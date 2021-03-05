@@ -1,0 +1,218 @@
+package it.uniba.di.prog2.cs2021.gruppo31.dado;
+import java.util.Date;
+
+public abstract class AbstractDado implements Dado {
+	
+	private Materiale materiale;
+	private Categoria categoria;
+	private RivestimentoProtettivo rivestimento;
+	private Filettatura filettatura;
+	private String luogoProduzione;
+	private Date dataProduzione;
+	private double prezzo;
+	private double peso;
+	private int numPezzi = 1;
+	
+	public AbstractDado() {}
+	
+	public AbstractDado(String metrica, boolean tipoPasso) {
+		this.setFilettatura(metrica, tipoPasso);
+	}
+	
+	@Override
+	public String getMateriale() {
+		return materiale.toString();
+	}
+
+	@Override
+	public boolean setMateriale(String materiale) {
+		try {
+			this.materiale = Materiale.valueOf(materiale);
+		}
+		catch(IllegalArgumentException e) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String getCategoria() {
+		return categoria.toString();
+	}
+
+	@Override
+	public boolean setCategoria(String categoria) {
+		try {
+			this.categoria = Categoria.valueOf(categoria);
+		}
+		catch(IllegalArgumentException e) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String getRivestimentoProtettivo() {
+		return rivestimento.toString();
+	}
+
+	@Override
+	public boolean setRivestimentoProtettivo(String rivestimento) {
+		try {
+			this.rivestimento = RivestimentoProtettivo.valueOf(rivestimento);
+		}
+		catch(IllegalArgumentException e) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String getFilettatura() {
+		return filettatura.toString();
+	}
+
+	@Override
+	public boolean setFilettatura(String metrica, boolean tipoPasso) {
+		//try {
+			filettatura = new Filettatura(metrica, tipoPasso);
+			peso = 0;
+			if(filettatura != null) {
+				peso = filettatura.getDiamentro() * filettatura.getMisuraPiatti() * filettatura.getAltezza();
+				peso /= (100 + filettatura.getMisuraPiatti());
+			}
+		/**
+		}
+		catch() {
+			return false;
+		} **/
+		return true;
+	}
+	
+	@Override
+	public double getPeso() {
+		return peso;
+	}
+
+	@Override
+	public int getNumPezzi() {
+		return numPezzi;
+	}
+
+	@Override
+	public boolean setNumPezzi(int numPezzi) {
+		if(numPezzi >= 0) {
+			this.numPezzi = numPezzi;
+			return true;
+		}
+		else
+			return false;
+	}
+
+	@Override
+	public double getPrezzo() {
+		return prezzo;
+	}
+
+	@Override
+	public boolean setPrezzo(double prezzo) {
+		if(prezzo >= 0) {
+			this.prezzo = prezzo;
+			return true;
+		}
+		else
+			return false;
+	}
+
+	@Override
+	public String getLuogoProduzione() {
+		return luogoProduzione;
+	}
+
+	@Override
+	public void setLuogoProduzione(String luogoProduzione) {
+		this.luogoProduzione = luogoProduzione;
+	}
+
+	@Override
+	public Date getDataProduzione() {
+		return dataProduzione;
+	}
+
+	@Override
+	public void setDataProduzione(Date dataProduzione) {
+		this.dataProduzione = dataProduzione;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + ((dataProduzione == null) ? 0 : dataProduzione.hashCode());
+		result = prime * result + ((filettatura == null) ? 0 : filettatura.hashCode());
+		result = prime * result + ((luogoProduzione == null) ? 0 : luogoProduzione.hashCode());
+		result = prime * result + ((materiale == null) ? 0 : materiale.hashCode());
+		result = prime * result + numPezzi;
+		long temp;
+		temp = Double.doubleToLongBits(peso);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(prezzo);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((rivestimento == null) ? 0 : rivestimento.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractDado other = (AbstractDado) obj;
+		if (categoria != other.categoria)
+			return false;
+		if (dataProduzione == null) {
+			if (other.dataProduzione != null)
+				return false;
+		} else if (!dataProduzione.equals(other.dataProduzione))
+			return false;
+		if (filettatura == null) {
+			if (other.filettatura != null)
+				return false;
+		} else if (!filettatura.equals(other.filettatura))
+			return false;
+		if (luogoProduzione == null) {
+			if (other.luogoProduzione != null)
+				return false;
+		} else if (!luogoProduzione.equals(other.luogoProduzione))
+			return false;
+		if (materiale != other.materiale)
+			return false;
+		if (numPezzi != other.numPezzi)
+			return false;
+		if (Double.doubleToLongBits(peso) != Double.doubleToLongBits(other.peso))
+			return false;
+		if (Double.doubleToLongBits(prezzo) != Double.doubleToLongBits(other.prezzo))
+			return false;
+		if (rivestimento != other.rivestimento)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		String s = "Filettatura: "+filettatura.toString();
+		s += "\nCategoria: " + categoria;
+		s += "\nPrezzo: " + prezzo;
+		s += "\nNumero Pezzi: " + numPezzi;
+		s += "\nMateriale: " + materiale;
+		s += "\nRivestimento Protettivo: " + rivestimento;
+		s += "\nPeso: " + peso;
+		s += "\nLuogo Produzione: " + luogoProduzione;
+		s += "\nData Produzione: " + dataProduzione;
+		return s;
+	}
+}
