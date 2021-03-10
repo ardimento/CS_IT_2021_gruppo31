@@ -6,8 +6,8 @@ public class EsagonaleAlto extends AbstractDado {
 	
 	public EsagonaleAlto() {}
 
-	public EsagonaleAlto(String metrica, boolean tipoPasso) {
-		super(metrica, tipoPasso);
+	public EsagonaleAlto(String metrica, boolean passoGrosso) {
+		super(metrica, passoGrosso);
 	}
 
 	@Override

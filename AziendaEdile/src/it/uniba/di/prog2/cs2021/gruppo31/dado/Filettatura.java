@@ -3,14 +3,14 @@ package it.uniba.di.prog2.cs2021.gruppo31.dado;
 public class Filettatura {
 	
 	private String metrica;
-	private boolean tipoPasso;
+	private boolean passoGrosso;
 	private double dimensionePasso;
 	private double misuraPiatti;
 	private double altezza;
 	
-	public Filettatura(String metrica, boolean tipoPasso) {
+	public Filettatura(String metrica, boolean passoGrosso) {
 		this.metrica = metrica;
-		this.tipoPasso = tipoPasso;
+		this.passoGrosso = passoGrosso;
 		//this.dimensionePasso = dimensionePasso;
 		//this.misuraPiatti = misuraPiatti;
 		//this.altezza = altezza;
@@ -25,8 +25,8 @@ public class Filettatura {
 		return Integer.parseInt(d);
 	}
 
-	public boolean isTipoPasso() {
-		return tipoPasso;
+	public boolean isPassoGrosso() {
+		return passoGrosso;
 	}
 
 	public double getDimensionePasso() {
@@ -53,7 +53,7 @@ public class Filettatura {
 		result = prime * result + ((metrica == null) ? 0 : metrica.hashCode());
 		temp = Double.doubleToLongBits(misuraPiatti);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (tipoPasso ? 1231 : 1237);
+		result = prime * result + (passoGrosso ? 1231 : 1237);
 		return result;
 	}
 
@@ -77,7 +77,7 @@ public class Filettatura {
 			return false;
 		if (Double.doubleToLongBits(misuraPiatti) != Double.doubleToLongBits(other.misuraPiatti))
 			return false;
-		if (tipoPasso != other.tipoPasso)
+		if (passoGrosso != other.passoGrosso)
 			return false;
 		return true;
 	}
@@ -86,7 +86,7 @@ public class Filettatura {
 	public String toString()
 	{
 		String s = "[Metrica: " + metrica;
-		if(tipoPasso == false)
+		if(passoGrosso == false)
 			s += " - Passo grosso: " + dimensionePasso;
 		else
 			s += " - Passo fine: " + dimensionePasso;

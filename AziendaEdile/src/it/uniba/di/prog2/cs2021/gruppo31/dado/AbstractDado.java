@@ -15,8 +15,8 @@ public abstract class AbstractDado implements Dado {
 	
 	public AbstractDado() {}
 	
-	public AbstractDado(String metrica, boolean tipoPasso) {
-		this.setFilettatura(metrica, tipoPasso);
+	public AbstractDado(String metrica, boolean passoGrosso) {
+		this.setFilettatura(metrica, passoGrosso);
 	}
 	
 	@Override
@@ -73,9 +73,9 @@ public abstract class AbstractDado implements Dado {
 	}
 
 	@Override
-	public boolean setFilettatura(String metrica, boolean tipoPasso) {
+	public boolean setFilettatura(String metrica, boolean passoGrosso) {
 		//try {
-			filettatura = new Filettatura(metrica, tipoPasso);
+			filettatura = new Filettatura(metrica, passoGrosso);
 			peso = 0;
 			if(filettatura != null) {
 				peso = filettatura.getDiamentro() * filettatura.getMisuraPiatti() * filettatura.getAltezza();

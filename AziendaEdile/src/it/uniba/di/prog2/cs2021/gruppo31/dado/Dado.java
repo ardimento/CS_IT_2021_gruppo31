@@ -11,7 +11,7 @@ public interface Dado {
 	public String getRivestimentoProtettivo();
 	public boolean setRivestimentoProtettivo(String rivestimento);
 	public String getFilettatura();
-	public boolean setFilettatura(String metrica, boolean tipoPasso);
+	public boolean setFilettatura(String metrica, boolean passoGrosso);
 	public double getPeso();
 	public int getNumPezzi();
 	public boolean setNumPezzi(int numPezzi);
