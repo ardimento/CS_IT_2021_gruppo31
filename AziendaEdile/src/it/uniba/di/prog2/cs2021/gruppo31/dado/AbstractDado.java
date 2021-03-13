@@ -1,5 +1,8 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
+import java.sql.SQLException;
 import java.util.Date;
+import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
+import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;;
 
 public abstract class AbstractDado implements Dado {
 	
@@ -15,7 +18,7 @@ public abstract class AbstractDado implements Dado {
 	
 	public AbstractDado() {}
 	
-	public AbstractDado(String metrica, boolean passoGrosso) {
+	public AbstractDado(String metrica, boolean passoGrosso) throws SQLException{
 		this.setFilettatura(metrica, passoGrosso);
 	}
 	
@@ -68,24 +71,27 @@ public abstract class AbstractDado implements Dado {
 	}
 
 	@Override
-	public String getFilettatura() {
+	public Filettatura getFilettatura() {
+		return filettatura;
+	}
+	
+	public String getFilettaturaString() {
 		return filettatura.toString();
 	}
 
 	@Override
-	public boolean setFilettatura(String metrica, boolean passoGrosso) {
-		//try {
-			filettatura = new Filettatura(metrica, passoGrosso);
+	public boolean setFilettatura(String metrica, boolean passoGrosso) throws SQLException {
+		try {
+			filettatura = ProxyDB.getIstance().getFilettatura(metrica,passoGrosso);
 			peso = 0;
 			if(filettatura != null) {
 				peso = filettatura.getDiamentro() * filettatura.getMisuraPiatti() * filettatura.getAltezza();
 				peso /= (100 + filettatura.getMisuraPiatti());
 			}
-		/**
 		}
-		catch() {
-			return false;
-		} **/
+		catch(AziendaException e) {
+			return false; //Metrica non valida
+		}
 		return true;
 	}
 	

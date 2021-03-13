@@ -1,4 +1,5 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
+import java.sql.SQLException;
 import java.util.Date;
 
 public interface Dado {
@@ -10,8 +11,9 @@ public interface Dado {
 	public boolean setCategoria(String categoria);
 	public String getRivestimentoProtettivo();
 	public boolean setRivestimentoProtettivo(String rivestimento);
-	public String getFilettatura();
-	public boolean setFilettatura(String metrica, boolean passoGrosso);
+	public Filettatura getFilettatura();
+	public String getFilettaturaString();
+	public boolean setFilettatura(String metrica, boolean passoGrosso) throws SQLException;
 	public double getPeso();
 	public int getNumPezzi();
 	public boolean setNumPezzi(int numPezzi);

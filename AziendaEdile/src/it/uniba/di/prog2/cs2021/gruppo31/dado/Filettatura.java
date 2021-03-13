@@ -11,11 +11,8 @@ public class Filettatura {
 	public Filettatura(String metrica, boolean passoGrosso) {
 		this.metrica = metrica;
 		this.passoGrosso = passoGrosso;
-		//this.dimensionePasso = dimensionePasso;
-		//this.misuraPiatti = misuraPiatti;
-		//this.altezza = altezza;
 	}
-	
+
 	public String getMetrica() {
 		return metrica;
 	}
@@ -39,6 +36,18 @@ public class Filettatura {
 
 	public double getAltezza() {
 		return altezza;
+	}
+	
+	public void setDimensionePasso(double dimensionePasso) {
+		this.dimensionePasso = dimensionePasso;
+	}
+
+	public void setMisuraPiatti(double misuraPiatti) {
+		this.misuraPiatti = misuraPiatti;
+	}
+
+	public void setAltezza(double altezza) {
+		this.altezza = altezza;
 	}
 	
 	@Override

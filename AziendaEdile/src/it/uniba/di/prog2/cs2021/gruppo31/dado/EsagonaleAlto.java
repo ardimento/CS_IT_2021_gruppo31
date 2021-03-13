@@ -1,12 +1,14 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
 
+import java.sql.SQLException;
+
 public class EsagonaleAlto extends AbstractDado {
 
 	private final String denominazione = "Dado Esagonale Alto [UNI 5587]";
 	
 	public EsagonaleAlto() {}
 
-	public EsagonaleAlto(String metrica, boolean passoGrosso) {
+	public EsagonaleAlto(String metrica, boolean passoGrosso) throws SQLException {
 		super(metrica, passoGrosso);
 	}
 
