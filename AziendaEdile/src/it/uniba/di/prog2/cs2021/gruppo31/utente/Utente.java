@@ -1,6 +1,6 @@
 package it.uniba.di.prog2.cs2021.gruppo31.utente;
 import java.sql.SQLException;
-import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;
+import it.uniba.di.prog2.cs2021.gruppo31.database.*;
 
 
 public class Utente {
@@ -34,6 +34,7 @@ public class Utente {
 	}
 	
 	public boolean addUtente() throws SQLException {
-		return ProxyDB.getIstance().addUtente(this);
+		LogIn_SignIn login = ProxyDB.getIstance();
+		return login.addUtente(this);
 	}
 }
