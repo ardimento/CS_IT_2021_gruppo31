@@ -24,7 +24,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return istance;
 	}
 	
-	public int checkUtente(String username, String hashPassword) throws SQLException {
+	public void checkUtente(String username, String hashPassword) throws SQLException,AziendaException {
 		query = "SELECT USERNAME,HASH_PASSWORD FROM UTENTE WHERE USERNAME LIKE '" + username + "';";
 		conn = ConnectorDB.connect();
 		
@@ -34,23 +34,20 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		if(rs.next() == false)
 		{
 			ConnectorDB.close(conn);
-			return 1; //Username not found
+			throw new AziendaException(ErroriDB.USERNAME_NOT_FOUND);
 		}
 		
 		String tempUsername = rs.getString("USERNAME");
 		String tempPassword = rs.getString("HASH_PASSWORD");
 		
-		int result;
-		if(tempUsername.equals(username) && tempPassword.equals(hashPassword))
-			result = 0; //Username and password match
+		if(tempUsername.equals(username) && tempPassword.equals(hashPassword));
 		else
-			result = 2; //Password not correct
+			throw new AziendaException(ErroriDB.INCORRECT_PASSWORD);
 		
 		ConnectorDB.close(conn);
-		return result;
 	}
 	
-	public boolean addUtente(Utente utente) throws SQLException {
+	public void addUtente(Utente utente) throws SQLException,AziendaException {
 		query = "INSERT INTO IMPIEGATO(NOME,COGNOME,DATA_NASCITA,MANSIONE,STIPENDIO,MAX_VENDITE_ANNO,DATA_ENTRATA) VALUES (?,?,?,?,?,?,?);";
 		conn = ConnectorDB.connect();
 		
@@ -80,12 +77,14 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		int righeInserite = ps.executeUpdate();
 		ConnectorDB.close(conn);
 		
-		if(righeInserite == 0)	return false;
-		return true;
+		if(righeInserite == 0)
+			throw new AziendaException(ErroriDB.USERNAME_ALREADY_EXISTS);;
 	}
 	
-	public boolean addVendita(Vendita vendita) throws SQLException {
+	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
 		query = "INSERT INTO VENDITA(UTENTE,DADO,DATA,NUMERO_PEZZI) VALUES (?,?,?,?);";
+		checkUtente(vendita.getUtente().getUsername(),vendita.getUtente().getHashPassword());
+		getDado(Integer.toString(vendita.getDado().hashCode()));
 		conn = ConnectorDB.connect();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -94,12 +93,14 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ps.setString(2,Integer.toString(vendita.getDado().hashCode()));
 		ps.setString(3,formatter.format(vendita.getData()));
 		ps.setInt(4,vendita.getNumPezzi());
-
-		int righeInserite = ps.executeUpdate();
+		ps.executeUpdate();
+			
+		query = "UPDATE DADO SET NUMERO_PEZZI = ? WHERE CODICE_HASH = ?;";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1,vendita.getDado().getNumPezzi()-vendita.getNumPezzi());
+		ps.setString(2,Integer.toString(vendita.getDado().hashCode()));
+		ps.executeUpdate();
 		ConnectorDB.close(conn);
-		
-		if(righeInserite == 0)	return false;
-		return true;
 	}
 	
 	public Impiegato getInfoImpiegato(String username) throws SQLException,AziendaException,ParseException {
@@ -153,7 +154,38 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ConnectorDB.close(conn);
 		return filettatura;
 	}
+	
+	public Dado getDado(String hashDado) throws SQLException,AziendaException,ParseException {
+		query = "SELECT * FROM DADO WHERE CODICE_HASH LIKE ?;";
+		conn = ConnectorDB.connect();
 		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1,hashDado);
+		ResultSet rs = ps.executeQuery();
+		
+		if(rs.next() == false)
+		{
+			ConnectorDB.close(conn);
+			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
+		}
+		
+		Dado dado = new EsagonaleAlto();
+		dado.setMateriale(rs.getString("MATERIALE"));
+		dado.setCategoria(rs.getString("CATEGORIA"));
+		dado.setRivestimentoProtettivo(rs.getString("RIVESTIMENTO"));
+		
+		Filettatura filettatura = getFilettaturaByID(rs.getInt("FILETTATURA"));
+		dado.setFilettatura(filettatura.getMetrica(),filettatura.isPassoGrosso());
+		dado.setNumPezzi(rs.getInt("NUMERO_PEZZI"));
+		dado.setPrezzo(rs.getDouble("PREZZO"));
+		dado.setLuogoProduzione(rs.getString("LUOGO_PRODUZIONE"));
+		dado.setDataProduzione(formatter.parse(rs.getString("DATA_PRODUZIONE")));
+		
+		ConnectorDB.close(conn);
+		return dado;
+	}
+	
 	public ArrayList<Vendita> getVenditeImpiegato(String username) throws SQLException,AziendaException,ParseException {
 		query = "SELECT * FROM VENDITA WHERE UTENTE LIKE ?;";
 		conn = ConnectorDB.connect();
@@ -205,7 +237,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return catalogo;
 	}
 	
-	public boolean addDado(String username, Dado dado) throws SQLException,AziendaException {
+	public void addDado(String username, Dado dado) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
 		
 		query = "SELECT CODICE FROM FILETTATURA WHERE METRICA LIKE ? AND PASSO_GROSSO = ?;";
@@ -250,11 +282,11 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		int righeInserite = ps.executeUpdate();
 		ConnectorDB.close(conn);
 		
-		if(righeInserite == 0)	return false;
-		return true;
+		if(righeInserite == 0)
+			throw new AziendaException(ErroriDB.DADO_ALREADY_EXITS);
 	}
 
-	public boolean deleteDado(String username, int hashDado) throws SQLException,AziendaException,ParseException {
+	public void deleteDado(String username, int hashDado) throws SQLException,AziendaException,ParseException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
 		//if(getDado(hashDado) == null)	throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
 		
@@ -266,11 +298,11 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		int righeRimosse = ps.executeUpdate();
 		ConnectorDB.close(conn);
 		
-		if(righeRimosse == 0)	return false;
-		return true;
+		if(righeRimosse == 0)
+			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);;
 	}
 	
-	public boolean updatePezziDado(String username, int hashDado, int numPezzi) throws SQLException,AziendaException {
+	public void updatePezziDado(String username, int hashDado, int numPezzi) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
 		
 		query = "UPDATE DADO SET NUMERO_PEZZI = ? WHERE CODICE_HASH = ?;";
@@ -282,11 +314,11 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		int righeAggiornate = ps.executeUpdate();
 		ConnectorDB.close(conn);
 		
-		if(righeAggiornate == 0)	return false;
-		return true;
+		if(righeAggiornate == 0)
+			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
 	}
 	
-	public boolean updatePrezzoDado(String username, int hashDado, double prezzo) throws SQLException,AziendaException {
+	public void updatePrezzoDado(String username, int hashDado, double prezzo) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
 		
 		query = "UPDATE DADO SET PREZZO = ? WHERE CODICE_HASH = ?;";
@@ -298,10 +330,10 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		int righeAggiornate = ps.executeUpdate();
 		ConnectorDB.close(conn);
 		
-		if(righeAggiornate == 0)	return false;
-		return true;
+		if(righeAggiornate == 0)
+			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
 	}
-	
+
 	private Filettatura getFilettaturaByID(int codice) throws SQLException,AziendaException {
 		query = "SELECT * FROM FILETTATURA WHERE CODICE = ?;";
 		conn = ConnectorDB.connect();
@@ -323,37 +355,6 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		ConnectorDB.close(conn);
 		return filettatura;
-	}
-
-	private Dado getDado(String hashDado) throws SQLException,AziendaException,ParseException {
-		query = "SELECT * FROM DADO WHERE CODICE_HASH LIKE ?;";
-		conn = ConnectorDB.connect();
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		PreparedStatement ps = conn.prepareStatement(query);
-		ps.setString(1,hashDado);
-		ResultSet rs = ps.executeQuery();
-		
-		if(rs.next() == false)
-		{
-			ConnectorDB.close(conn);
-			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
-		}
-		
-		Dado dado = new EsagonaleAlto();
-		dado.setMateriale(rs.getString("MATERIALE"));
-		dado.setCategoria(rs.getString("CATEGORIA"));
-		dado.setRivestimentoProtettivo(rs.getString("RIVESTIMENTO"));
-		
-		Filettatura filettatura = getFilettaturaByID(rs.getInt("FILETTATURA"));
-		dado.setFilettatura(filettatura.getMetrica(),filettatura.isPassoGrosso());
-		dado.setNumPezzi(rs.getInt("NUMERO_PEZZI"));
-		dado.setPrezzo(rs.getDouble("PREZZO"));
-		dado.setLuogoProduzione(rs.getString("LUOGO_PRODUZIONE"));
-		dado.setDataProduzione(formatter.parse(rs.getString("DATA_PRODUZIONE")));
-		
-		ConnectorDB.close(conn);
-		return dado;
 	}
 	
 	private boolean isAdmin(String username) throws SQLException,AziendaException {

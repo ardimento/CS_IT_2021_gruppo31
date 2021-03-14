@@ -8,8 +8,9 @@ import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 
 public interface UserQuery {
-	public boolean addVendita(Vendita vendita) throws SQLException;
+	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException;
 	public Impiegato getInfoImpiegato(String username) throws SQLException,AziendaException,ParseException;
 	public ArrayList<Vendita> getVenditeImpiegato(String username) throws SQLException,AziendaException,ParseException;
 	public ArrayList<Dado> getCatalogoDadi() throws SQLException,AziendaException,ParseException;
+	public Dado getDado(String hashDado) throws SQLException,AziendaException,ParseException;
 }
