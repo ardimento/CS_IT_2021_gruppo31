@@ -15,14 +15,20 @@ import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 
 public class HomePage {
 	private Utente utente;
-	private boolean accesso = false;
 	
-	public HomePage(Utente utente) {
+	public HomePage(Utente utente) throws AziendaException {
 		this.utente = utente;
-		//Token
+		if(Token.getIstance().getHashPassword().equals(utente.getHashPassword()));
+		else
+			throw new AziendaException(ErroriUtente.USERNAME_NOT_LOGGED);
 	}
 	
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
+		if(getVenditeAnno(vendita.getUtente().getUsername()) >= vendita.getUtente().getImpiegato().getMaxVenditeAnno())
+			throw new AziendaException(ErroriUtente.MAX_VENDITE_ANNO);
+		if(getVenditeGiorno(vendita.getUtente().getUsername()) >= Impiegato.MAX_VENDITE_GIORNO)
+			throw new AziendaException(ErroriUtente.MAX_VENDITE_GIORNO);
+		
 		UserQuery uq = ProxyDB.getIstance();
 		Dado dado = uq.getDado(Integer.toString(vendita.getDado().hashCode()));
 		int pezzi = dado.getNumPezzi();
@@ -78,5 +84,35 @@ public class HomePage {
 			throw new AziendaException(ErroriUtente.PREZZO_NOT_VALID);
 		aq.updatePrezzoDado(utente.getUsername(),hashDado,prezzo);
 		
+	}
+	
+	public void logOut() {
+		Token.getIstance().setHashPassword(null);
+	}
+
+	private int getVenditeAnno(String username) throws SQLException,AziendaException,ParseException {
+		UserQuery uq = ProxyDB.getIstance();
+		ArrayList<Vendita> vendite = uq.getVenditeImpiegato(username);
+		int anno = Calendar.getInstance().get(Calendar.YEAR);
+		int count = 0;
+		
+		for(Vendita i : vendite) {
+			Calendar c = Calendar.getInstance();
+			c.setTime(i.getData());
+			if(c.get(Calendar.YEAR) == anno)	count++;
+		}
+		return count;
+	}
+	
+	private int getVenditeGiorno(String username) throws SQLException,AziendaException,ParseException {
+		UserQuery uq = ProxyDB.getIstance();
+		ArrayList<Vendita> vendite = uq.getVenditeImpiegato(username);
+		Date data = Calendar.getInstance().getTime();
+		int count = 0;
+		
+		for(Vendita i : vendite)
+			if(i.getData().compareTo(data) == 0)	count++;
+		
+		return count;
 	}
 }

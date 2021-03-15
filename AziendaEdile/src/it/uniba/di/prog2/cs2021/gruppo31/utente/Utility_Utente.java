@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+import it.uniba.di.prog2.cs2021.gruppo31.Token;
 import it.uniba.di.prog2.cs2021.gruppo31.database.LogIn_SignIn;
 import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
@@ -12,7 +13,8 @@ public class Utility_Utente {
 	
 	public static void checkUtente(String username, String hashPassword) throws SQLException,AziendaException {
 		LogIn_SignIn login = ProxyDB.getIstance();
-		login.checkUtente(username, hashPassword);
+		login.checkUtente(username,hashPassword);
+		Token.getIstance().setHashPassword(hashPassword);
 	}
 	
 	/**
