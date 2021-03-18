@@ -1,5 +1,6 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;;
@@ -166,7 +167,7 @@ public abstract class AbstractDado implements Dado {
 		temp = Double.doubleToLongBits(prezzo);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((rivestimento == null) ? 0 : rivestimento.hashCode());
-		return result;
+		return (result & 0xfffffff);
 	}
 
 	@Override
@@ -210,15 +211,16 @@ public abstract class AbstractDado implements Dado {
 
 	@Override
 	public String toString() {
-		String s = "Filettatura: "+filettatura.toString();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String s = "Filettatura: " + filettatura.toString();
 		s += "\nCategoria: " + categoria;
-		s += "\nPrezzo: " + prezzo;
+		s += "\nPrezzo: € " + prezzo;
 		s += "\nNumero Pezzi: " + numPezzi;
 		s += "\nMateriale: " + materiale;
 		s += "\nRivestimento Protettivo: " + rivestimento;
-		s += "\nPeso: " + peso;
+		s += String.format("\nPeso: %.3f grammi",peso);
 		s += "\nLuogo Produzione: " + luogoProduzione;
-		s += "\nData Produzione: " + dataProduzione;
+		s += "\nData Produzione: " + formatter.format(dataProduzione);
 		return s;
 	}
 }

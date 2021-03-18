@@ -9,4 +9,5 @@ public class ErroriDB {
 	public static final String DADO_ALREADY_EXITS = "ERROR: Dado gia' esistente!";
 	public static final String USERNAME_ALREADY_EXISTS = "ERROR: Username gia' esistente!";
 	public static final String USERNAME_NOT_ADMIN = "ERROR: Permessi di amministratore richiesti!";
+	public static final String IMPIEGATO_ALREADY_EXISTS = "ERROR: Impiegato gia' esistente!";
 }

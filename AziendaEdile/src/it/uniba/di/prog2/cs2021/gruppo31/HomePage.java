@@ -9,6 +9,7 @@ import it.uniba.di.prog2.cs2021.gruppo31.database.AdminQuery;
 import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;
 import it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
+import it.uniba.di.prog2.cs2021.gruppo31.exception.ErroriDB;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.ErroriUtente;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
@@ -37,7 +38,11 @@ public class HomePage {
 		
 		Calendar c = Calendar.getInstance();
 		Date temp = c.getTime();
-		if(vendita.getData().compareTo(temp) > 0)
+		if(vendita.getData().compareTo(temp) > 0) //Vendita nel futuro
+			throw new AziendaException(ErroriUtente.DATA_NOT_VALID);
+		if(vendita.getData().compareTo(vendita.getDado().getDataProduzione()) < 0) //Vendita prima della produzione
+			throw new AziendaException(ErroriUtente.DATA_NOT_VALID);
+		if(vendita.getData().compareTo(vendita.getUtente().getImpiegato().getDataEntrata()) < 0) //Vendita prima dell'entrata in azienda
 			throw new AziendaException(ErroriUtente.DATA_NOT_VALID);
 		uq.addVendita(vendita);
 	}
@@ -92,27 +97,43 @@ public class HomePage {
 
 	private int getVenditeAnno(String username) throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
-		ArrayList<Vendita> vendite = uq.getVenditeImpiegato(username);
-		int anno = Calendar.getInstance().get(Calendar.YEAR);
-		int count = 0;
-		
-		for(Vendita i : vendite) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(i.getData());
-			if(c.get(Calendar.YEAR) == anno)	count++;
+		try {
+			ArrayList<Vendita> vendite = uq.getVenditeImpiegato(username);
+			int anno = Calendar.getInstance().get(Calendar.YEAR);
+			int count = 0;
+			
+			for(Vendita i : vendite) {
+				Calendar c = Calendar.getInstance();
+				c.setTime(i.getData());
+				if(c.get(Calendar.YEAR) == anno)	count++;
+			}
+			return count;
 		}
-		return count;
+		catch(AziendaException ex) {
+			if(ex.getMessage() == ErroriDB.EMPTY_LIST)	return 0;
+			else
+				throw new AziendaException(ex.getMessage());
+		}
 	}
 	
 	private int getVenditeGiorno(String username) throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
-		ArrayList<Vendita> vendite = uq.getVenditeImpiegato(username);
-		Date data = Calendar.getInstance().getTime();
-		int count = 0;
+		try {
+			ArrayList<Vendita> vendite = uq.getVenditeImpiegato(username);
+			Date data = Calendar.getInstance().getTime();
+			int count = 0;
+			
+			for(Vendita i : vendite)
+				if(i.getData().compareTo(data) == 0)	count++;
+			
+			return count;
+		}
+		catch(AziendaException ex) {
+			if(ex.getMessage() == ErroriDB.EMPTY_LIST)	return 0;
+			else
+				throw new AziendaException(ex.getMessage());
+		}
 		
-		for(Vendita i : vendite)
-			if(i.getData().compareTo(data) == 0)	count++;
-		
-		return count;
+
 	}
 }

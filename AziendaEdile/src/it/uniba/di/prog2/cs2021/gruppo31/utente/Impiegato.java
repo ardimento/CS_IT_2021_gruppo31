@@ -1,4 +1,5 @@
 package it.uniba.di.prog2.cs2021.gruppo31.utente;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Impiegato {
@@ -12,14 +13,10 @@ public class Impiegato {
 	private int maxVenditeAnno;
 	public static final int MAX_VENDITE_GIORNO = 300;
 	
-	public Impiegato(Date dataEntrata, int stipendioMensile, int maxVenditeAnno) {
+	public Impiegato(String nome, String cognome, Date dataNascita, String mansione, Date dataEntrata, int stipendioMensile, int maxVenditeAnno) {
 		this.stipendioMensile = stipendioMensile;
 		this.maxVenditeAnno = maxVenditeAnno;
 		this.dataEntrata = dataEntrata;
-	}
-	
-	public Impiegato(String nome, String cognome, Date dataNascita, String mansione, Date dataEntrata, int stipendioMensile, int maxVenditeAnno) {
-		this(dataEntrata,stipendioMensile,maxVenditeAnno);
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dataNascita = dataNascita;
@@ -81,4 +78,15 @@ public class Impiegato {
 	public void setMaxVenditeAnno(int maxVenditeAnno) {
 		this.maxVenditeAnno = maxVenditeAnno;
 	}
+
+	@Override
+	public String toString() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String s = "Nome: " + nome + "\nCognome: " + cognome + "\nData Nascita: " + formatter.format(dataNascita);
+		s += "\nMansione: " + mansione + "\nData Entrata: " + formatter.format(dataEntrata) + "\nStipendio Mensile: ";
+		s += + stipendioMensile + "\nLimite massimo vendite annue: " + maxVenditeAnno;
+		return s;
+	}
+	
+	
 }

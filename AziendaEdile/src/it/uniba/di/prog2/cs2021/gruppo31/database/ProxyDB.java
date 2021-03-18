@@ -33,6 +33,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.USERNAME_NOT_FOUND);
 		}
@@ -42,7 +43,11 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(tempUsername.equals(username) && tempPassword.equals(hashPassword));
 		else
+		{
+			ps.close();
+			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.INCORRECT_PASSWORD);
+		}
 		
 		ConnectorDB.close(conn);
 	}
@@ -53,14 +58,21 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		PreparedStatement ps = conn.prepareStatement(query);
-		if(utente.getImpiegato().getNome() != null)	ps.setString(1,utente.getImpiegato().getNome());
-		if(utente.getImpiegato().getCognome() != null)	ps.setString(2,utente.getImpiegato().getCognome());
-		if(utente.getImpiegato().getDataNascita() != null)	ps.setString(3,formatter.format(utente.getImpiegato().getDataNascita()));
-		if(utente.getImpiegato().getMansione() != null)	ps.setString(4,utente.getImpiegato().getMansione());
+		ps.setString(1,utente.getImpiegato().getNome());
+		ps.setString(2,utente.getImpiegato().getCognome());
+		ps.setString(3,formatter.format(utente.getImpiegato().getDataNascita()));
+		ps.setString(4,utente.getImpiegato().getMansione());
 		ps.setInt(5,utente.getImpiegato().getStipendioMensile());
 		ps.setInt(6,utente.getImpiegato().getMaxVenditeAnno());
 		ps.setString(7,formatter.format(utente.getImpiegato().getDataEntrata()));
-		ps.executeUpdate();
+		
+		try {
+			ps.executeUpdate();
+		}
+		catch (SQLException ex) {
+			ConnectorDB.close(conn);
+			throw new AziendaException(ErroriDB.IMPIEGATO_ALREADY_EXISTS);
+		}
 		
 		query = "SELECT last_insert_rowid();";
 		ps = conn.prepareStatement(query);
@@ -74,17 +86,26 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ps.setBoolean(3,utente.isAdmin());
 		ps.setInt(4,lastID);
 		
-		int righeInserite = ps.executeUpdate();
+		try {
+			ps.executeUpdate();
+		}
+		catch (SQLException ex) {
+			query = "DELETE FROM IMPIEGATO WHERE CODICE = ?;";
+			ps = conn.prepareStatement(query);
+			ps.setInt(1,lastID);
+			ps.executeUpdate();
+			
+			ConnectorDB.close(conn);
+			throw new AziendaException(ErroriDB.USERNAME_ALREADY_EXISTS);
+		}
 		ConnectorDB.close(conn);
-		
-		if(righeInserite == 0)
-			throw new AziendaException(ErroriDB.USERNAME_ALREADY_EXISTS);;
 	}
 	
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
-		query = "INSERT INTO VENDITA(UTENTE,DADO,DATA,NUMERO_PEZZI) VALUES (?,?,?,?);";
 		checkUtente(vendita.getUtente().getUsername(),vendita.getUtente().getHashPassword());
 		getDado(Integer.toString(vendita.getDado().hashCode()));
+		
+		query = "INSERT INTO VENDITA(UTENTE,DADO,DATA,NUMERO_PEZZI) VALUES (?,?,?,?);";
 		conn = ConnectorDB.connect();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -94,12 +115,13 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ps.setString(3,formatter.format(vendita.getData()));
 		ps.setInt(4,vendita.getNumPezzi());
 		ps.executeUpdate();
-			
-		query = "UPDATE DADO SET NUMERO_PEZZI = ? WHERE CODICE_HASH = ?;";
+		
+		query = "UPDATE DADO SET NUMERO_PEZZI = (NUMERO_PEZZI - ?) WHERE CODICE_HASH = ?;";
 		ps = conn.prepareStatement(query);
-		ps.setInt(1,vendita.getDado().getNumPezzi()-vendita.getNumPezzi());
+		ps.setInt(1,vendita.getNumPezzi());
 		ps.setString(2,Integer.toString(vendita.getDado().hashCode()));
 		ps.executeUpdate();
+		ps.close();
 		ConnectorDB.close(conn);
 	}
 	
@@ -114,6 +136,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.USERNAME_NOT_FOUND);
 		}
@@ -125,6 +148,8 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		int stipendio = rs.getInt("STIPENDIO");
 		int maxVenditeAnno = rs.getInt("MAX_VENDITE_ANNO");
 		Date dataEntrata = formatter.parse(rs.getString("DATA_ENTRATA"));
+		
+		ps.close();
 		ConnectorDB.close(conn);
 		
 		Impiegato temp = new Impiegato(nome,cognome,dataNascita,mansione,dataEntrata,stipendio,maxVenditeAnno);
@@ -142,6 +167,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.FILETTATURA_NOT_FOUND);
 		}
@@ -151,6 +177,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		filettatura.setMisuraPiatti(rs.getDouble("MISURA_PIATTI"));
 		filettatura.setAltezza(rs.getDouble("ALTEZZA"));
 		
+		ps.close();
 		ConnectorDB.close(conn);
 		return filettatura;
 	}
@@ -166,6 +193,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
 		}
@@ -182,6 +210,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		dado.setLuogoProduzione(rs.getString("LUOGO_PRODUZIONE"));
 		dado.setDataProduzione(formatter.parse(rs.getString("DATA_PRODUZIONE")));
 		
+		ps.close();
 		ConnectorDB.close(conn);
 		return dado;
 	}
@@ -197,6 +226,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.EMPTY_LIST);
 		}
@@ -210,6 +240,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 			vendite.add(new Vendita(null,tempDado,tempData,tempNumPezzi));
 		} while(rs.next() == true);
 		
+		ps.close();
 		ConnectorDB.close(conn);
 		return vendite;
 	}
@@ -223,6 +254,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.EMPTY_LIST);
 		}
@@ -233,6 +265,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 			catalogo.add(dado);
 		} while(rs.next() == true);
 		
+		ps.close();
 		ConnectorDB.close(conn);
 		return catalogo;
 	}
@@ -250,6 +283,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.FILETTATURA_NOT_FOUND);
 		}
@@ -265,25 +299,22 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ps.setString(4,dado.getCategoria());
 		ps.setString(5,dado.getRivestimentoProtettivo());
 		ps.setString(6,dado.getDenominazione());
-		
-		if(dado.getLuogoProduzione() != null)
-			ps.setString(7,dado.getLuogoProduzione());
-		else
-			ps.setString(7,null);
-		if(dado.getDataProduzione() != null)
-			ps.setString(8,formatter.format(dado.getDataProduzione()));
-		else
-			ps.setString(8,null);
-		
+		ps.setString(7,dado.getLuogoProduzione());
+		ps.setString(8,formatter.format(dado.getDataProduzione()));
 		ps.setDouble(9,dado.getPeso());
 		ps.setDouble(10,dado.getPrezzo());
 		ps.setInt(11,dado.getNumPezzi());
 		
-		int righeInserite = ps.executeUpdate();
-		ConnectorDB.close(conn);
-		
-		if(righeInserite == 0)
+		try {
+			ps.executeUpdate();
+		}
+		catch (SQLException ex) {
+			ps.close();
+			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.DADO_ALREADY_EXITS);
+		}
+		ps.close();
+		ConnectorDB.close(conn);
 	}
 
 	public void deleteDado(String username, int hashDado) throws SQLException,AziendaException,ParseException {
@@ -295,11 +326,30 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1,Integer.toString(hashDado));
-		int righeRimosse = ps.executeUpdate();
-		ConnectorDB.close(conn);
 		
-		if(righeRimosse == 0)
-			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);;
+		try {
+			ps.executeUpdate();
+		}
+		catch (SQLException ex) {
+			ps.close();
+			ConnectorDB.close(conn);
+			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
+		}
+		
+		//Elimina anche le vendite associate al dado
+		query = "DELETE FROM VENDITA WHERE DADO LIKE ?;";
+		ps = conn.prepareStatement(query);
+		ps.setString(1,Integer.toString(hashDado));
+		
+		try {
+			ps.executeUpdate();
+		}
+		catch (SQLException ex) {
+			ps.close();
+			ConnectorDB.close(conn);
+		}
+		ps.close();
+		ConnectorDB.close(conn);
 	}
 	
 	public void updatePezziDado(String username, int hashDado, int numPezzi) throws SQLException,AziendaException {
@@ -311,11 +361,17 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setInt(1,numPezzi);
 		ps.setString(2,Integer.toString(hashDado));
-		int righeAggiornate = ps.executeUpdate();
-		ConnectorDB.close(conn);
 		
-		if(righeAggiornate == 0)
+		try {
+			ps.executeUpdate();
+		}
+		catch (SQLException ex) {
+			ps.close();
+			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
+		}
+		ps.close();
+		ConnectorDB.close(conn);
 	}
 	
 	public void updatePrezzoDado(String username, int hashDado, double prezzo) throws SQLException,AziendaException {
@@ -327,11 +383,17 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setDouble(1,prezzo);
 		ps.setString(2,Integer.toString(hashDado));
-		int righeAggiornate = ps.executeUpdate();
-		ConnectorDB.close(conn);
 		
-		if(righeAggiornate == 0)
+		try {
+			ps.executeUpdate();
+		}
+		catch (SQLException ex) {
+			ps.close();
+			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
+		}
+		ps.close();
+		ConnectorDB.close(conn);
 	}
 
 	private Filettatura getFilettaturaByID(int codice) throws SQLException,AziendaException {
@@ -344,6 +406,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.FILETTATURA_NOT_FOUND);
 		}
@@ -353,6 +416,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		filettatura.setMisuraPiatti(rs.getDouble("MISURA_PIATTI"));
 		filettatura.setAltezza(rs.getDouble("ALTEZZA"));
 		
+		ps.close();
 		ConnectorDB.close(conn);
 		return filettatura;
 	}
@@ -367,11 +431,13 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		
 		if(rs.next() == false)
 		{
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.USERNAME_NOT_FOUND);
 		}
 		
 		boolean result = rs.getBoolean(1);
+		ps.close();
 		ConnectorDB.close(conn);
 		return result;
 	}

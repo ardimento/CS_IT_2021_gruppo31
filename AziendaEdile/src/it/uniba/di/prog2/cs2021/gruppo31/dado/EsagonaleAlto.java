@@ -22,7 +22,7 @@ public class EsagonaleAlto extends AbstractDado {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((denominazione == null) ? 0 : denominazione.hashCode());
-		return result;
+		return (result & 0xfffffff);
 	}
 
 	@Override

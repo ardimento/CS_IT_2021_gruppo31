@@ -56,7 +56,7 @@ public class Utility_Utente {
 	
 	public static String hashPwd(String password) {
 		if(password == null)	return null;
-		int hash = password.hashCode();
+		int hash = (password.hashCode() & 0xfffffff);
 		return Integer.toString(hash);
 	}
 	
