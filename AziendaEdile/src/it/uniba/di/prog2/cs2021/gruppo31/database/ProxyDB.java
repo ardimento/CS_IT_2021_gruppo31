@@ -49,6 +49,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 			throw new AziendaException(ErroriDB.INCORRECT_PASSWORD);
 		}
 		
+		ps.close();
 		ConnectorDB.close(conn);
 	}
 	
@@ -98,6 +99,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.USERNAME_ALREADY_EXISTS);
 		}
+		ps.close();
 		ConnectorDB.close(conn);
 	}
 	
