@@ -1,18 +1,13 @@
-package it.uniba.di.prog2.cs2021.gruppo31.testjunit;
+package it.uniba.di.prog2.cs2021.gruppo31.utente;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
-import it.uniba.di.prog2.cs2021.gruppo31.utente.*;
-import org.junit.Assert;
-import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class TestUtente {
 	//Arrange
@@ -22,7 +17,6 @@ public class TestUtente {
 	Date Dataprova=  new Date(System.currentTimeMillis());
 	boolean flag = false;
 	
-	//Act
 	@Test
 	public void UtenteTest() {
 		i=new Impiegato("marco","Deggi",Dataprova,"impiegato",Dataprova,1200,500);
@@ -30,7 +24,6 @@ public class TestUtente {
 		//Assert
 		Assert.assertNotNull(i);
 	}
-	
 	
 	@Test
 	public void ImpiegatoTest() {
@@ -62,7 +55,7 @@ public class TestUtente {
 		//Assert
 		Assert.assertTrue(Utility_Utente.checkImpiegato(i) == 0);	
 	}
-	//Act
+	
 	@Test
 	public void addUtenteTest() throws SQLException, AziendaException {
 		try {
@@ -84,33 +77,9 @@ public class TestUtente {
 			utente1.addUtente();
 			//Assert
 			Assert.assertNotNull(utente1);
+			
 		}catch(Exception e) {
-			e.printStackTrace();
-			//System.out.print(e.getMessage());
-		}
-	}
-	@Test
-	public void addUtenteThrows() throws SQLException, AziendaException, ParseException {
-		
-		try {
-			//Arrange
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			Impiegato impiegato1 = new Impiegato(null,"Costa",formatter.parse("19/04/2000"),"Magazzino",formatter.parse("12/11/2020"),1200,500);
-			String username = "matteo.costa";
-			String password = "password1";
-			
-			if(Utility_Utente.checkImpiegato(impiegato1) == 0);
-			else
-				throw new AziendaException();
-			
-			if(Utility_Utente.checkCorrettezzaCredenziali(username,password) == 0);
-			else
-				throw new AziendaException();
-			
-			Utente utente1 = new Utente(impiegato1,username,password,true);
-			utente1.addUtente();
-		}catch(SQLException e) {
-			assertEquals("ERROR:Username non trovato!",e.getMessage());
+			System.out.print(e.getMessage());
 		}
 	}
 }

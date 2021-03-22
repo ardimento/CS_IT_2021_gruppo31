@@ -71,6 +71,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 			ps.executeUpdate();
 		}
 		catch (SQLException ex) {
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.IMPIEGATO_ALREADY_EXISTS);
 		}
@@ -95,7 +96,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 			ps = conn.prepareStatement(query);
 			ps.setInt(1,lastID);
 			ps.executeUpdate();
-			
+			ps.close();
 			ConnectorDB.close(conn);
 			throw new AziendaException(ErroriDB.USERNAME_ALREADY_EXISTS);
 		}
