@@ -14,9 +14,19 @@ import it.uniba.di.prog2.cs2021.gruppo31.exception.ErroriUtente;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 
+/**
+ * Classe che si occupa di gestire la homepage del programma 
+ * @author andrea
+ * @version 1.1
+ */
 public class HomePage {
 	private Utente utente;
 	
+	/**
+	 * 
+	 * @param utente Utente 
+	 * @throws AziendaException
+	 */
 	public HomePage(Utente utente) throws AziendaException {
 		this.utente = utente;
 		if(Token.getIstance().getHashPassword().equals(utente.getHashPassword()));
@@ -24,6 +34,13 @@ public class HomePage {
 			throw new AziendaException(ErroriUtente.USERNAME_NOT_LOGGED);
 	}
 	
+	/**
+	 * Metodo per aggiungere una vendita 
+	 * @param vendita Vendita 
+	 * @throws SQLException
+	 * @throws AziendaException
+	 * @throws ParseException
+	 */
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
 		if(getVenditeAnno(vendita.getUtente().getUsername()) >= vendita.getUtente().getImpiegato().getMaxVenditeAnno())
 			throw new AziendaException(ErroriUtente.MAX_VENDITE_ANNO);
@@ -47,26 +64,60 @@ public class HomePage {
 		uq.addVendita(vendita);
 	}
 	
+	/**
+	 * 
+	 * @return 
+	 * @throws SQLException
+	 * @throws AziendaException
+	 * @throws ParseException
+	 */
 	public Impiegato getInfoImpiegato() throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
 		return uq.getInfoImpiegato(utente.getUsername());
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws SQLException
+	 * @throws AziendaException
+	 * @throws ParseException
+	 */
 	public ArrayList<Vendita> getVenditeImpiegato() throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
 		return uq.getVenditeImpiegato(utente.getUsername());
 	}
-	
+
+	/**
+	 * 
+	 * @return 
+	 * @throws SQLException
+	 * @throws AziendaException
+	 * @throws ParseException
+	 */
 	public ArrayList<Dado> getCatalogoDadi() throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
 		return uq.getCatalogoDadi();
 	}
 	
+	/**
+	 * 
+	 * @param dado
+	 * @throws SQLException
+	 * @throws AziendaException
+	 */
 	public void addDado(Dado dado) throws SQLException,AziendaException {
 		AdminQuery aq = ProxyDB.getIstance();
 		aq.addDado(utente.getUsername(),dado);
 	}
 	
+	/**
+	 * 
+	 * @param hashDado
+	 * @throws SQLException
+	 * @throws AziendaException
+	 * @throws ParseException
+	 */
 	public void deleteDado(int hashDado) throws SQLException,AziendaException,ParseException {
 		AdminQuery aq = ProxyDB.getIstance();
 		aq.deleteDado(utente.getUsername(),hashDado);
@@ -75,6 +126,12 @@ public class HomePage {
 	/*
 	 * Sistema di gestione delle vendite, questo metodo permette di modificare il numero di pezzi
 	 * Esempio: comprati nuovi dadi, oppure alcuni dadi sono stati persi.
+	 *<p> 
+	 * @param hashDado 
+	 * @param numPezzi Numero pezzi dadi
+	 * @throws SQLException
+	 * @throws AziendaException
+	 * @throws ParseException
 	 */
 	public void updatePezziDado(int hashDado, int numPezzi) throws SQLException,AziendaException,ParseException {
 		AdminQuery aq = ProxyDB.getIstance();
@@ -83,6 +140,13 @@ public class HomePage {
 		aq.updatePezziDado(utente.getUsername(),hashDado,numPezzi);
 	}
 	
+	/**
+	 * 
+	 * @param hashDado
+	 * @param prezzo
+	 * @throws SQLException
+	 * @throws AziendaException
+	 */
 	public void updatePrezzoDado(int hashDado, double prezzo) throws SQLException, AziendaException {
 		AdminQuery aq = ProxyDB.getIstance();
 		if(prezzo <= 0)
@@ -91,10 +155,21 @@ public class HomePage {
 		
 	}
 	
+	/**
+	 * 
+	 */
 	public void logOut() {
 		Token.getIstance().setHashPassword(null);
 	}
 
+	/**
+	 * 
+	 * @param username Nickname 
+	 * @return 
+	 * @throws SQLException
+	 * @throws AziendaException
+	 * @throws ParseException
+	 */
 	private int getVenditeAnno(String username) throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
 		try {
@@ -116,6 +191,14 @@ public class HomePage {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param username Nickname utente 
+	 * @return 
+	 * @throws SQLException
+	 * @throws AziendaException
+	 * @throws ParseException
+	 */
 	private int getVenditeGiorno(String username) throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
 		try {

@@ -1,5 +1,10 @@
 package it.uniba.di.prog2.cs2021.gruppo31.exception;
 
+/**
+ * Classe che gestisce tutti i possibili errori che può generare il database
+ * @author andrea
+ * @version 1.2 
+ */
 public class ErroriDB {
 	public static final String USERNAME_NOT_FOUND = "ERROR: Username non trovato!";
 	public static final String INCORRECT_PASSWORD = "ERROR: Password non corretta!";

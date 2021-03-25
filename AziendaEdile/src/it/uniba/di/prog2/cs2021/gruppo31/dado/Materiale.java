@@ -1,5 +1,10 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
 
+/**
+ * Tipi di materiali in cui può essere composto un dado
+ * @author andrea
+ * @version 1.1
+ */
 enum Materiale {
 	Acciaio_5,
 	Acciaio_8,

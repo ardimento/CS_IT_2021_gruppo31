@@ -2,6 +2,11 @@ package it.uniba.di.prog2.cs2021.gruppo31.dado;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * Interfaccia del 
+ * @author andrea
+ * @version 1.1
+ */
 public interface Dado {
 	
 	public String getDenominazione();

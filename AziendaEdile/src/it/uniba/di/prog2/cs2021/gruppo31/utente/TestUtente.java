@@ -9,6 +9,12 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Classe che implementa il testing,per il funzionamento del testing è necessario scaricare la libreria JUnit 5
+ * @author andrea
+ * @version 1.1
+ *
+ */
 public class TestUtente {
 	//Arrange
 	Utente u;

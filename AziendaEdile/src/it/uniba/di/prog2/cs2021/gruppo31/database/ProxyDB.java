@@ -12,6 +12,12 @@ import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.*;
 
+/**
+ * 
+ * @author andrea
+ * @version 1.1
+ *
+ */
 public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	
 	private String query;

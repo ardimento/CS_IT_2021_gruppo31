@@ -1,5 +1,10 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
 
+/**
+ * Classe che si occupa di gestire la Filettatura del Dado
+ * @author andrea
+ * @version 1.1
+ */
 public class Filettatura {
 	
 	private String metrica;
@@ -8,44 +13,85 @@ public class Filettatura {
 	private double misuraPiatti;
 	private double altezza;
 	
+	/**
+	 * costruttore 
+	 * @param metrica metrica del Dado
+	 * @param passoGrosso Passo grosso del dado
+	 */
 	public Filettatura(String metrica, boolean passoGrosso) {
 		this.metrica = metrica;
 		this.passoGrosso = passoGrosso;
 	}
-
+	
+	/**
+	 * 
+	 * @return metrica del dado
+	 */
 	public String getMetrica() {
 		return metrica;
 	}
 	
+	/**
+	 * 
+	 * @return intero che indica il diametro
+	 */
 	public int getDiamentro() {
 		String d = metrica.substring(1);
 		return Integer.parseInt(d);
 	}
-
+	
+	/**
+	 * 
+	 * @return Passo Grosso del dado
+	 */
 	public boolean isPassoGrosso() {
 		return passoGrosso;
 	}
-
+	
+	/**
+	 * 
+	 * @return dimensione Passo del dado
+	 */
 	public double getDimensionePasso() {
 		return dimensionePasso;
 	}
-
+	
+	/**
+	 * 
+	 * @return misura piatti del dado
+	 */
 	public double getMisuraPiatti() {
 		return misuraPiatti;
 	}
-
+	
+	/**
+	 * 
+	 * @return altezza del dado
+	 */
 	public double getAltezza() {
 		return altezza;
 	}
 	
+	/**
+	 * 
+	 * @param dimensionePasso Dimensione passo del dado
+	 */
 	public void setDimensionePasso(double dimensionePasso) {
 		this.dimensionePasso = dimensionePasso;
 	}
-
+	
+	/**
+	 * 
+	 * @param misuraPiatti misura piatti del dado
+	 */
 	public void setMisuraPiatti(double misuraPiatti) {
 		this.misuraPiatti = misuraPiatti;
 	}
-
+	
+	/**
+	 * 
+	 * @param altezza Altezza del dado
+	 */
 	public void setAltezza(double altezza) {
 		this.altezza = altezza;
 	}

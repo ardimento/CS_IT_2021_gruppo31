@@ -5,6 +5,11 @@ import java.util.Date;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;;
 
+/**
+ * Classe astratta dado 
+ * @author andrea
+ * @version 1.1
+ */
 public abstract class AbstractDado implements Dado {
 	
 	private Materiale materiale;
@@ -19,6 +24,11 @@ public abstract class AbstractDado implements Dado {
 	
 	public AbstractDado() {}
 	
+	/**
+	 * @param metrica 
+	 * @param passoGrosso
+	 * @throws SQLException
+	 */
 	public AbstractDado(String metrica, boolean passoGrosso) throws SQLException{
 		this.setFilettatura(metrica, passoGrosso);
 	}

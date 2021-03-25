@@ -1,5 +1,11 @@
 package it.uniba.di.prog2.cs2021.gruppo31.exception;
 
+/**
+ * Classe che gestisce tutti i possibili errori che può generare un utente
+ * @author andrea
+ * @version 1.1
+ *
+ */
 public class ErroriUtente {
 	public static final String MAX_VENDITE_GIORNO = "ERROR: Limite massimo di vendite giornaliere raggiunto!";
 	public static final String MAX_VENDITE_ANNO = "ERROR: Limite massimo di vendite annue raggiunto!";
