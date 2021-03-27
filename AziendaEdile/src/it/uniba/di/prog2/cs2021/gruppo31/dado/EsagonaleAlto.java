@@ -19,7 +19,7 @@ public class EsagonaleAlto extends AbstractDado {
 	public EsagonaleAlto() {}
 
 	/**
-	 * Costruttore parametrizzato.<br>
+	 * Costruttore parametrico.<br>
 	 * Questo costruttore inizializza la filettatura del dado.
 	 * @param metrica Metrica del dado.
 	 * @param passoGrosso Tipo di passo del dado.

@@ -7,9 +7,10 @@ import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;;
 
 /**
  * Classe astratta contenente tutti i metodi definiti nell'interfaccia Dado.<br>
- * La classe fattorizza i metodi dell'interfaccia Dado e fornisce un'mplementazione comune per tutti i tipi di dado.
+ * La classe fattorizza i metodi dell'interfaccia Dado e fornisce un'implementazione comune per tutti i tipi di dado.
  * Il metodo {@link Dado#getDenominazione()} ha un'implementazione specifica per ogni dado, quindi non viene implementato.
- * Inoltre i metodi {@link Dado#hashCode()}, {@link Dado#equals(Object)} e {@link Dado#toString()} verranno sovrascritti in ogni sottoclasse.
+ * Inoltre i metodi {@link Dado#hashCode()}, {@link Dado#equals(Object)} e {@link Dado#toString()} verranno sovrascritti in ogni sottoclasse.<br>
+ * Attualmente (versione 1.1) è presente un unico tipo di dado, ossia il dado esagonale alto.
  * @author matteo
  * @version 1.1
  */
@@ -33,7 +34,7 @@ public abstract class AbstractDado implements Dado {
 	public AbstractDado() {}
 	
 	/**
-	 * Costruttore parametrizzato.<br>
+	 * Costruttore parametrico.<br>
 	 * @param metrica Metrica del dado.
 	 * @param passoGrosso Tipo di passo del dado.
 	 * @throws SQLException
