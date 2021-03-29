@@ -431,6 +431,11 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	
 	/**
 	 * Metodo per aggiornare il prezzo del dado
+	 * @param username username utente 
+	 * @param hashDado 
+	 * @param prezzo prezzo dado
+	 * @throws SQLException
+	 * @throws AziendaException
 	 */
 	public void updatePrezzoDado(String username, int hashDado, double prezzo) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
