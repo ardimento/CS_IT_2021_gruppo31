@@ -2,7 +2,7 @@ package it.uniba.di.prog2.cs2021.gruppo31.database;
 import java.sql.*;
 
 /**
- * 
+ * classe che si occupa di funzioni primarie di un database
  * @author andrea
  * @version 1.1
  */
@@ -21,6 +21,7 @@ public class ConnectorDB {
 	}
 	
 	/**
+	 * 
 	 * @param conn connessione
 	 * @throws SQLException
 	 */

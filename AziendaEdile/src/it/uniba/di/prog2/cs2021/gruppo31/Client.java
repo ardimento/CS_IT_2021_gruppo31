@@ -8,12 +8,7 @@ import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utility_Utente;
 
-/**
- * Classe principale
- * @author andrea
- * @version 1.1
- */
-public class Client {
+class Client {
 
 	public static void main(String[] args) {
 		

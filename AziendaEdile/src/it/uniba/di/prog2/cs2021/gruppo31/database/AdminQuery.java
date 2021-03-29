@@ -21,7 +21,7 @@ public interface AdminQuery {
 	public Dado getDado(String hashDado) throws SQLException,AziendaException,ParseException;
 	
 	/**
-	 * @param username Nickname utente 
+	 * @param username username utente 
 	 * @param dado
 	 * @throws SQLException
 	 * @throws AziendaException
@@ -29,7 +29,7 @@ public interface AdminQuery {
 	public void addDado(String username, Dado dado) throws SQLException,AziendaException;
 	
 	/**
-	 * @param username Nickname utente 
+	 * @param username username utente 
 	 * @param hashDado 
 	 * @throws SQLException
 	 * @throws AziendaException
@@ -39,7 +39,7 @@ public interface AdminQuery {
 	
 	/**
 	 * Metodo che aggiorna i pezzi dei dadi
-	 * @param username Nickname utente
+	 * @param username username utente
 	 * @param hashDado 
 	 * @param numPezzi Numero pezzi dadi 
 	 * @throws SQLException
@@ -49,7 +49,7 @@ public interface AdminQuery {
 	
 	/**
 	 * Metodo che aggiorna il prezzo del dado
-	 * @param username Nickname utente 
+	 * @param username username utente 
 	 * @param hashDado
 	 * @param prezzo prezzo del dado
 	 * @throws SQLException
