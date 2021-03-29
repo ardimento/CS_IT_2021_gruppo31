@@ -33,7 +33,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	/**
 	 *Metodo per la ricerca dell'utente all'interno del database
 	 * @param username username utente
-	 * @param hashPasswordn password criptata 
+	 * @param hashPasswordn password criptata
 	 */
 	public void checkUtente(String username, String hashPassword) throws SQLException,AziendaException {
 		query = "SELECT USERNAME,HASH_PASSWORD FROM UTENTE WHERE USERNAME LIKE '" + username + "';";
