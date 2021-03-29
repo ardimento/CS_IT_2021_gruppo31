@@ -8,48 +8,76 @@ import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 
 /**
- * WQuesta è un interfaccia query utente
- * @author andrea
+ * Interfaccia utente (non amministratore).<br>
+ * Contiene tutte le funzionalità che sia un utente standard
+ * sia un admin possono eseguire sul database.
+ * @author matteo
  * @version 1.1
- *
  */
 public interface UserQuery {
+	
 	/**
-	 * @param vendita 
+	 * Aggiunge una vendita alla lista delle vendite.<br>
+	 * Vengono effettuati prima dei controlli su utente e dado a cui
+	 * la vendita fa riferimento. Successivamente si procede a validare
+	 * ed aggiungere la vendita al database.
+	 * @param vendita Vendita da aggiungere alla lista.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Possibili eccezioni:<br>
+	 * 		USERNAME_NOT_FOUND, INCORRECT_PASSWORD, DADO_NOT_FOUND.
+	 * @see ProxyDB#checkUtente(String, String)
+	 * @see ProxyDB#getDado(String)
+	 * @see Vendita
+	 * @see ConnectorDB
 	 */
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException;
+	
 	/**
-	 * @param username
-	 * @return
+	 * Restituisce l'impiegato relativo ad un utente.<br>
+	 * @param username Username utente da cui reperire le informazioni.
+	 * @return Oggetto Impiegato costruito con le informazioni presenti sul database.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Eccezione: USERNAME_NOT_FOUND.
+	 * @see Impiegato
+	 * @see ConnectorDB
 	 */
 	public Impiegato getInfoImpiegato(String username) throws SQLException,AziendaException,ParseException;
+	
 	/**
-	 * @param username
-	 * @return
+	 * Restituisce la lista di tutte le vendite relative ad un impiegato.
+	 * @param username Username utente da cui scaricare la lista.
+	 * @return Lista di vendite effettuate dall'impiegato.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Possibili eccezioni: EMPTY_LIST.
+	 * @see Vendita
+	 * @see ConnectorDB
 	 */
 	public ArrayList<Vendita> getVenditeImpiegato(String username) throws SQLException,AziendaException,ParseException;
+	
 	/**
-	 * @return
+	 * Restituisce il catalogo di tutti i dadi presenti nel database.
+	 * @return Catalogo dei dadi attualmente presenti.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Possibili eccezioni: EMPTY_LIST.
+	 * @see Dado
+	 * @see ConnectorDB
 	 */
 	public ArrayList<Dado> getCatalogoDadi() throws SQLException,AziendaException,ParseException;
+	
 	/**
-	 * @param hashDado
-	 * @return
+	 * Restituisce un tipo di dado memorizzato sul database.<br>
+	 * @param hashDado Stringa contenente il codice hash del dado cercato.
+	 * @return Oggetto Dado costrutito con le informazioni presenti sul database.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Eccezione: DADO_NOT_FOUND.
+	 * @see Dado
+	 * @see Filettatura
+	 * @see ConnectorDB
 	 */
 	public Dado getDado(String hashDado) throws SQLException,AziendaException,ParseException;
 }

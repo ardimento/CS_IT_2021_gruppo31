@@ -13,8 +13,13 @@ import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.*;
 
 /**
- * 
- * @author andrea
+ * Classe contenente tutti i metodi del sistema che si interfacciano al database.<br>
+ * La classe implementa tutti i metodi delle interfacce presenti all'interno del package,
+ * ed inoltre è stata modellata come classe singleton (unica istanza). Questa scelta deriva
+ * dal fatto che la connessione al database viene aperta e chiusa per ogni metodo, quindi
+ * più istanze della stessa classe potrebbero generare conflitti in termini di più connessioni
+ * simultanee al database.
+ * @author matteo
  * @version 1.1
  *
  */
@@ -22,20 +27,27 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	
 	private String query;
 	private Connection conn;
-	private static ProxyDB istance = new ProxyDB();
+	private static ProxyDB istance = new ProxyDB(); // Unica istanza di ProxyDB
 	
+	/**
+	 * Costruttore privato.<br>
+	 * L'oggetto può essere istanziato solo all'interno della classe stessa.
+	 */
 	private ProxyDB() {}
 	
+	/**
+	 * Restituisce l'unica istanza di ProxyDB.<br>
+	 * Il metodo è statico, quindi può essere invocato senza istanziare la classe.
+	 * Sull'oggetto ProxyDB è possibile poi eseguire tutti i metodi relativi allo 
+	 * specifico tipo di utente (user o admin).
+	 * @return Istanza di ProxyDB.
+	 */
 	public static ProxyDB getIstance() {
 		return istance;
 	}
 	
 	/**
-	 *Metodo per la ricerca dell'utente all'interno del database
-	 * @param username username utente
-	 * @param hashPasswordn password criptata
-	 * @throws SQLException
-	 * @throws AziendaException
+	 * {@inheritDoc}
 	 */
 	public void checkUtente(String username, String hashPassword) throws SQLException,AziendaException {
 		query = "SELECT USERNAME,HASH_PASSWORD FROM UTENTE WHERE USERNAME LIKE '" + username + "';";
@@ -67,10 +79,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * Metodo per l'aggiunta di un utente all'interno del databse 
-	 * @param utente utente con i vari attributi
-	 * @throws SQLException
-	 * @throws AziendaException
+	 * {@inheritDoc}
 	 */
 	public void addUtente(Utente utente) throws SQLException,AziendaException {
 		query = "INSERT INTO IMPIEGATO(NOME,COGNOME,DATA_NASCITA,MANSIONE,STIPENDIO,MAX_VENDITE_ANNO,DATA_ENTRATA) VALUES (?,?,?,?,?,?,?);";
@@ -124,11 +133,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 *Aggiungi la vendita che è stata eseguita nel database 
-	 * @param vendita 
-	 * @throws SQLException
-	 * @throws AziendaException
-	 * @throws ParseException
+	 * {@inheritDoc}
 	 */
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
 		checkUtente(vendita.getUtente().getUsername(),vendita.getUtente().getHashPassword());
@@ -155,11 +160,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * Metodo per avere informazioni sull'utente.
-	 * @param username usenrame utente
-	 * @throws SQLException
-	 * @throws AziendaException
-	 * @throws ParseException
+	 * {@inheritDoc}
 	 */
 	public Impiegato getInfoImpiegato(String username) throws SQLException,AziendaException,ParseException {
 		query = "SELECT * FROM IMPIEGATO WHERE CODICE = (SELECT IMPIEGATO FROM UTENTE WHERE USERNAME = ?);";
@@ -193,46 +194,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * Metodo Incrementa filettatura del dado 
-	 * @param metrica
-	 * @param passoGrosso
-	 * @return Filettatura 
-	 * @throws SQLException
-	 * @throws AziendaException
-	 */
-	public Filettatura getFilettatura(String metrica, boolean passoGrosso) throws SQLException,AziendaException {
-		query = "SELECT * FROM FILETTATURA WHERE METRICA LIKE ? AND PASSO_GROSSO = ?;";
-		conn = ConnectorDB.connect();
-		
-		PreparedStatement ps = conn.prepareStatement(query);
-		ps.setString(1,metrica);
-		ps.setBoolean(2,passoGrosso);
-		ResultSet rs = ps.executeQuery();
-		
-		if(rs.next() == false)
-		{
-			ps.close();
-			ConnectorDB.close(conn);
-			throw new AziendaException(ErroriDB.FILETTATURA_NOT_FOUND);
-		}
-		
-		Filettatura filettatura = new Filettatura(metrica,passoGrosso);
-		filettatura.setDimensionePasso(rs.getDouble("DIMENSIONE_PASSO"));
-		filettatura.setMisuraPiatti(rs.getDouble("MISURA_PIATTI"));
-		filettatura.setAltezza(rs.getDouble("ALTEZZA"));
-		
-		ps.close();
-		ConnectorDB.close(conn);
-		return filettatura;
-	}
-	
-	/**
-	 * 
-	 * @param hashdado
-	 * @return dado 
-	 * @throws SQLException
-	 * @throws AziendaException
-	 * @throws ParseException
+	 * {@inheritDoc}
 	 */
 	public Dado getDado(String hashDado) throws SQLException,AziendaException,ParseException {
 		query = "SELECT * FROM DADO WHERE CODICE_HASH LIKE ?;";
@@ -268,12 +230,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * 
-	 * @param username username utente
-	 * @return vendite 
-	 * @throws SQLException
-	 * @throws AziendaException
-	 * @throws ParseException
+	 * {@inheritDoc}
 	 */
 	public ArrayList<Vendita> getVenditeImpiegato(String username) throws SQLException,AziendaException,ParseException {
 		query = "SELECT * FROM VENDITA WHERE UTENTE LIKE ?;";
@@ -306,10 +263,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * 
-	 * @throws SQLException
-	 * @throws AziendaException
-	 * @throws ParseException
+	 * {@inheritDoc}
 	 */
 	public ArrayList<Dado> getCatalogoDadi() throws SQLException,AziendaException,ParseException {
 		query = "SELECT CODICE_HASH FROM DADO;";
@@ -337,11 +291,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * @param username username utente 
-	 * @param dado nome dado
-	 * Metodo per l'aggiunta di un dado al catalogo dadi
-	 * @throws SQLException
-	 * @throws AziendaException
+	 * {@inheritDoc}
 	 */
 	public void addDado(String username, Dado dado) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
@@ -384,19 +334,14 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		catch (SQLException ex) {
 			ps.close();
 			ConnectorDB.close(conn);
-			throw new AziendaException(ErroriDB.DADO_ALREADY_EXITS);
+			throw new AziendaException(ErroriDB.DADO_ALREADY_EXISTS);
 		}
 		ps.close();
 		ConnectorDB.close(conn);
 	}
 
 	/**
-	 * Metodo per eliminare un dado.
-	 * @param username username utente
-	 * @param hashDado password utente 
-	 * @throws SQLException
-	 * @throws AziendaException
-	 * @throws ParseException
+	 * {@inheritDoc}
 	 */
 	public void deleteDado(String username, int hashDado) throws SQLException,AziendaException,ParseException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
@@ -434,12 +379,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * Metodo per aggiornare il numero di pezzi di un dado 
-	 * @param username username utente
-	 * @param hashDado
-	 * @param numPezzi numero di pezzi 
-	 * @throws SQLException
-	 * @throws AziendaException
+	 * {@inheritDoc}
 	 */
 	public void updatePezziDado(String username, int hashDado, int numPezzi) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
@@ -464,12 +404,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * Metodo per aggiornare il prezzo del dado
-	 * @param username username utente 
-	 * @param hashDado 
-	 * @param prezzo prezzo dado
-	 * @throws SQLException
-	 * @throws AziendaException
+	 * {@inheritDoc}
 	 */
 	public void updatePrezzoDado(String username, int hashDado, double prezzo) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
@@ -494,11 +429,49 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 
 	/**
-	 * 
-	 * @param codice
-	 * @return Filettatura
+	 * Restituisce un tipo di filettatura indicando come parametri la metrica e il passo.
+	 * @param metrica Codice della metrica della filettatura.
+	 * @param passoGrosso Tipo di passo della filettatura [TRUE=Grosso|FALSE=Fine].
+	 * @return Oggetto Filettatura costruito con le informazioni presenti sul database.
 	 * @throws SQLException
-	 * @throws AziendaException
+	 * @throws AziendaException Eccezione: FILETTATURA_NOT_FOUND.
+	 * @see Filettatura
+	 * @see ConnectorDB
+	 */
+	public Filettatura getFilettatura(String metrica, boolean passoGrosso) throws SQLException,AziendaException {
+		query = "SELECT * FROM FILETTATURA WHERE METRICA LIKE ? AND PASSO_GROSSO = ?;";
+		conn = ConnectorDB.connect();
+		
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1,metrica);
+		ps.setBoolean(2,passoGrosso);
+		ResultSet rs = ps.executeQuery();
+		
+		if(rs.next() == false)
+		{
+			ps.close();
+			ConnectorDB.close(conn);
+			throw new AziendaException(ErroriDB.FILETTATURA_NOT_FOUND);
+		}
+		
+		Filettatura filettatura = new Filettatura(metrica,passoGrosso);
+		filettatura.setDimensionePasso(rs.getDouble("DIMENSIONE_PASSO"));
+		filettatura.setMisuraPiatti(rs.getDouble("MISURA_PIATTI"));
+		filettatura.setAltezza(rs.getDouble("ALTEZZA"));
+		
+		ps.close();
+		ConnectorDB.close(conn);
+		return filettatura;
+	}
+	
+	/**
+	 * Restituisce un tipo di filettatura indicando come parametro il suo codice ID.
+	 * @param codice Codice ID della filettatura da cercare.
+	 * @return Oggetto Filettatura costruito con le informazioni presenti sul database.
+	 * @throws SQLException
+	 * @throws AziendaException Eccezione: FILETTATURA_NOT_FOUND.
+	 * @see Filettatura
+	 * @see ConnectorDB
 	 */
 	private Filettatura getFilettaturaByID(int codice) throws SQLException,AziendaException {
 		query = "SELECT * FROM FILETTATURA WHERE CODICE = ?;";
@@ -526,10 +499,16 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	}
 	
 	/**
-	 * @param username
-	 * @return 
+	 * Verifica che un utente sia admin.<br>
+	 * Utilizzato nei metodi appartenenti all'interfaccia {@link AdminQuery}
+	 * per controllare che l'utente sia un amministratore.
+	 * @param username Username utente da controllare.
+	 * @return Valore booleano:<br>
+	 * 		TRUE -> Admin<br>
+	 * 		FLASE -> Not Admin
 	 * @throws SQLException
-	 * @throws AziendaException
+	 * @throws AziendaException Eccezione: USERNAME_NOT_FOUND.
+	 * @see ConnectorDB
 	 */
 	private boolean isAdmin(String username) throws SQLException,AziendaException {
 		query = "SELECT ADMIN FROM UTENTE WHERE USERNAME LIKE ?;";
