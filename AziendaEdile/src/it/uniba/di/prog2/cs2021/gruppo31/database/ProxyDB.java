@@ -30,6 +30,11 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return istance;
 	}
 	
+	/**
+	 *Metodo per la ricerca dell'utente all'interno del database
+	 * @param username username utente
+	 * @param hashPasswordn password criptata 
+	 */
 	public void checkUtente(String username, String hashPassword) throws SQLException,AziendaException {
 		query = "SELECT USERNAME,HASH_PASSWORD FROM UTENTE WHERE USERNAME LIKE '" + username + "';";
 		conn = ConnectorDB.connect();
@@ -59,6 +64,10 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ConnectorDB.close(conn);
 	}
 	
+	/**
+	 * Metodo per l'aggiunta di un utente all'interno del databse 
+	 * @param utente utente con i vari attributi
+	 */
 	public void addUtente(Utente utente) throws SQLException,AziendaException {
 		query = "INSERT INTO IMPIEGATO(NOME,COGNOME,DATA_NASCITA,MANSIONE,STIPENDIO,MAX_VENDITE_ANNO,DATA_ENTRATA) VALUES (?,?,?,?,?,?,?);";
 		conn = ConnectorDB.connect();
@@ -110,6 +119,10 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ConnectorDB.close(conn);
 	}
 	
+	/**
+	 *Aggiungi la vendita che è stata eseguita nel database 
+	 * @param vendita 
+	 */
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
 		checkUtente(vendita.getUtente().getUsername(),vendita.getUtente().getHashPassword());
 		getDado(Integer.toString(vendita.getDado().hashCode()));
@@ -165,6 +178,14 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return temp;
 	}
 	
+	/**
+	 * Metodo Incrementa filettatura del dado 
+	 * @param metrica
+	 * @param passoGrosso
+	 * @return
+	 * @throws SQLException
+	 * @throws AziendaException
+	 */
 	public Filettatura getFilettatura(String metrica, boolean passoGrosso) throws SQLException,AziendaException {
 		query = "SELECT * FROM FILETTATURA WHERE METRICA LIKE ? AND PASSO_GROSSO = ?;";
 		conn = ConnectorDB.connect();
@@ -191,6 +212,11 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return filettatura;
 	}
 	
+	/**
+	 * 
+	 * @param hashdado
+	 * @return dado 
+	 */
 	public Dado getDado(String hashDado) throws SQLException,AziendaException,ParseException {
 		query = "SELECT * FROM DADO WHERE CODICE_HASH LIKE ?;";
 		conn = ConnectorDB.connect();
@@ -224,6 +250,10 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return dado;
 	}
 	
+	/**
+	 * 
+	 * @return vendite 
+	 */
 	public ArrayList<Vendita> getVenditeImpiegato(String username) throws SQLException,AziendaException,ParseException {
 		query = "SELECT * FROM VENDITA WHERE UTENTE LIKE ?;";
 		conn = ConnectorDB.connect();
@@ -254,6 +284,9 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return vendite;
 	}
 	
+	/**
+	 *
+	 */
 	public ArrayList<Dado> getCatalogoDadi() throws SQLException,AziendaException,ParseException {
 		query = "SELECT CODICE_HASH FROM DADO;";
 		conn = ConnectorDB.connect();
@@ -279,6 +312,10 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return catalogo;
 	}
 	
+	/**
+	 * Metodo per l'aggiunta di un dado al catalogo dadi
+	 * 
+	 */
 	public void addDado(String username, Dado dado) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
 		
@@ -326,6 +363,11 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ConnectorDB.close(conn);
 	}
 
+	/**
+	 * Metodo per eliminare un dado.
+	 * @param username username utente
+	 * @param hashDado password utente 
+	 */
 	public void deleteDado(String username, int hashDado) throws SQLException,AziendaException,ParseException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
 		//if(getDado(hashDado) == null)	throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
@@ -361,6 +403,10 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ConnectorDB.close(conn);
 	}
 	
+	/**
+	 * Metodo per aggiornare il numero di pezzi di un dado 
+	 *
+	 */
 	public void updatePezziDado(String username, int hashDado, int numPezzi) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
 		
@@ -383,6 +429,9 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ConnectorDB.close(conn);
 	}
 	
+	/**
+	 * Metodo per aggiornare il prezzo del dado
+	 */
 	public void updatePrezzoDado(String username, int hashDado, double prezzo) throws SQLException,AziendaException {
 		if(isAdmin(username) == false)	throw new AziendaException(ErroriDB.USERNAME_NOT_ADMIN);
 		
@@ -405,6 +454,13 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ConnectorDB.close(conn);
 	}
 
+	/**
+	 * 
+	 * @param codice
+	 * @return
+	 * @throws SQLException
+	 * @throws AziendaException
+	 */
 	private Filettatura getFilettaturaByID(int codice) throws SQLException,AziendaException {
 		query = "SELECT * FROM FILETTATURA WHERE CODICE = ?;";
 		conn = ConnectorDB.connect();
@@ -430,6 +486,12 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		return filettatura;
 	}
 	
+	/**
+	 * @param username
+	 * @return
+	 * @throws SQLException
+	 * @throws AziendaException
+	 */
 	private boolean isAdmin(String username) throws SQLException,AziendaException {
 		query = "SELECT ADMIN FROM UTENTE WHERE USERNAME LIKE ?;";
 		conn = ConnectorDB.connect();
