@@ -6,8 +6,12 @@ import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;;
 
 /**
- * Classe astratta dado 
- * @author andrea
+ * Classe astratta contenente tutti i metodi definiti nell'interfaccia Dado.<br>
+ * La classe fattorizza i metodi dell'interfaccia Dado e fornisce un'implementazione comune per tutti i tipi di dado.
+ * Il metodo {@link Dado#getDenominazione()} ha un'implementazione specifica per ogni dado, quindi non viene implementato.
+ * Inoltre i metodi {@link Dado#hashCode()}, {@link Dado#equals(Object)} e {@link Dado#toString()} verranno sovrascritti in ogni sottoclasse.<br>
+ * Attualmente (versione 1.1) è presente un unico tipo di dado, ossia il dado esagonale alto.
+ * @author matteo
  * @version 1.1
  */
 public abstract class AbstractDado implements Dado {
@@ -22,22 +26,35 @@ public abstract class AbstractDado implements Dado {
 	private double peso;
 	private int numPezzi = 1;
 	
+	/**
+	 * Costruttore aparametrico.<br>
+	 * Se viene utilizzato questo costruttore, la filettatura deve essere impostata
+	 * successivamente con il metodo {@link #setFilettatura(String, boolean)}.
+	 */
 	public AbstractDado() {}
 	
 	/**
-	 * @param metrica 
-	 * @param passoGrosso
+	 * Costruttore parametrico.<br>
+	 * @param metrica Metrica del dado.
+	 * @param passoGrosso Tipo di passo del dado.
 	 * @throws SQLException
+	 * @see #setFilettatura(String, boolean)
 	 */
 	public AbstractDado(String metrica, boolean passoGrosso) throws SQLException{
 		this.setFilettatura(metrica, passoGrosso);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getMateriale() {
 		return materiale.toString();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean setMateriale(String materiale) {
 		try {
@@ -49,11 +66,17 @@ public abstract class AbstractDado implements Dado {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getCategoria() {
 		return categoria.toString();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean setCategoria(String categoria) {
 		try {
@@ -65,11 +88,17 @@ public abstract class AbstractDado implements Dado {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getRivestimentoProtettivo() {
 		return rivestimento.toString();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean setRivestimentoProtettivo(String rivestimento) {
 		try {
@@ -81,15 +110,25 @@ public abstract class AbstractDado implements Dado {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Filettatura getFilettatura() {
 		return filettatura;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String getFilettaturaString() {
 		return filettatura.toString();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean setFilettatura(String metrica, boolean passoGrosso) throws SQLException {
 		try {
@@ -106,16 +145,25 @@ public abstract class AbstractDado implements Dado {
 		return true;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public double getPeso() {
 		return peso;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getNumPezzi() {
 		return numPezzi;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean setNumPezzi(int numPezzi) {
 		if(numPezzi >= 0) {
@@ -126,11 +174,17 @@ public abstract class AbstractDado implements Dado {
 			return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public double getPrezzo() {
 		return prezzo;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean setPrezzo(double prezzo) {
 		if(prezzo >= 0) {
@@ -141,26 +195,41 @@ public abstract class AbstractDado implements Dado {
 			return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getLuogoProduzione() {
 		return luogoProduzione;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setLuogoProduzione(String luogoProduzione) {
 		this.luogoProduzione = luogoProduzione;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Date getDataProduzione() {
 		return dataProduzione;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setDataProduzione(Date dataProduzione) {
 		this.dataProduzione = dataProduzione;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -180,6 +249,9 @@ public abstract class AbstractDado implements Dado {
 		return (result & 0xfffffff);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -219,6 +291,9 @@ public abstract class AbstractDado implements Dado {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

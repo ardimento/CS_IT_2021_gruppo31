@@ -3,24 +3,33 @@ import java.sql.SQLException;
 import it.uniba.di.prog2.cs2021.gruppo31.database.*;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 
-
 /**
- * Classe che gestisce la creazione di un utente 
- * @author andrea
+ * Classe che occupa di gestire un generico utente.<br>
+ * Ogni utente all'interno del sistema corrisponde ad un impiegato dell'azienda.
+ * @author matteo
  * @version 1.1
  */
 public class Utente {
 	
+	/** Impiegato relativo all'utente */
 	private Impiegato impiegato;
+	
+	/** Username utente */
 	private String username;
+	
+	/** Password utente */
 	private String password;
+	
+	/** Se l'utente è un amministratore, allora adminFlag=TRUE. Altrimenti adminFlag=FALSE. */
 	private boolean adminFlag = false;
 	
 	/**
-	 * @param impiegato Impiegato dell'azienda 
-	 * @param username  Nickname per definire l'utente
-	 * @param password  Password utente
-	 * @param adminFlag  stato dell'amministratore
+	 * Costruttore parametrico.<br>
+	 * Inizializza tutti i campi relativi all'utente.
+	 * @param impiegato Impiegato relativo all'utente.
+	 * @param username Username utente.
+	 * @param password Password utente.
+	 * @param adminFlag Flag che indica se l'utente è un amministratore o meno.
 	 */
 	public Utente(Impiegato impiegato, String username, String password, boolean adminFlag) {
 		this.impiegato = impiegato;
@@ -30,33 +39,47 @@ public class Utente {
 	}
 
 	/**
-	 * @return Impiegato dell'azienda con tutti i suoi attributi
+	 * Restituisce l'impiegato dell'azienda relativo all'utente.
+	 * @return Impiegato relativo all'utente.
+	 * @see Impiegato
 	 */
 	public Impiegato getImpiegato() {
 		return impiegato;
 	}
+	
 	/**
-	 * @return username Nickname per definire l'utente
+	 * Restituisce lo username dell'utente.
+	 * @return username Username dell'utente.
 	 */
 	public String getUsername() {
 		return username;
 	}
 	/**
-	 * @return password per accedere al sito 
+	 * Restituisce l'hash della password dell'utente.
+	 * @return Hash della password dell'utente.
+	 * @see Utility_Utente#hashPwd(String)
 	 */
 	public String getHashPassword() {
 		return Utility_Utente.hashPwd(password);
 	}
 	/**
-	 * @return adminFlag lo stato dell'amministratore
+	 * Restituisce un valore booleano che indica se l'utente è un amministratore o meno.
+	 * @return Se l'utente è un amministratore, ritorna TRUE. Altrimenti FALSE.
 	 */
 	public boolean isAdmin() {
 		return adminFlag;
 	}
 	
 	/**
+	 * Aggiunge l'utente nella base dati.<br>
+	 * Il metodo utilizza l'interfaccia {@link it.uniba.di.prog2.cs2021.gruppo31.database.LogIn_SignIn} del package
+	 * {@link it.uniba.di.prog2.cs2021.gruppo31.database} per accedere al metodo 
+	 * {@link it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB#addUtente(Utente)} e aggiungere l'utente al DB.
 	 * @throws SQLException
-	 * @throws AziendaException
+	 * @throws AziendaException Possibili eccezioni:<br>
+	 * 		IMPIEGATO_ALREADY_EXISTS, USERNAME_ALREADY_EXISTS.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.LogIn_SignIn
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB#addUtente(Utente)
 	 */
 	public void addUtente() throws SQLException,AziendaException {
 		LogIn_SignIn login = ProxyDB.getIstance();

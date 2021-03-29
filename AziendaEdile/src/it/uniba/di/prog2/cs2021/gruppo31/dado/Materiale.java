@@ -1,8 +1,11 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
 
 /**
- * Tipi di materiali in cui può essere composto un dado
- * @author andrea
+ * Enumerazione contenente tutti i tipi di materiale disponibili per un dado.
+ * <p>
+ * La sigla accanto al materiale (incisa sul dado) indica la classe di resistenza, ossia
+ * rappresenta la resistenza alla rottura, la quale si misura in MPa (Mega Pascal) e va moltiplicato x100.
+ * @author matteo
  * @version 1.1
  */
 enum Materiale {

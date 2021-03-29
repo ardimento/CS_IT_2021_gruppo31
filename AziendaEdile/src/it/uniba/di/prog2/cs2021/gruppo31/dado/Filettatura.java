@@ -1,22 +1,35 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
 
 /**
- * Classe che si occupa di gestire la Filettatura del Dado
- * @author andrea
+ * Classe che si occupa di gestire la filettatura di un dado.
+ * <p>
+ * Tutti i tipi di filettatura disponibili per un dado sono memorizzati sul database.<br>
+ * Tutti i tipi di filettatura presenti seguono la norma EN ISO 898-2.
+ * @author matteo
  * @version 1.1
  */
 public class Filettatura {
 	
+	/** Diametro foro espresso in mm, range: [M3-M60] */
 	private String metrica;
+	
+	/** Passo grosso (true) / passo fine (false) */
 	private boolean passoGrosso;
+	
+	/** Dimensione passo espressa in mm */
 	private double dimensionePasso;
-	private double misuraPiatti;
+	
+	/** Dimensione apertura chiave espressa in mm */
+	private double misuraPiatti; 
+	
+	/** Altezza espressa in mm */
 	private double altezza;
 	
 	/**
-	 * costruttore 
-	 * @param metrica metrica del Dado
-	 * @param passoGrosso Passo grosso del dado
+	 * Il costruttore riceve il diamentro del foro e il tipo di passo.<br>
+	 * Attraverso questi due paramentri è possibile reperire dal database le restanti informazioni.
+	 * @param metrica Diametro del foro.
+	 * @param passoGrosso Tipo di passo.
 	 */
 	public Filettatura(String metrica, boolean passoGrosso) {
 		this.metrica = metrica;
@@ -24,16 +37,17 @@ public class Filettatura {
 	}
 	
 	/**
-	 * 
-	 * @return metrica del dado
+	 * Restituisce la metrica del dado.<br>
+	 * Formato: Mxx, con xx in [3,60].
+	 * @return Metrica dado.
 	 */
 	public String getMetrica() {
 		return metrica;
 	}
 	
 	/**
-	 * 
-	 * @return intero che indica il diametro
+	 * Restituisce il diametro del foro del dado.
+	 * @return Diametro foro espressa in mm.
 	 */
 	public int getDiamentro() {
 		String d = metrica.substring(1);
@@ -41,102 +55,65 @@ public class Filettatura {
 	}
 	
 	/**
-	 * 
-	 * @return Passo Grosso del dado
+	 * Restituisce il tipo di passo del dado.
+	 * @return Tipo passo.
 	 */
 	public boolean isPassoGrosso() {
 		return passoGrosso;
 	}
 	
 	/**
-	 * 
-	 * @return dimensione Passo del dado
+	 * Restituisce la dimensione del passo del dado.
+	 * @return Dimesione passo espressa in mm.
 	 */
 	public double getDimensionePasso() {
 		return dimensionePasso;
 	}
 	
 	/**
-	 * 
-	 * @return misura piatti del dado
+	 * Restituisce la dimensione dell'apertura della chiave del dado.
+	 * @return Dimensione apertura chiave espressa in mm.
 	 */
 	public double getMisuraPiatti() {
 		return misuraPiatti;
 	}
 	
 	/**
-	 * 
-	 * @return altezza del dado
+	 * Restituisce l'altezza del dado.
+	 * @return Altezza espressa in mm.
 	 */
 	public double getAltezza() {
 		return altezza;
 	}
 	
 	/**
-	 * 
-	 * @param dimensionePasso Dimensione passo del dado
+	 * Imposta la dimensione del passo.
+	 * @param dimensionePasso Dimensione passo espressa in mm.
 	 */
 	public void setDimensionePasso(double dimensionePasso) {
 		this.dimensionePasso = dimensionePasso;
 	}
 	
 	/**
-	 * 
-	 * @param misuraPiatti misura piatti del dado
+	 * Imposta la dimensione dell'apertura della chiave.
+	 * @param misuraPiatti Apertura chiave espressa in mm.
 	 */
 	public void setMisuraPiatti(double misuraPiatti) {
 		this.misuraPiatti = misuraPiatti;
 	}
 	
 	/**
-	 * 
-	 * @param altezza Altezza del dado
+	 * Imposta l'altezza.
+	 * @param altezza Altezza espressa in mm.
 	 */
 	public void setAltezza(double altezza) {
 		this.altezza = altezza;
 	}
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(altezza);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(dimensionePasso);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((metrica == null) ? 0 : metrica.hashCode());
-		temp = Double.doubleToLongBits(misuraPiatti);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (passoGrosso ? 1231 : 1237);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Filettatura other = (Filettatura) obj;
-		if (Double.doubleToLongBits(altezza) != Double.doubleToLongBits(other.altezza))
-			return false;
-		if (Double.doubleToLongBits(dimensionePasso) != Double.doubleToLongBits(other.dimensionePasso))
-			return false;
-		if (metrica == null) {
-			if (other.metrica != null)
-				return false;
-		} else if (!metrica.equals(other.metrica))
-			return false;
-		if (Double.doubleToLongBits(misuraPiatti) != Double.doubleToLongBits(other.misuraPiatti))
-			return false;
-		if (passoGrosso != other.passoGrosso)
-			return false;
-		return true;
-	}
-
+	/**
+	 * Restituisce la filettatura in formato String.
+	 * @return Elenco di tutte le informazioni sul tipo di filettatura.
+	 */
 	@Override
 	public String toString()
 	{

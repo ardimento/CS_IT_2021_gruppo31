@@ -3,25 +3,32 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
-
 import it.uniba.di.prog2.cs2021.gruppo31.Token;
 import it.uniba.di.prog2.cs2021.gruppo31.database.LogIn_SignIn;
 import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 
 /**
- * Classe contenete alcune funzioni statiche per la gestione degli utenti
- * @author andrea
+ * Classe che fornisce dei metodi statici per la gestione di utenti e impiegati.<br>
+ * Contiene metodi per il controllo della correttezza sintattica di utenti e impiegati,
+ * per la generazione degli hash delle password e per effettuare il login al sistema.
+ * @author matteo
  * @version 1.1
  */
 public class Utility_Utente {
 	
 	/**
-	 * Metodo che si occupa di validare username e password inseriti, e permettere all'utente di loggarsi nel sistema
-	 * @param username username che viene inserito dall'utente 
-	 * @param hashPassword Password che viene inserita dall'utente 
-	 * @throws SQLException 
-	 * @throws AziendaException 
+	 * Metodo che si occupa di effettuare il login dell'utente al sistema.<br>
+	 * Se username e password ricevuti in input sono registrati sulla base dati,
+	 * il metodo imposta il token in modo tale che l'utente possa effettuare il login
+	 * attraverso la classe {@link it.uniba.di.prog2.cs2021.gruppo31.HomePage}.
+	 * @param username Username dell'utente.
+	 * @param hashPassword Hash della password dell'utente.
+	 * @throws SQLException
+	 * @throws AziendaException Possibili eccezioni:<br>
+	 * 		USERNAME_NOT_FOUND, INCORRECT_PASSWORD.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.Token#setHashPassword(String)
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.LogIn_SignIn#checkUtente(String, String)
 	 */
 	public static void checkUtente(String username, String hashPassword) throws SQLException,AziendaException {
 		LogIn_SignIn login = ProxyDB.getIstance();
@@ -30,23 +37,30 @@ public class Utility_Utente {
 	}
 	
 	/**
-	 * Username:
-	 * - Minima lunghezza = 5
-	 * - Massima lunghezza = 20
-	 * - Può contenere solo a-z, A-Z, 0-9, and the chars {._-}
-	 * - Deve iniziare con  a-z, A-Z
+	 * Controlla la correttezza del formato di username e password.<p>
+	 * Vincoli username:
+	 * <ul>
+	 * <li>Lunghezza minima = 5</li>
+	 * <li>Lunghezza massima = 20</li>
+	 * <li>Può contenere solo lettere, cifre e i seguenti caratteri: {._-}</li>
+	 * <li>Deve iniziare con una lettera</li>
+	 * </ul>
+	 * <p>
 	 * Password:
-	 * - Minima lunghezza = 8
-	 * - Massima lunghezza = 50
-	 * - Può contenere solo a-z, A-Z, 0-9, and the chars {.,;:_+/*^=?!()\\[\\]{}@%#$-} 
-	 * @param username 
-	 * @param password
-	 * @return
-	 * 	1: Username lunghezza non valida
-	 * 	2: Username formato non valido
-	 *  3: Password lunghezza non valida
-	 *  4: Password formato non valido
-	 *  0: Credenziali valide
+	 * <ul>
+	 * <li>Lunghezza minima = 8</li>
+	 * <li>Lunghezza massima = 50</li>
+	 * <li>Può contenere solo lettere, cifre e i seguenti caratteri: {.,;:_+/*^=?!()\\[\\]{}@%#$-}</li>
+	 * </ul>
+	 * @param username Username da validare.
+	 * @param password Password da validare.
+	 * @return Possibili valori di ritorno:<br>
+	 * 	0: Credenziali valide<br>
+	 * 	1: Lunghezza username non valida<br>
+	 * 	2: Formato username non valido<br>
+	 *  3: Lunghezza password non valida<br>
+	 *  4: Formato password non valido<br>
+	 *  @see Pattern#matches(String, CharSequence)
 	 */
 	public static int checkCorrettezzaCredenziali(String username, String password) {
 		if(username == null || username.length() > 20 || username.length() < 5)	return 1;
@@ -57,16 +71,20 @@ public class Utility_Utente {
 	}
 	
 	/**
-	 * Metodo  che gestisce il controllo dell'impiegato implementando metodi locali 
-	 * @param impiegato Impiegato azienda
-	 * @return
-	 *  0 : Tutti i parametri sono corretti
-	 * 	1 : Nome non corretto
-	 * 	2 : Cognome non corretto
-	 * 	3 : Data di nascita non corretta 
-	 * 	4 : Data di inizio lavoro non corretta 
-	 * 	5 : Stipendio dell'impiegato non corretto
-	 *  6 : Vendita massima annua non corretta 
+	 * Controlla la correttezza sintattica dei campi dell'impiegato.<br>
+	 * Vengono utilizzati metodi locali per il controllo dei singoli campi.
+	 * @param impiegato Impiegato da validare.
+	 * @return Possibili valori di ritorno:<br>
+	 *  0: Parametri corretti<br>
+	 * 	1: Nome non corretto<br>
+	 * 	2: Cognome non corretto<br>
+	 * 	3: Data di nascita non corretta<br>
+	 * 	4: Data di entrata non corretta<br> 
+	 * 	5: Stipendio mensile non corretto<br>
+	 *  6: Numero vendite massime all'anno non corretto<br>
+	 *  @see #checkNome(String)
+	 *  @see #checkDataEntrata(Date)
+	 *  @see #checkDataNascita(Date)
 	 */
 	public static int checkImpiegato(Impiegato impiegato) {
 		if(checkNome(impiegato.getNome()) == false)	return 1;
@@ -79,8 +97,10 @@ public class Utility_Utente {
 	}
 	
 	/**
-	 * @param password 
-	 * @return String Stringa contente la password 
+	 * Genera l'hash della password fornita in input.<br>
+	 * L'hash generato è sempre un numero positivo: <code> (password.hashCode() & 0xfffffff) </code>
+	 * @param password Password da cui generare il codice hash.
+	 * @return Hash della password fornita in input.
 	 */
 	public static String hashPwd(String password) {
 		if(password == null)	return null;
@@ -89,10 +109,13 @@ public class Utility_Utente {
 	}
 	
 	/**
-	 * Controllo sulla correttezza del nome 
-	 * @param nome Nome impiegato 
-	 * @return Il metodo ritorna false  se il Nome non è correttoe 
-	 *         true se il  Nome corretto
+	 * Controllo correttezza sintattica nome o cognome.<br>
+	 * Il nome e il cognome devono contenere solo lettere, e non possono avere lunghezza >30 caratteri.
+	 * @param nome Nome impiegato.
+	 * @return
+	 * 		TRUE - Nome corretto.<br>
+	 * 		FALSE - Nome non corretto.
+	 * @see Character#isLetter(char)
 	 */
 	private static boolean checkNome(String nome) {
 		if(nome == null)	return false;
@@ -106,10 +129,15 @@ public class Utility_Utente {
 	}
 	
 	/**
-	 * Controllo sulla correttezza dela data di nascita dell'impiegato  
-	 * @param dataNascita Data di nascita dell'impiegato
-	 * @return false Data non corretta
-	 *         true Data corretta
+	 * Controllo correttezza semantica data di nascita.<br>
+	 * L'impiegato deve essere maggiorenne per poter lavorare in azienda. 
+	 * @param dataNascita Data di nascita.
+	 * @return
+	 * 		TRUE - Data corretta.<br>
+	 * 		FALSE - Data non corretta.
+	 * @see Calendar#add(int, int)
+	 * @see Calendar#getTime()
+	 * @see Date#compareTo(Date)
 	 */
 	private static boolean checkDataNascita(Date dataNascita) {
 		Calendar c = Calendar.getInstance();
@@ -120,10 +148,14 @@ public class Utility_Utente {
 	}
 	
 	/**
-	 * Controllo sulla correttezza della data di inizio lavoro nell'Azienda 
-	 * @param dataEntrata Data di inizio lavoro nell'Azienda 
-	 * @return false Data non corretta
-	 *         true Data corretta 
+	 * Controllo correttezza semantica data di entrata.<br>
+	 * La data di entrata deve essere precedente alla data attuale. 
+	 * @param dataEntrata Data di entrata. 
+	 * @return
+	 * 		TRUE - Data corretta.<br>
+	 * 		FALSE - Data non corretta.
+	 * @see Calendar#getTime()
+	 * @see Date#compareTo(Date)
 	 */
 	private static boolean checkDataEntrata(Date dataEntrata) {
 		Calendar c = Calendar.getInstance();
