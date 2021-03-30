@@ -98,7 +98,7 @@ public class Utility_Utente {
 	
 	/**
 	 * Genera l'hash della password fornita in input.<br>
-	 * L'hash generato è sempre un numero positivo: <code> (password.hashCode() & 0xfffffff) </code>
+	 * L'hash generato è sempre un numero positivo: <code> (password.hashCode() &amp; 0xfffffff) </code>
 	 * @param password Password da cui generare il codice hash.
 	 * @return Hash della password fornita in input.
 	 */

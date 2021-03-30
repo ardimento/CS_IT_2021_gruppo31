@@ -8,7 +8,7 @@ import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 
 /**
- * Interfaccia utente (non amministratore).<br>
+ * Interfaccia utente standard.<br>
  * Contiene tutte le funzionalità che sia un utente standard
  * sia un admin possono eseguire sul database.
  * @author matteo
@@ -28,7 +28,7 @@ public interface UserQuery {
 	 * 		USERNAME_NOT_FOUND, INCORRECT_PASSWORD, DADO_NOT_FOUND.
 	 * @see ProxyDB#checkUtente(String, String)
 	 * @see ProxyDB#getDado(String)
-	 * @see Vendita
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.Vendita
 	 * @see ConnectorDB
 	 */
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException;
@@ -40,7 +40,7 @@ public interface UserQuery {
 	 * @throws SQLException
 	 * @throws ParseException
 	 * @throws AziendaException Eccezione: USERNAME_NOT_FOUND.
-	 * @see Impiegato
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato
 	 * @see ConnectorDB
 	 */
 	public Impiegato getInfoImpiegato(String username) throws SQLException,AziendaException,ParseException;
@@ -52,7 +52,7 @@ public interface UserQuery {
 	 * @throws SQLException
 	 * @throws ParseException
 	 * @throws AziendaException Possibili eccezioni: EMPTY_LIST.
-	 * @see Vendita
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.Vendita
 	 * @see ConnectorDB
 	 */
 	public ArrayList<Vendita> getVenditeImpiegato(String username) throws SQLException,AziendaException,ParseException;
@@ -63,7 +63,7 @@ public interface UserQuery {
 	 * @throws SQLException
 	 * @throws ParseException
 	 * @throws AziendaException Possibili eccezioni: EMPTY_LIST.
-	 * @see Dado
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Dado
 	 * @see ConnectorDB
 	 */
 	public ArrayList<Dado> getCatalogoDadi() throws SQLException,AziendaException,ParseException;
@@ -75,8 +75,8 @@ public interface UserQuery {
 	 * @throws SQLException
 	 * @throws ParseException
 	 * @throws AziendaException Eccezione: DADO_NOT_FOUND.
-	 * @see Dado
-	 * @see Filettatura
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Dado
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Filettatura
 	 * @see ConnectorDB
 	 */
 	public Dado getDado(String hashDado) throws SQLException,AziendaException,ParseException;

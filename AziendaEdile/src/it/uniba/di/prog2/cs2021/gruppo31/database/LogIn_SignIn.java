@@ -20,7 +20,7 @@ public interface LogIn_SignIn {
 	 * @throws SQLException
 	 * @throws AziendaException Possibili eccezioni:<br>
 	 * 		USERNAME_NOT_FOUND, INCORRECT_PASSWORD.
-	 * @see Utente
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
 	 * @see ConnectorDB
 	 */
 	public void checkUtente(String username, String hashPassword) throws SQLException,AziendaException;
@@ -36,8 +36,8 @@ public interface LogIn_SignIn {
 	 * @throws SQLException
 	 * @throws AziendaException Possibili eccezioni:<br>
 	 * 		IMPIEGATO_ALREADY_EXISTS, USERNAME_ALREADY_EXISTS.
-	 * @see Utente
-	 * @see Impiegato
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato
 	 * @see ConnectorDB
 	 */
 	public void addUtente(Utente utente) throws SQLException,AziendaException;

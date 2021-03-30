@@ -2,23 +2,29 @@ package it.uniba.di.prog2.cs2021.gruppo31;
 import java.util.Date;
 import it.uniba.di.prog2.cs2021.gruppo31.dado.Dado;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
+
 /**
- * Classe che gestisce le vendite di un tipo di Dado,in una specifica Data e uno specifico Utente
- * @author andrea
+ * Classe che si occupa di gestire le vendite.<br>
+ * Ogni vendita fa riferimento ad un tipo di dado e all'utente che effettua la vendita.
+ * @author matteo
  * @version 1.1
  */
 public class Vendita {
 	
-	private Utente utente;
-	private Dado dado;
-	private Date data;
-	private int numPezzi;
+	private Utente utente; // Utente che effettua la vendita
+	private Dado dado; // Tipo di dado venduto
+	private Date data; // Data di vendita
+ 	private int numPezzi; // Numero di pezzi venduti
 	
 	/**
-	 * @param utente Utente che acquista 
-	 * @param dado   interfaccia Dado
-	 * @param data   data della vendita
-	 * @param numPezzi quantita di dadi venduti
+	 * Costruttore parametrico.<br>
+	 * Inizializza tutti i campi di un oggetto Vendita.
+	 * @param utente Utente che effettua la vendita.
+	 * @param dado Tipo di dado venduto.
+	 * @param data Data di vendita.
+	 * @param numPezzi Numero di pezzi venduti.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Dado
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
 	 */
 	public Vendita(Utente utente, Dado dado, Date data, int numPezzi) {
 		this.utente = utente;
@@ -28,25 +34,35 @@ public class Vendita {
 	}
 
 	/**
-	 * @return utente utente che ha effettuato la vendita 
+	 * Restituisce l'utente che ha effettuato la vendita.
+	 * @return utente Utente che ha effettuato la vendita.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
 	 */
 	public Utente getUtente() {
 		return utente;
 	}
+	
 	/**
-	 * @return dado Il tipo di dato 
+	 * Restituisce il tipo di dado venduto.
+	 * @return Tipo di dado venduto.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Dado
 	 */
 	public Dado getDado() {
 		return dado;
 	}
+	
 	/**
-	 * @return data Data vendita 
+	 * Restituisce la data di vendita.
+	 * @return Data di vendita.
+	 * @see Date
 	 */
 	public Date getData() {
 		return data;
 	}
+	
 	/**
-	 * @return numPezzi Numero di Dadi che sono stati venduti
+	 * Restituisce il numero di pezzi venduti.
+	 * @return Numero di pezzi venduti.
 	 */
 	public int getNumPezzi() {
 		return numPezzi;

@@ -15,17 +15,32 @@ import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 
 /**
- * Classe che si occupa di gestire la homepage del programma 
- * @author andrea
+ * Classe contenente tutte le operazioni che un utente può eseguire nel sistema.<br>
+ * Questa classe è stata implementata per i seguenti motivi:
+ * <ul>
+ * <li>Implementare il controllo di accesso al sistema attraverso la classe Token.</li>
+ * <li>Iniettare la dipendenda di accesso al package database nella classe HomePage,
+ * 		invece di accedervi direttamente dalla classe Client.</li>
+ * <li>Fornire una classe comune sia per utenti standard che amministratori.</li>
+ * </ul>
+ * <p>
+ * La classe utilizza le interfacce UserQuery e AdminQuery per accedere alle operazioni
+ * definite nella classe ProxyDB, e ne gestisce le eccezioni.<br>
+ * @author matteo
  * @version 1.1
  */
 public class HomePage {
-	private Utente utente;
+	
+	private Utente utente; // Utente nella sessione corrente
 	
 	/**
-	 * 
-	 * @param utente Utente 
-	 * @throws AziendaException
+	 * Costruttore parametrico.<br>
+	 * Controlla che l'utente ricevuto in input abbia effettuato il login
+	 * attraverso il metodo {@link it.uniba.di.prog2.cs2021.gruppo31.utente.Utility_Utente#checkUtente(String, String)}.
+	 * @param utente Utente con cui è stato effettuato l'accesso.
+	 * @throws AziendaException Eccezione: USERNAME_NOT_LOGGED.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.Token
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
 	 */
 	public HomePage(Utente utente) throws AziendaException {
 		this.utente = utente;
@@ -35,11 +50,20 @@ public class HomePage {
 	}
 	
 	/**
-	 * Metodo per aggiungere una vendita 
-	 * @param vendita Vendita 
+	 * Aggiunge una vendita alla lista delle vendite.<br>
+	 * Vengono effettuati prima dei controlli sui limiti delle vendite
+	 * dell'utente, sul numero di pezzi disponibili e sul formato delle date.
+	 * Successivamente su procede a validare ed aggiungere la vendita al database,
+	 * attraverso l'interfaccia UserQuery della classe ProxyDB.
+	 * @param vendita Vendita da aggiungere alla lista.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Possibili eccezioni:<br>
+	 * 		USERNAME_NOT_FOUND, INCORRECT_PASSWORD, DADO_NOT_FOUND,<br>
+	 * 		MAX_VENDITE_ANNO, MAX_VENDITE_GIORNO, NUMPEZZI_NOT_VALID, DATA_NOT_VALID.
+	 * @see Dado
+	 * @see Calendar
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery#addVendita(Vendita)
 	 */
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
 		if(getVenditeAnno(vendita.getUtente().getUsername()) >= vendita.getUtente().getImpiegato().getMaxVenditeAnno())
@@ -65,11 +89,12 @@ public class HomePage {
 	}
 	
 	/**
-	 * 
-	 * @return 
+	 * Restituisce le informazioni relative all'utente loggato.<br>
+	 * @return Oggetto Impiegato costruito con le informazioni presenti sul database.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Eccezione: USERNAME_NOT_FOUND.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery#getInfoImpiegato(String)
 	 */
 	public Impiegato getInfoImpiegato() throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
@@ -77,11 +102,12 @@ public class HomePage {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Restituisce la lista di tutte le vendite relative all'utente loggato.
+	 * @return Lista di vendite effettuate dall'impiegato.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Eccezione: EMPTY_LIST.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery#getVenditeImpiegato(String)
 	 */
 	public ArrayList<Vendita> getVenditeImpiegato() throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
@@ -89,11 +115,12 @@ public class HomePage {
 	}
 
 	/**
-	 * 
-	 * @return 
+	 * Restituisce il catalogo di tutti i dadi presenti nel database.
+	 * @return Catalogo dei dadi attualmente presenti.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Eccezione: EMPTY_LIST.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery#getCatalogoDadi()
 	 */
 	public ArrayList<Dado> getCatalogoDadi() throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
@@ -101,10 +128,12 @@ public class HomePage {
 	}
 	
 	/**
-	 * 
-	 * @param dado
+	 * Aggiunge un dado al catalogo del database.<br>
+	 * @param dado Dado da aggiungere al catalogo.
 	 * @throws SQLException
-	 * @throws AziendaException
+	 * @throws AziendaException Possibili eccezioni:<br>
+	 * 		USERNAME_NOT_FOUND, USERNAME_NOT_ADMIN, FILETTATTURA_NOT_FOUND, DADO_ALREADY_EXISTS.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.AdminQuery#addDado(String, Dado)
 	 */
 	public void addDado(Dado dado) throws SQLException,AziendaException {
 		AdminQuery aq = ProxyDB.getIstance();
@@ -112,26 +141,32 @@ public class HomePage {
 	}
 	
 	/**
-	 * 
-	 * @param hashDado
+	 * Elimina un dado dal catalogo del database.<br>
+	 * @param hashDado Dado da eliminare dal catalogo.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Possibili eccezioni:<br>
+	 * 		USERNAME_NOT_FOUND, USERNAME_NOT_ADMIN, DADO_NOT_FOUND.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.AdminQuery#deleteDado(String, int)
 	 */
 	public void deleteDado(int hashDado) throws SQLException,AziendaException,ParseException {
 		AdminQuery aq = ProxyDB.getIstance();
 		aq.deleteDado(utente.getUsername(),hashDado);
 	}
 	
-	/*
-	 * Sistema di gestione delle vendite, questo metodo permette di modificare il numero di pezzi
-	 * Esempio: comprati nuovi dadi, oppure alcuni dadi sono stati persi.
-	 *<p> 
-	 * @param hashDado 
-	 * @param numPezzi Numero pezzi dadi
+	/**
+	 * Aggiorna il numero di pezzi di un dado nel catalogo.<br>
+	 * Il metodo permette ad un amministratore di modificare il numero di pezzi
+	 * di un dado, senza che questo sia stato venduto. Può essere utilizzato ad esempio
+	 * quando sono stati comprati nuovi pezzi di un dado, oppure alcuni pezzi sono andati persi.<br>
+	 * Inoltre il metodo genera un'eccezione se il nuovo numero di pezzi è negativo.
+	 * @param hashDado Codice hash del dado da aggiornare.
+	 * @param numPezzi Nuovo numero di pezzi del dado.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Possibili eccezioni:<br>
+	 * 		USERNAME_NOT_FOUND, USERNAME_NOT_ADMIN, DADO_NOT_FOUND, NUMPEZZI_NOT_VALID.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.AdminQuery#updatePezziDado(String, int, int)
 	 */
 	public void updatePezziDado(int hashDado, int numPezzi) throws SQLException,AziendaException,ParseException {
 		AdminQuery aq = ProxyDB.getIstance();
@@ -141,11 +176,14 @@ public class HomePage {
 	}
 	
 	/**
-	 * 
-	 * @param hashDado
-	 * @param prezzo
+	 * Aggiorna il prezzo di un dado nel catalogo.<br>
+	 * Il metodo genera un'eccezione se il nuovo prezzo inserito è negativo.
+	 * @param hashDado Codice hash del dado da aggiornare.
+	 * @param prezzo Nuovo prezzo del dado.
 	 * @throws SQLException
-	 * @throws AziendaException
+	 * @throws AziendaException Possibili eccezioni:<br>
+	 * 		USERNAME_NOT_FOUND, USERNAME_NOT_ADMIN, DADO_NOT_FOUND, PREZZO_NOT_VALID.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.AdminQuery#updatePrezzoDado(String, int, double)
 	 */
 	public void updatePrezzoDado(int hashDado, double prezzo) throws SQLException, AziendaException {
 		AdminQuery aq = ProxyDB.getIstance();
@@ -156,19 +194,24 @@ public class HomePage {
 	}
 	
 	/**
-	 * 
+	 * Effettua il logout dell'utente dal sistema.
+	 * @see Token
 	 */
 	public void logOut() {
 		Token.getIstance().setHashPassword(null);
 	}
 
 	/**
-	 * 
-	 * @param username Nickname 
-	 * @return 
+	 * Restituisce il numero di vendite dell'utente nell'anno corrente.<br>
+	 * Viene utilizzato per controllare il limite massimo di vendite all'anno.
+	 * @param username Username utente di cui controllare le vendite.
+	 * @return Numero di vendite effettuate nell'anno corrente.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Eccezione: EMPTY_LIST.
+	 * @see Calendar
+	 * @see Vendita
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery#getVenditeImpiegato(String)
 	 */
 	private int getVenditeAnno(String username) throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
@@ -192,12 +235,16 @@ public class HomePage {
 	}
 	
 	/**
-	 * 
-	 * @param username Nickname utente 
-	 * @return 
+	 * Restituisce il numero di vendite dell'utente nel giorno corrente.<br>
+	 * Viene utilizzato per controllare il limite massimo di vendite al giorno.
+	 * @param username Username utente di cui controllare le vendite.
+	 * @return Numero di vendite effettuate nel giorno corrente.
 	 * @throws SQLException
-	 * @throws AziendaException
 	 * @throws ParseException
+	 * @throws AziendaException Eccezione: EMPTY_LIST.
+	 * @see Calendar
+	 * @see Vendita
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery#getVenditeImpiegato(String)
 	 */
 	private int getVenditeGiorno(String username) throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
@@ -216,7 +263,5 @@ public class HomePage {
 			else
 				throw new AziendaException(ex.getMessage());
 		}
-		
-
 	}
 }

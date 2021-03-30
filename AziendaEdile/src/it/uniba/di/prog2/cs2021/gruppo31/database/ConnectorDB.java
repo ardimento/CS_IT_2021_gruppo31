@@ -27,7 +27,7 @@ public class ConnectorDB {
 	/**
 	 * Metodo statico che si occupa di chiudere una connessione verso il database.<br>
 	 * Questo metodo può essere invocato dopo l'apertura della connessione con il metodo {@link ConnectorDB#connect()}
-	 * @param Oggetto Connection contenente la connessione da chiuedere.
+	 * @param conn Oggetto Connection contenente la connessione da chiuedere.
 	 * @throws SQLException
 	 * @see Connection
 	 */

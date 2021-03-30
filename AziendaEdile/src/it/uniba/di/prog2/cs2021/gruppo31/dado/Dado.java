@@ -1,5 +1,6 @@
 package it.uniba.di.prog2.cs2021.gruppo31.dado;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -90,7 +91,7 @@ public interface Dado {
 	 * @param passoGrosso Tipo passo del dado.
 	 * @return Se la metrica e il tipo di passo sono presenti nel database, ritorna TRUE. Altrimenti FALSE.
 	 * @throws SQLException
-	 * @see {@link it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB#getFilettatura(String, boolean)}
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB#getFilettatura(String, boolean)
 	 */
 	public boolean setFilettatura(String metrica, boolean passoGrosso) throws SQLException;
 	
@@ -156,7 +157,7 @@ public interface Dado {
 	
 	/**
 	 * Calcola il codice identificativo hash del dado.<br>
-	 * @return Codice hash del dado positivo: <code>(result & 0xfffffff)</code>
+	 * @return Codice hash del dado positivo: <code>(result &amp; 0xfffffff)</code>
 	 */
 	public int hashCode();
 	
@@ -169,7 +170,7 @@ public interface Dado {
 	 * Restutisce il dado in formato String.
 	 * @return Elenco di tutte le informazioni relative al tipo di dado.
 	 * @see Date
-	 * @see SimpleDateFormatter
+	 * @see SimpleDateFormat
 	 */
 	public String toString();
 }

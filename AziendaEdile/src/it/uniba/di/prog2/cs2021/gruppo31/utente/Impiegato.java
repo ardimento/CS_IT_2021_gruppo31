@@ -174,7 +174,7 @@ public class Impiegato {
 	 * Restutisce l'impiegato in formato String.
 	 * @return Elenco di tutte le informazioni relative all'impiegato.
 	 * @see Date
-	 * @see SimpleDateFormatter
+	 * @see SimpleDateFormat
 	 */
 	@Override
 	public String toString() {

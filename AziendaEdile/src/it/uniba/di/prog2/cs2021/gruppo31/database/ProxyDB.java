@@ -431,7 +431,9 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	/**
 	 * Restituisce un tipo di filettatura indicando come parametri la metrica e il passo.
 	 * @param metrica Codice della metrica della filettatura.
-	 * @param passoGrosso Tipo di passo della filettatura [TRUE=Grosso|FALSE=Fine].
+	 * @param passoGrosso Tipo di passo della filettatura.<br>
+	 * 		Passo grosso = TRUE<br>
+	 * 		Passo fine = FALSE
 	 * @return Oggetto Filettatura costruito con le informazioni presenti sul database.
 	 * @throws SQLException
 	 * @throws AziendaException Eccezione: FILETTATURA_NOT_FOUND.

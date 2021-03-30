@@ -22,9 +22,9 @@ public interface AdminQuery {
 	 * @throws SQLException
 	 * @throws AziendaException Possibili eccezioni:<br>
 	 * 		USERNAME_NOT_FOUND, USERNAME_NOT_ADMIN, FILETTATTURA_NOT_FOUND, DADO_ALREADY_EXISTS.
-	 * @see Dado
-	 * @see Utente
-	 * @see Filettatura
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Dado
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Filettatura
 	 * @see ConnectorDB
 	 */
 	public void addDado(String username, Dado dado) throws SQLException,AziendaException;
@@ -37,10 +37,11 @@ public interface AdminQuery {
 	 * @param username Username utente da controllare. 
 	 * @param hashDado Dado da eliminare dal catalogo.
 	 * @throws SQLException
+	 * @throws ParseException
 	 * @throws AziendaException Possibili eccezioni:<br>
 	 * 		USERNAME_NOT_FOUND, USERNAME_NOT_ADMIN, DADO_NOT_FOUND.
-	 * @see Dado
-	 * @see Utente
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Dado
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
 	 * @see ConnectorDB
 	 */
 	public void deleteDado(String username, int hashDado) throws SQLException,AziendaException,ParseException;
@@ -56,8 +57,8 @@ public interface AdminQuery {
 	 * @throws SQLException
 	 * @throws AziendaException Possibili eccezioni:<br>
 	 * 		USERNAME_NOT_FOUND, USERNAME_NOT_ADMIN, DADO_NOT_FOUND.
-	 * @see Dado
-	 * @see Utente
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Dado
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
 	 * @see ConnectorDB
 	 */
 	public void updatePezziDado(String username, int hashDado, int numPezzi) throws SQLException,AziendaException;
@@ -69,12 +70,12 @@ public interface AdminQuery {
 	 * per il dado ricevuto in input, a meno che il dado non esista nel database.
 	 * @param username Username utente da controllare.
 	 * @param hashDado Codice hash del dado da aggiornare.
-	 * @param numPezzi Nuovo prezzo del dado.
+	 * @param prezzo Nuovo prezzo del dado.
 	 * @throws SQLException
 	 * @throws AziendaException Possibili eccezioni:<br>
 	 * 		USERNAME_NOT_FOUND, USERNAME_NOT_ADMIN, DADO_NOT_FOUND.
-	 * @see Dado
-	 * @see Utente
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.dado.Dado
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
 	 * @see ConnectorDB
 	 */
 	public void updatePrezzoDado(String username, int hashDado, double prezzo) throws SQLException,AziendaException;
