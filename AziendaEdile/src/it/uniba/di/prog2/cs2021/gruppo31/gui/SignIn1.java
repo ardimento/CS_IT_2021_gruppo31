@@ -1,29 +1,30 @@
 package it.uniba.di.prog2.cs2021.gruppo31.gui;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Image;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.SystemColor;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.Color;
-import javax.swing.border.MatteBorder;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.SoftBevelBorder;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.SoftBevelBorder;
 
-public class Login extends JFrame {
+public class SignIn1 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public Login() {
+	public SignIn1() {
 		
 		setSize(600,300);
 		setLocationRelativeTo(null);
@@ -56,32 +57,12 @@ public class Login extends JFrame {
 		contentPane.add(lblAziendaEdile);
 		
 		JTextField txtUsername = new JTextField();
-		txtUsername.setBounds(291, 100, 250, 30);
+		txtUsername.setBounds(246, 80, 321, 30);
 		contentPane.add(txtUsername);
 		
 		JPasswordField passwordField = new JPasswordField();
-		passwordField.setBounds(291, 160, 250, 30);
+		passwordField.setBounds(246, 140, 321, 30);
 		contentPane.add(passwordField);
-		
-		JButton btnNewButton = new JButton("Registrati!");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new SignIn1();
-			}
-		});
-		btnNewButton.setForeground(SystemColor.activeCaption);
-		btnNewButton.setContentAreaFilled(false);
-		btnNewButton.setBorder(null);
-		btnNewButton.setBounds(518, 280, 75, 15);
-		contentPane.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Accedi");
-		btnNewButton_1.setForeground(SystemColor.text);
-		btnNewButton_1.setBackground(SystemColor.desktop);
-		btnNewButton_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		btnNewButton_1.setBounds(456, 202, 85, 25);
-		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("X");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -102,31 +83,49 @@ public class Login extends JFrame {
 		lblNewLabel.setBounds(0, 0, 228, 400);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblSeiUnNuovo = new JLabel("Sei un nuovo utente?");
-		lblSeiUnNuovo.setBounds(362, 280, 150, 15);
-		contentPane.add(lblSeiUnNuovo);
-		
-		JLabel lblLogin = new JLabel("Login");
+		JLabel lblLogin = new JLabel("Info Utente");
 		lblLogin.setFont(new Font("Liberation Sans", Font.BOLD, 20));
-		lblLogin.setBounds(373, 29, 62, 24);
+		lblLogin.setBounds(246, 12, 104, 24);
 		contentPane.add(lblLogin);
 		
 		ImageIcon user = new ImageIcon(Login.class.getResource("/user.png"));
 		Image userScaled = user.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT);
 		user = new ImageIcon(userScaled);
 		
-		JLabel label = new JLabel("");
-		label.setIcon(user);
-		label.setBounds(432, 24, 31, 29);
-		contentPane.add(label);
-		
-		JLabel lblUsername = new JLabel("Password");
-		lblUsername.setBounds(291, 140, 70, 15);
+		JLabel lblUsername = new JLabel("Inserisci la password:");
+		lblUsername.setBounds(246, 120, 155, 15);
 		contentPane.add(lblUsername);
 		
-		JLabel lblUsername_1 = new JLabel("Username");
-		lblUsername_1.setBounds(291, 80, 72, 15);
+		JLabel lblUsername_1 = new JLabel("Inserisci lo username:");
+		lblUsername_1.setBounds(246, 60, 156, 15);
 		contentPane.add(lblUsername_1);
-		setVisible(true);
+		
+		JPasswordField passwordField_1 = new JPasswordField();
+		passwordField_1.setBounds(246, 200, 321, 30);
+		contentPane.add(passwordField_1);
+		
+		JLabel lblInserisciNuocamenteLa = new JLabel("Inserisci nuovamente la password:");
+		lblInserisciNuocamenteLa.setBounds(246, 180, 247, 15);
+		contentPane.add(lblInserisciNuocamenteLa);
+		
+		JButton btnNewButton_1 = new JButton("Avanti");
+		btnNewButton_1.setForeground(SystemColor.text);
+		btnNewButton_1.setBackground(SystemColor.desktop);
+		btnNewButton_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		btnNewButton_1.setBounds(503, 263, 85, 25);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnAnnulla = new JButton("Annulla");
+		btnAnnulla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Login();
+			}
+		});
+		btnAnnulla.setForeground(SystemColor.text);		
+		btnAnnulla.setBackground(new Color(178, 34, 34));
+		btnAnnulla.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		btnAnnulla.setBounds(406, 263, 85, 25);
+		contentPane.add(btnAnnulla);
 	}
 }
