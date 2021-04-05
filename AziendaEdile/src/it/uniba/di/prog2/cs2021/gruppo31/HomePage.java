@@ -102,6 +102,15 @@ public class HomePage {
 	}
 	
 	/**
+	 * Restituisce l'utente che ha effettuato l'accesso.<br>
+	 * @return Utente che ha effettuato l'accesso.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
+	 */
+	public Utente getUtente() {
+		return utente;
+	}
+	
+	/**
 	 * Restituisce la lista di tutte le vendite relative all'utente loggato.
 	 * @return Lista di vendite effettuate dall'impiegato.
 	 * @throws SQLException
