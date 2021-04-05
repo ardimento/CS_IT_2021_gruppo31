@@ -1,5 +1,6 @@
 package it.uniba.di.prog2.cs2021.gruppo31.database;
 import java.sql.SQLException;
+import java.text.ParseException;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 
@@ -41,4 +42,19 @@ public interface LogIn_SignIn {
 	 * @see ConnectorDB
 	 */
 	public void addUtente(Utente utente) throws SQLException,AziendaException;
+	
+	/**
+	 * Restituisce un utente memorizzato nel database.<br>
+	 * Questo metodo viene utilizzato dalla classe Client nella fase
+	 * di login in quanto la classe HomePage, per essere istanziata,
+	 * necessita dell'utente che ha effettuato l'accesso.
+	 * @param username Username utente.
+	 * @retrun Restituisce l'utente trovato.
+	 * @throws SQLException
+	 * @throws ParseException
+	 * @throws AziendaException Eccezione: USERNAME_NOT_FOUND.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.utente.Utente
+	 * @see ConnectorDB
+	 */
+	public Utente getUtente(String username) throws SQLException,AziendaException,ParseException;
 }

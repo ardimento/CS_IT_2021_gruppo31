@@ -17,8 +17,8 @@ public class Utente {
 	/** Username utente */
 	private String username;
 	
-	/** Password utente */
-	private String password;
+	/** Hash password utente */
+	private String hashPassword;
 	
 	/** Se l'utente è un amministratore, allora adminFlag=TRUE. Altrimenti adminFlag=FALSE. */
 	private boolean adminFlag = false;
@@ -28,14 +28,15 @@ public class Utente {
 	 * Inizializza tutti i campi relativi all'utente.
 	 * @param impiegato Impiegato relativo all'utente.
 	 * @param username Username utente.
-	 * @param password Password utente.
+	 * @param hashPassword Hash password utente.
 	 * @param adminFlag Flag che indica se l'utente è un amministratore o meno.
+	 * @see Utility_Utente#hashPwd(String)
 	 */
-	public Utente(Impiegato impiegato, String username, String password, boolean adminFlag) {
+	public Utente(Impiegato impiegato, String username, String hashPassword, boolean adminFlag) {
 		this.impiegato = impiegato;
 		this.username = username;
-		this.password = password;
 		this.adminFlag = adminFlag;
+		this.hashPassword = hashPassword;
 	}
 
 	/**
@@ -57,10 +58,9 @@ public class Utente {
 	/**
 	 * Restituisce l'hash della password dell'utente.
 	 * @return Hash della password dell'utente.
-	 * @see Utility_Utente#hashPwd(String)
 	 */
 	public String getHashPassword() {
-		return Utility_Utente.hashPwd(password);
+		return hashPassword;
 	}
 	/**
 	 * Restituisce un valore booleano che indica se l'utente è un amministratore o meno.

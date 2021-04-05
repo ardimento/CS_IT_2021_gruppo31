@@ -135,6 +135,31 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	/**
 	 * {@inheritDoc}
 	 */
+	public Utente getUtente(String username) throws SQLException,AziendaException,ParseException {
+		query = "SELECT * FROM UTENTE WHERE USERNAME LIKE '" + username + "';";
+		conn = ConnectorDB.connect();
+		
+		PreparedStatement ps = conn.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		
+		if(rs.next() == false)
+		{
+			ps.close();
+			ConnectorDB.close(conn);
+			throw new AziendaException(ErroriDB.USERNAME_NOT_FOUND);
+		}
+		
+		String tempUsername = rs.getString("USERNAME");
+		String tempPassword = rs.getString("HASH_PASSWORD");
+		boolean tempAdmin = rs.getBoolean("ADMIN");
+		Impiegato tempImpiegato = getInfoImpiegato(username);
+		
+		return new Utente(tempImpiegato,tempUsername,tempPassword,tempAdmin);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
 		checkUtente(vendita.getUtente().getUsername(),vendita.getUtente().getHashPassword());
 		getDado(Integer.toString(vendita.getDado().hashCode()));

@@ -1,5 +1,6 @@
 package it.uniba.di.prog2.cs2021.gruppo31.utente;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -34,6 +35,23 @@ public class Utility_Utente {
 		LogIn_SignIn login = ProxyDB.getIstance();
 		login.checkUtente(username,hashPassword);
 		Token.getIstance().setHashPassword(hashPassword);
+	}
+	
+	/**
+	 * Restituisce un utente memorizzato nel database.<br>
+	 * Questo metodo viene utilizzato dalla classe Client nella fase
+	 * di login in quanto la classe HomePage, per essere istanziata,
+	 * necessita dell'utente che ha effettuato l'accesso.
+	 * @param username Username utente.
+	 * @retrun Restituisce l'utente trovato.
+	 * @throws SQLException
+	 * @throws ParseException
+	 * @throws AziendaException Eccezione: USERNAME_NOT_FOUND.
+	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.LogIn_SignIn#getUtente(String)
+	 */
+	public static Utente getUtente(String username) throws SQLException,AziendaException,ParseException {
+		LogIn_SignIn login = ProxyDB.getIstance();
+		return login.getUtente(username);
 	}
 	
 	/**
@@ -90,7 +108,7 @@ public class Utility_Utente {
 		if(checkNome(impiegato.getNome()) == false)	return 1;
 		if(checkNome(impiegato.getCognome()) == false)	return 2;
 		if(checkDataNascita(impiegato.getDataNascita()) == false)	return 3;
-		if(checkDataEntrata(impiegato.getDataEntrata()) == false)	return 4;
+		if(checkDataEntrata(impiegato.getDataEntrata(),impiegato.getDataNascita()) == false)	return 4;
 		if(impiegato.getStipendioMensile() < 0)	return 5;
 		if(impiegato.getMaxVenditeAnno() < 0) return 6;
 		return 0; //Valido
@@ -149,18 +167,27 @@ public class Utility_Utente {
 	
 	/**
 	 * Controllo correttezza semantica data di entrata.<br>
-	 * La data di entrata deve essere precedente alla data attuale. 
-	 * @param dataEntrata Data di entrata. 
+	 * La data di entrata deve essere precedente alla data attuale.<br>
+	 * Inoltre devono essere passati almeno 18 anni dalla data di nascita.
+	 * @param dataEntrata Data di entrata.
+	 * @param dataNascita Data di nascita.
 	 * @return
 	 * 		TRUE - Data corretta.<br>
 	 * 		FALSE - Data non corretta.
 	 * @see Calendar#getTime()
 	 * @see Date#compareTo(Date)
 	 */
-	private static boolean checkDataEntrata(Date dataEntrata) {
+	private static boolean checkDataEntrata(Date dataEntrata,Date dataNascita) {
 		Calendar c = Calendar.getInstance();
 		Date temp = c.getTime();
 		if(dataEntrata.compareTo(temp) > 0)	return false;
+		
+		c.setTime(dataNascita);
+		c.add(Calendar.YEAR,18);
+		Date newNascita = c.getTime();
+		if(dataEntrata.compareTo(newNascita) > 0);
+		else	return false;
+		
 		return true;
 	}
 }
