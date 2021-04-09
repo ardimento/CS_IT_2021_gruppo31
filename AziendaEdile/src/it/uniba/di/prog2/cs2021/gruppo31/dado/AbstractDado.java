@@ -16,6 +16,7 @@ import it.uniba.di.prog2.cs2021.gruppo31.database.ProxyDB;;
  */
 public abstract class AbstractDado implements Dado {
 	
+	private int codice;
 	private Materiale materiale;
 	private Categoria categoria;
 	private RivestimentoProtettivo rivestimento;
@@ -226,7 +227,23 @@ public abstract class AbstractDado implements Dado {
 	public void setDataProduzione(Date dataProduzione) {
 		this.dataProduzione = dataProduzione;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setCodice(int codice) {
+		this.codice = codice;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getCodice() {
+		return codice;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -246,7 +263,8 @@ public abstract class AbstractDado implements Dado {
 		temp = Double.doubleToLongBits(prezzo);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((rivestimento == null) ? 0 : rivestimento.hashCode());
-		return (result & 0xfffffff);
+		codice = (result & 0xfffffff);
+		return codice;
 	}
 
 	/**

@@ -156,6 +156,19 @@ public interface Dado {
 	public void setDataProduzione(Date dataProduzione);
 	
 	/**
+	 * Imposta il codice identificativo del dado.<br>
+	 * @see #hashCode()
+	 */
+	void setCodice(int codice);
+	
+	/**
+	 * Restituisce il codice identificativo del dado.<br>
+	 * @return Codice identificativo del dado.
+	 * @see #hashCode()
+	 */
+	int getCodice();
+	
+	/**
 	 * Calcola il codice identificativo hash del dado.<br>
 	 * @return Codice hash del dado positivo: <code>(result &amp; 0xfffffff)</code>
 	 */

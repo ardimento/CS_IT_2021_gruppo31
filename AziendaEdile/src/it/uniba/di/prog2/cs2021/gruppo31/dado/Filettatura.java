@@ -118,7 +118,7 @@ public class Filettatura {
 	public String toString()
 	{
 		String s = "[Metrica: " + metrica;
-		if(passoGrosso == false)
+		if(passoGrosso == true)
 			s += " - Passo grosso: " + dimensionePasso;
 		else
 			s += " - Passo fine: " + dimensionePasso;

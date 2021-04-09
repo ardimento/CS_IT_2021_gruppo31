@@ -37,8 +37,7 @@ public class Form_Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Form_Login frame = new Form_Login();
-					frame.setVisible(true);
+					new Form_Login();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

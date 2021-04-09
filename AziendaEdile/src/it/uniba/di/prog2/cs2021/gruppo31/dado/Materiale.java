@@ -8,7 +8,7 @@ package it.uniba.di.prog2.cs2021.gruppo31.dado;
  * @author matteo
  * @version 1.1
  */
-enum Materiale {
+public enum Materiale {
 	Acciaio_5,
 	Acciaio_8,
 	Acciaio_10,

@@ -5,27 +5,38 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import java.awt.Font;
 import java.awt.Dimension;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.table.DefaultTableModel;
 import it.uniba.di.prog2.cs2021.gruppo31.HomePage;
+import it.uniba.di.prog2.cs2021.gruppo31.Vendita;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
+import it.uniba.di.prog2.cs2021.gruppo31.gui.catalogo.Catalogo;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
+import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 import javax.swing.border.BevelBorder;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 
 public class Home extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private JTable table;
+	private Utente utente;
 
 	public Home(HomePage home) {
 
@@ -35,7 +46,7 @@ public class Home extends JFrame {
 
 		JPanel contentPane = new JPanel();
 		contentPane.setForeground(new Color(0, 0, 128));
-		contentPane.setBackground(UIManager.getColor("Button.background"));
+		contentPane.setBackground(new Color(240, 230, 140));
 		contentPane.setBorder(null);
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
@@ -63,7 +74,8 @@ public class Home extends JFrame {
 		lblNewLabel_1.setIcon(img);
 		lblNewLabel_1.setBounds(10, 10, 60, 60);
 		contentPane.add(lblNewLabel_1);
-
+		
+		utente = home.getUtente();
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			Impiegato impiegato = home.getInfoImpiegato();
@@ -96,34 +108,46 @@ public class Home extends JFrame {
 			lblLimiteVenditeAnnuo.setBounds(10, 260, 222, 15);
 			contentPane.add(lblLimiteVenditeAnnuo);
 
-			JLabel lblUsername = new JLabel("Username: " + home.getUtente().getUsername());
-			lblUsername.setForeground(new Color(255, 0, 0));
+			JLabel lblUsername = new JLabel("Username: " + utente.getUsername());
+			lblUsername.setBackground(new Color(240, 230, 140));
+			lblUsername.setForeground(new Color(0, 0, 255));
 			lblUsername.setBounds(80, 10, 241, 15);
 			contentPane.add(lblUsername);
 
 			String account = "Account: ";
-			if (home.getUtente().isAdmin())
+			if (utente.isAdmin())
 				account += "Amministratore";
 			else
 				account += "Utente";
 			JLabel lblAccount = new JLabel(account);
-			lblAccount.setForeground(new Color(255, 0, 0));
+			lblAccount.setBackground(new Color(240, 230, 140));
+			lblAccount.setForeground(new Color(0, 0, 255));
 			lblAccount.setBounds(80, 40, 241, 15);
 			contentPane.add(lblAccount);
 
 		} catch (AziendaException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Errore database!");
+			JOptionPane.showMessageDialog(null, "ERROR: Errore interno database!");
 		}
 
 		JPanel panel = new JPanel();
-		panel.setBackground(UIManager.getColor("Button.highlight"));
+		panel.setBorder(null);
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(250, 80, 337, 210);
-		contentPane.add(panel);
 		panel.setLayout(null);
+		contentPane.add(panel);
+		
+		JButton button_5 = new JButton("Vendi");
+		button_5.setBounds(10, 12, 65, 25);
+		panel.add(button_5);
+		button_5.setForeground(Color.WHITE);
+		button_5.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		button_5.setBackground(new Color(0, 153, 51));
 
 		JButton btnEsci_1 = new JButton("Esci");
+		btnEsci_1.setBounds(260, 42, 65, 25);
+		panel.add(btnEsci_1);
 		btnEsci_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				home.logOut();
@@ -134,22 +158,63 @@ public class Home extends JFrame {
 		btnEsci_1.setForeground(Color.WHITE);
 		btnEsci_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnEsci_1.setBackground(new Color(178, 34, 34));
-		btnEsci_1.setBounds(260, 173, 65, 25);
-		panel.add(btnEsci_1);
-
-		JButton button_5 = new JButton("Vendi");
-		button_5.setForeground(Color.WHITE);
-		button_5.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		button_5.setBackground(new Color(0, 153, 51));
-		button_5.setBounds(210, 97, 115, 25);
-		panel.add(button_5);
 
 		JButton btnEsci = new JButton("Catalogo dadi");
-		btnEsci.setBounds(210, 134, 115, 25);
-		panel.add(btnEsci);
+		btnEsci.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Catalogo(home);
+			}
+		});
+		btnEsci.setBounds(87, 12, 120, 25);
 		btnEsci.setForeground(SystemColor.activeCaptionText);
 		btnEsci.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnEsci.setBackground(SystemColor.info);
+		panel.add(btnEsci);
+		
+		//Tabella vendite
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			String[] colonne = {"Dado","Data","Pezzi","Totale"};
+			ArrayList<Vendita> vendite;
+			try {
+				vendite = home.getVenditeImpiegato();
+				String tmp[][] = new String[vendite.size()][4];
+				for(int i=0;i<vendite.size();i++) {
+					tmp[i][0] = Integer.toString(vendite.get(i).getDado().hashCode());
+					tmp[i][1] = formatter.format(vendite.get(i).getData());
+					tmp[i][2] = Integer.toString(vendite.get(i).getNumPezzi());
+					tmp[i][3] = "€ " + Double.toString(vendite.get(i).getDado().getPrezzo() * (double)vendite.get(i).getNumPezzi());
+				}
+				table = new JTable(tmp,colonne);
+				table.setOpaque(true);
+				table.setFillsViewportHeight(true);
+				table.getTableHeader().setBackground(Color.WHITE);
+				JScrollPane sp = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				sp.setBounds(10, 79, 315, 119);
+				panel.add(sp);
+			} catch (AziendaException e1) {
+				DefaultTableModel model = new DefaultTableModel(0,colonne.length);
+				model.setColumnIdentifiers(colonne);
+				table = new JTable(model);
+				table.setOpaque(true);
+				table.setFillsViewportHeight(true);
+				table.getTableHeader().setBackground(Color.WHITE);
+				JScrollPane sp = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				sp.setBounds(10, 79, 315, 119);
+				panel.add(sp);
+			}
+
+			JLabel lblNewLabel_3 = new JLabel("Le tue vendite");
+			lblNewLabel_3.setBorder(new CompoundBorder(new LineBorder(new Color(0, 0, 0), 2, true), new LineBorder(new Color(255, 255, 0), 1, true)));
+			lblNewLabel_3.setOpaque(true);
+			lblNewLabel_3.setBackground(new Color(255, 153, 0));
+			lblNewLabel_3.setBounds(10, 60, 108, 21);
+			panel.add(lblNewLabel_3);
+			
+		} catch(SQLException | ParseException e) {
+			JOptionPane.showMessageDialog(null, "ERROR: Errore interno database!");
+		}		
 
 		setVisible(true);
 	}

@@ -238,6 +238,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		}
 		
 		Dado dado = new EsagonaleAlto();
+		dado.setCodice(rs.getInt("CODICE_HASH"));
 		dado.setMateriale(rs.getString("MATERIALE"));
 		dado.setCategoria(rs.getString("CATEGORIA"));
 		dado.setRivestimentoProtettivo(rs.getString("RIVESTIMENTO"));
@@ -468,7 +469,6 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	public Filettatura getFilettatura(String metrica, boolean passoGrosso) throws SQLException,AziendaException {
 		query = "SELECT * FROM FILETTATURA WHERE METRICA LIKE ? AND PASSO_GROSSO = ?;";
 		conn = ConnectorDB.connect();
-		
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1,metrica);
 		ps.setBoolean(2,passoGrosso);
@@ -489,6 +489,33 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ps.close();
 		ConnectorDB.close(conn);
 		return filettatura;
+	}
+	
+	/**
+	 * Restituisce tutti i tipi di filettatura disponibili.
+	 * @return Array contenente tutti i tipi di filettatura.
+	 * @throws SQLException
+	 * @see Filettatura
+	 * @see ConnectorDB
+	 */
+	public ArrayList<Filettatura> getAllFilettatura() throws SQLException {
+		query = "SELECT * FROM FILETTATURA;";
+		conn = ConnectorDB.connect();
+		
+		PreparedStatement ps = conn.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		ArrayList<Filettatura> array = new ArrayList<Filettatura>();
+		
+		while(rs.next()) {
+			Filettatura filettatura = new Filettatura(rs.getString("METRICA"),rs.getBoolean("PASSO_GROSSO"));
+			filettatura.setDimensionePasso(rs.getDouble("DIMENSIONE_PASSO"));
+			filettatura.setMisuraPiatti(rs.getDouble("MISURA_PIATTI"));
+			filettatura.setAltezza(rs.getDouble("ALTEZZA"));
+			array.add(filettatura);
+		}
+		ps.close();
+		ConnectorDB.close(conn);
+		return array;
 	}
 	
 	/**

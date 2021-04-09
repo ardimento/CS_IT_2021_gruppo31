@@ -214,9 +214,10 @@ public class Form_Signin_2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String warning = "Vincoli di inserimento:\n";
 				warning += "- Nome e cognome devono contenere solo lettere\n";
+				warning += "- Nome, cognome e mansione possono contenere massimo 20 caratteri\n";
 				warning += "- Stipendio e limite di vendite devono essere interi positivi\n";
 				warning += "- Le date inserite devono rispettare il formato [gg/mm/aaaa]\n";
-				warning += "- Le date non possono essere successive alla data corrente\n";
+				warning += "- Le date non possono essere successive all'anno corrente\n";
 				warning += "- L'anno minimo per le date è il 1900\n";
 				warning += "- La data di entrata deve essere maggiore di almeno 18 anni\n"
 						+ "  da quella di nascita: possono lavorare solo i maggiorenni\n";
@@ -246,7 +247,23 @@ public class Form_Signin_2 extends JFrame {
 			JOptionPane.showMessageDialog(null, "ERROR: Alcuni campi sono vuoti!");
 			return;
 		}
-			
+		
+		if(tmpNome.length() > 20)
+		{
+			JOptionPane.showMessageDialog(null, "ERROR: Nome non valido!");
+			return;
+		}
+		if(tmpCognome.length() > 20)
+		{
+			JOptionPane.showMessageDialog(null, "ERROR: Cognome non valido!");
+			return;
+		}
+		if(tmpMansione.length() > 20)
+		{
+			JOptionPane.showMessageDialog(null, "ERROR: Mansione non valida!");
+			return;
+		}
+		
 		try {
 			if(dateCheck(tmpNascita) == 1) {
 				JOptionPane.showMessageDialog(null, "ERROR: Data di nascita non valida!");

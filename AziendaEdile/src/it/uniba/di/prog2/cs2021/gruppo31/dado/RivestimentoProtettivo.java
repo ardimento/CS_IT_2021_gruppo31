@@ -6,7 +6,7 @@ package it.uniba.di.prog2.cs2021.gruppo31.dado;
  * @author matteo
  * @version 1.1
  */
-enum RivestimentoProtettivo {
+public enum RivestimentoProtettivo {
 	Nessuno,
 	Brunitura,
 	Fosfatazione,
