@@ -73,8 +73,9 @@ public class Form_Signin_2 extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblAziendaEdile = new JLabel("Azienda Edile");
+		lblAziendaEdile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAziendaEdile.setBackground(new Color(0, 0, 139));
-		lblAziendaEdile.setFont(new Font("Liberation Sans", Font.BOLD, 25));
+		lblAziendaEdile.setFont(new Font("Dialog", Font.BOLD, 21));
 		lblAziendaEdile.setForeground(Color.BLACK);
 		lblAziendaEdile.setBounds(28, 50, 162, 29);
 		lblAziendaEdile.setHorizontalTextPosition(JLabel.CENTER);
@@ -174,8 +175,8 @@ public class Form_Signin_2 extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblLogin = new JLabel("Info Impiegato");
-		lblLogin.setFont(new Font("Liberation Sans", Font.BOLD, 20));
-		lblLogin.setBounds(246, 12, 134, 24);
+		lblLogin.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblLogin.setBounds(246, 10, 148, 32);
 		contentPane.add(lblLogin);
 		
 		JButton btnNewButton_1 = new JButton("Registra");
@@ -184,8 +185,8 @@ public class Form_Signin_2 extends JFrame {
 				check();
 			}
 		});
-		btnNewButton_1.setForeground(SystemColor.text);
-		btnNewButton_1.setBackground(SystemColor.desktop);
+		btnNewButton_1.setForeground(new Color(255, 255, 255));
+		btnNewButton_1.setBackground(new Color(46, 139, 87));
 		btnNewButton_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnNewButton_1.setBounds(503, 263, 85, 25);
 		contentPane.add(btnNewButton_1);
@@ -197,16 +198,13 @@ public class Form_Signin_2 extends JFrame {
 				new Form_Login();
 			}
 		});
-		btnAnnulla.setForeground(SystemColor.text);		
+		btnAnnulla.setForeground(new Color(255, 255, 255));		
 		btnAnnulla.setBackground(new Color(178, 34, 34));
 		btnAnnulla.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnAnnulla.setBounds(406, 263, 85, 25);
 		contentPane.add(btnAnnulla);
 		
-		img = new ImageIcon(Form_Signin_1.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-confirm.png"));
-		imgScaled = img.getImage().getScaledInstance(24, 24, Image.SCALE_DEFAULT);
-		img = new ImageIcon(imgScaled);
-		
+		img = new ImageIcon(Form_Signin_1.class.getResource("/info.png"));
 		JButton button = new JButton(img);
 		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		button.setContentAreaFilled(false);
@@ -218,14 +216,14 @@ public class Form_Signin_2 extends JFrame {
 				warning += "- Stipendio e limite di vendite devono essere interi positivi\n";
 				warning += "- Le date inserite devono rispettare il formato [gg/mm/aaaa]\n";
 				warning += "- Le date non possono essere successive all'anno corrente\n";
-				warning += "- L'anno minimo per le date è il 1900\n";
+				warning += "- L'anno minimo per le date e' il 1900\n";
 				warning += "- La data di entrata deve essere maggiore di almeno 18 anni\n"
 						+ "  da quella di nascita: possono lavorare solo i maggiorenni\n";
 				JOptionPane.showMessageDialog(null, warning);
 			}
 		});
 		button.setBorder(null);
-		button.setBounds(385, 12, 24, 24);
+		button.setBounds(400, 10, 32, 32);
 		contentPane.add(button);
 		
 		setVisible(true);
@@ -318,7 +316,7 @@ public class Form_Signin_2 extends JFrame {
 					JOptionPane.showMessageDialog(null, "ERROR: Cognome non valido!");
 					return;
 				case 3:
-					JOptionPane.showMessageDialog(null, "ERROR: Data di nascita non valida!!");
+					JOptionPane.showMessageDialog(null, "ERROR: Data di nascita non valida!");
 					return;
 				case 4:
 					JOptionPane.showMessageDialog(null, "ERROR: Data di entrata non valida!");

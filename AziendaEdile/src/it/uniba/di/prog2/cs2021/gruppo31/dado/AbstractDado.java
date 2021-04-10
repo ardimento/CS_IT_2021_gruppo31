@@ -317,11 +317,11 @@ public abstract class AbstractDado implements Dado {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		String s = "Filettatura: " + filettatura.toString();
 		s += "\nCategoria: " + categoria;
-		s += "\nPrezzo: € " + prezzo;
+		s += "\nPrezzo: " + prezzo + " euro";
 		s += "\nNumero Pezzi: " + numPezzi;
 		s += "\nMateriale: " + materiale;
 		s += "\nRivestimento Protettivo: " + rivestimento;
-		s += String.format("\nPeso: %.3f grammi",peso);
+		s += String.format("\nPeso: %.2f grammi",peso);
 		s += "\nLuogo Produzione: " + luogoProduzione;
 		s += "\nData Produzione: " + formatter.format(dataProduzione);
 		return s;

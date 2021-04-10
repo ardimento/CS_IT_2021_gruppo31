@@ -56,8 +56,9 @@ public class Form_Signin_1 extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblAziendaEdile = new JLabel("Azienda Edile");
+		lblAziendaEdile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAziendaEdile.setBackground(new Color(0, 0, 139));
-		lblAziendaEdile.setFont(new Font("Liberation Sans", Font.BOLD, 25));
+		lblAziendaEdile.setFont(new Font("Dialog", Font.BOLD, 21));
 		lblAziendaEdile.setForeground(Color.BLACK);
 		lblAziendaEdile.setBounds(28, 50, 162, 29);
 		lblAziendaEdile.setHorizontalTextPosition(JLabel.CENTER);
@@ -96,8 +97,8 @@ public class Form_Signin_1 extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblLogin = new JLabel("Info Utente");
-		lblLogin.setFont(new Font("Liberation Sans", Font.BOLD, 20));
-		lblLogin.setBounds(246, 12, 104, 24);
+		lblLogin.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblLogin.setBounds(246, 10, 117, 32);
 		contentPane.add(lblLogin);
 		
 		ImageIcon user = new ImageIcon(Form_Login.class.getResource("/user.png"));
@@ -122,8 +123,8 @@ public class Form_Signin_1 extends JFrame {
 				check();
 			}
 		});
-		btnNewButton_1.setForeground(SystemColor.text);
-		btnNewButton_1.setBackground(SystemColor.desktop);
+		btnNewButton_1.setForeground(new Color(255, 255, 255));
+		btnNewButton_1.setBackground(new Color(46, 139, 87));
 		btnNewButton_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnNewButton_1.setBounds(503, 263, 85, 25);
 		contentPane.add(btnNewButton_1);
@@ -135,16 +136,13 @@ public class Form_Signin_1 extends JFrame {
 				new Form_Login();
 			}
 		});
-		btnAnnulla.setForeground(SystemColor.text);		
+		btnAnnulla.setForeground(new Color(255, 255, 255));		
 		btnAnnulla.setBackground(new Color(178, 34, 34));
 		btnAnnulla.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnAnnulla.setBounds(406, 263, 85, 25);
 		contentPane.add(btnAnnulla);
 		
-		img = new ImageIcon(Form_Signin_1.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-confirm.png"));
-		imgScaled = img.getImage().getScaledInstance(24, 24, Image.SCALE_DEFAULT);
-		img = new ImageIcon(imgScaled);
-		
+		img = new ImageIcon(Form_Signin_1.class.getResource("/info.png"));	
 		JButton button = new JButton(img);
 		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		button.setContentAreaFilled(false);
@@ -153,17 +151,17 @@ public class Form_Signin_1 extends JFrame {
 				String warning = "Vincoli username:\n";
 				warning += "- Lunghezza minima = 5\n";
 				warning += "- Lunghezza massima = 20\n";
-				warning += "- Può contenere solo lettere, cifre e i seguenti caratteri: {._-}\n";
+				warning += "- Puo' contenere solo lettere, cifre e i seguenti caratteri: {._-}\n";
 				warning += "- Deve iniziare con una lettera\n";
 				warning += "Vincoli password:\n";
 				warning += "- Lunghezza minima = 8\n";
 				warning += "- Lunghezza massima = 50\n";
-				warning += "- Può contenere solo lettere, cifre e i seguenti caratteri: {.,;:_+/*^=?!()\\\\[\\\\]{}@%#$-}\n";
+				warning += "- Puo' contenere solo lettere, cifre e i seguenti caratteri: {.,;:_+/*^=?!()\\\\[\\\\]{}@%#$-}\n";
 				JOptionPane.showMessageDialog(null, warning);
 			}
 		});
 		button.setBorder(null);
-		button.setBounds(355, 12, 24, 24);
+		button.setBounds(369, 10, 32, 32);
 		contentPane.add(button);
 		
 		setVisible(true);

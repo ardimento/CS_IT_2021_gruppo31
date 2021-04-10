@@ -100,7 +100,7 @@ public class Home extends JFrame {
 			lblDataDiEntrata.setBounds(10, 200, 222, 15);
 			contentPane.add(lblDataDiEntrata);
 
-			JLabel lblStipendioMensile = new JLabel("Stipendio mensile: € " + impiegato.getStipendioMensile());
+			JLabel lblStipendioMensile = new JLabel("Stipendio mensile: " + impiegato.getStipendioMensile() + " euro");
 			lblStipendioMensile.setBounds(10, 230, 222, 15);
 			contentPane.add(lblStipendioMensile);
 
@@ -167,9 +167,9 @@ public class Home extends JFrame {
 			}
 		});
 		btnEsci.setBounds(87, 12, 120, 25);
-		btnEsci.setForeground(SystemColor.activeCaptionText);
+		btnEsci.setForeground(new Color(0, 0, 0));
 		btnEsci.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		btnEsci.setBackground(SystemColor.info);
+		btnEsci.setBackground(new Color(255, 215, 0));
 		panel.add(btnEsci);
 		
 		//Tabella vendite
@@ -187,6 +187,7 @@ public class Home extends JFrame {
 					tmp[i][3] = "€ " + Double.toString(vendite.get(i).getDado().getPrezzo() * (double)vendite.get(i).getNumPezzi());
 				}
 				table = new JTable(tmp,colonne);
+				table.setBackground(new Color(204, 255, 153));
 				table.setOpaque(true);
 				table.setFillsViewportHeight(true);
 				table.getTableHeader().setBackground(Color.WHITE);

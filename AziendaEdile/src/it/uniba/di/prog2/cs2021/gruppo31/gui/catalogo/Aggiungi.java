@@ -87,18 +87,19 @@ public class Aggiungi extends JFrame {
 		button_1.setForeground(Color.WHITE);
 		button_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		button_1.setBackground(new Color(178, 34, 34));
-		button_1.setBounds(357, 263, 75, 25);
+		button_1.setBounds(355, 263, 75, 25);
 		contentPane.add(button_1);
 		
 		JScrollPane scrollPane = new JScrollPane((Component) null, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(12, 12, 320, 276);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 		contentPane.add(scrollPane);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(320, 400));
 		panel.setBorder(null);
-		panel.setBackground(new Color(211, 211, 211));
+		panel.setBackground(new Color(255, 255, 204));
 		scrollPane.setViewportView(panel);
 		
 		JLabel lblFilettatura = new JLabel("Filettatura:");
@@ -200,15 +201,12 @@ public class Aggiungi extends JFrame {
 		btnAggiungi.setForeground(Color.WHITE);
 		btnAggiungi.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnAggiungi.setBackground(new Color(0, 153, 51));
-		btnAggiungi.setBounds(357, 229, 75, 25);
+		btnAggiungi.setBounds(355, 229, 75, 25);
 		contentPane.add(btnAggiungi);
 		
-		ImageIcon img = new ImageIcon(Form_Signin_1.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-confirm.png"));
-		Image imgScaled = img.getImage().getScaledInstance(24, 24, Image.SCALE_DEFAULT);
-		img = new ImageIcon(imgScaled);
-		
+		ImageIcon img = new ImageIcon(Form_Signin_1.class.getResource("/info.png"));	
 		JButton button1 = new JButton(img);
-		button1.setBounds(408, 200, 24, 24);
+		button1.setBounds(398, 190, 32, 32);
 		contentPane.add(button1);
 		button1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		button1.setContentAreaFilled(false);
@@ -217,22 +215,15 @@ public class Aggiungi extends JFrame {
 				String warning = "Vincoli data produzione:\n";
 				warning += "- Le date inserite devono rispettare il formato [gg/mm/aaaa]\n";
 				warning += "- Le date non possono essere successive all'anno corrente\n";
-				warning += "- L'anno minimo per le date è il 1900\n";
+				warning += "- L'anno minimo per le date e' il 1900\n";
 				warning += "Ulteriori vincoli:\n";
-				warning += "- Luogo di produzione può contenere massimo 50 caratteri\n";
+				warning += "- Luogo di produzione puo' contenere massimo 50 caratteri\n";
 				warning += "- Prezzo deve contenere un numero decimale positivo\n";
 				warning += "- Numero pezzi deve contenere un intero positivo";
 				JOptionPane.showMessageDialog(null, warning);
 			}
 		});
 		button1.setBorder(null);
-		
-		JLabel lblInfo = new JLabel("Info");
-		lblInfo.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		lblInfo.setOpaque(true);
-		lblInfo.setBackground(Color.YELLOW);
-		lblInfo.setBounds(378, 200, 54, 24);
-		contentPane.add(lblInfo);
 		
 		setVisible(true);
 	}

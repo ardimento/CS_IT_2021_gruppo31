@@ -119,6 +119,7 @@ public class Catalogo extends JFrame {
 				DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
 				cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 				table = new JTable(tmp,colonne);
+				table.setBackground(new Color(204, 204, 255));
 				table.setOpaque(true);
 				table.setFillsViewportHeight(true);
 				table.getTableHeader().setBackground(Color.WHITE);

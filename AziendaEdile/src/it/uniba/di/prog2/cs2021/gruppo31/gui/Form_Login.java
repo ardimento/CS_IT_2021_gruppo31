@@ -69,11 +69,12 @@ public class Form_Login extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblAziendaEdile = new JLabel("Azienda Edile");
+		lblAziendaEdile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAziendaEdile.setBackground(new Color(0, 0, 139));
-		lblAziendaEdile.setFont(new Font("Liberation Sans", Font.BOLD, 25));
+		lblAziendaEdile.setFont(new Font("Dialog", Font.BOLD, 21));
 		lblAziendaEdile.setForeground(Color.BLACK);
 		lblAziendaEdile.setBounds(28, 50, 162, 29);
-		lblAziendaEdile.setHorizontalTextPosition(JLabel.CENTER);
+		lblAziendaEdile.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAziendaEdile.setVerticalTextPosition(JLabel.TOP);
 		contentPane.add(lblAziendaEdile);
 		
@@ -93,10 +94,11 @@ public class Form_Login extends JFrame {
 				new Form_Signin_1();
 			}
 		});
-		btnNewButton.setForeground(SystemColor.activeCaption);
+		btnNewButton.setForeground(new Color(0, 0, 128));
 		btnNewButton.setContentAreaFilled(false);
 		btnNewButton.setBorder(null);
 		btnNewButton.setBounds(518, 280, 75, 15);
+		btnNewButton.setFont(new Font("Dialog", Font.BOLD, 12));
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Accedi");
@@ -106,8 +108,8 @@ public class Form_Login extends JFrame {
 				login();
 			}
 		});
-		btnNewButton_1.setForeground(SystemColor.text);
-		btnNewButton_1.setBackground(SystemColor.desktop);
+		btnNewButton_1.setForeground(new Color(255, 255, 255));
+		btnNewButton_1.setBackground(new Color(0, 128, 128));
 		btnNewButton_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnNewButton_1.setBounds(456, 202, 85, 25);
 		contentPane.add(btnNewButton_1);
@@ -132,11 +134,12 @@ public class Form_Login extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblSeiUnNuovo = new JLabel("Sei un nuovo utente?");
+		lblSeiUnNuovo.setFont(new Font("Dialog", Font.BOLD, 12));
 		lblSeiUnNuovo.setBounds(362, 280, 150, 15);
 		contentPane.add(lblSeiUnNuovo);
 		
 		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setFont(new Font("Liberation Sans", Font.BOLD, 20));
+		lblLogin.setFont(new Font("Dialog", Font.BOLD, 18));
 		lblLogin.setBounds(373, 29, 62, 24);
 		contentPane.add(lblLogin);
 		
