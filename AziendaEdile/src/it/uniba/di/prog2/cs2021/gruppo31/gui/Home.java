@@ -26,7 +26,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.border.CompoundBorder;
@@ -207,6 +206,8 @@ public class Home extends JFrame {
 			}
 
 			JLabel lblNewLabel_3 = new JLabel("Le tue vendite");
+			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_3.setFont(new Font("Lucida Sans", Font.BOLD, 13));
 			lblNewLabel_3.setBorder(new CompoundBorder(new LineBorder(new Color(0, 0, 0), 2, true), new LineBorder(new Color(255, 255, 0), 1, true)));
 			lblNewLabel_3.setOpaque(true);
 			lblNewLabel_3.setBackground(new Color(255, 153, 0));

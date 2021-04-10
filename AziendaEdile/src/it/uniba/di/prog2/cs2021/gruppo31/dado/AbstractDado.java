@@ -316,11 +316,55 @@ public abstract class AbstractDado implements Dado {
 	public String toString() {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		String s = "Filettatura: " + filettatura.toString();
+		String tmpMateriale = null,tmpRivestimento = null;
+		
+		switch(materiale) {
+		case Acciaio_5:
+			tmpMateriale = "Acciaio 5";
+			break;
+		case Acciaio_8:
+			tmpMateriale = "Acciaio 8";
+			break;
+		case Acciaio_10:
+			tmpMateriale = "Acciaio 10";
+			break;
+		case AcciaioInox_A2:
+			tmpMateriale = "Acciaio Inox A2";
+			break;
+		case AcciaioInox_A4:
+			tmpMateriale = "Acciaio Inox A4";
+			break;
+		case Ottone_OT58:
+			tmpMateriale = "Ottone OT58";
+			break;
+		case Ottone_OT63:
+			tmpMateriale = "Ottone OT63";
+			break;
+		}
+	
+		switch(rivestimento) {
+		case Nessuno:
+			tmpRivestimento = "Nessuno";
+			break;
+		case Brunitura:
+			tmpRivestimento = "Brunitura";
+			break;
+		case Fosfatazione:
+			tmpRivestimento = "Fosfatazione";
+			break;
+		case Zinco_Nichel:
+			tmpRivestimento = "Zinco-Nichel";
+			break;
+		case Zincatura_a_caldo:
+			tmpRivestimento = "Zincatura a caldo";
+			break;
+		}
+		
 		s += "\nCategoria: " + categoria;
 		s += "\nPrezzo: " + prezzo + " euro";
 		s += "\nNumero Pezzi: " + numPezzi;
-		s += "\nMateriale: " + materiale;
-		s += "\nRivestimento Protettivo: " + rivestimento;
+		s += "\nMateriale: " + tmpMateriale;
+		s += "\nRivestimento Protettivo: " + tmpRivestimento;
 		s += String.format("\nPeso: %.2f grammi",peso);
 		s += "\nLuogo Produzione: " + luogoProduzione;
 		s += "\nData Produzione: " + formatter.format(dataProduzione);

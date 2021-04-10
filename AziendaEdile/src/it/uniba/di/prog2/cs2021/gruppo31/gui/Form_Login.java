@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -97,8 +96,8 @@ public class Form_Login extends JFrame {
 		btnNewButton.setForeground(new Color(0, 0, 128));
 		btnNewButton.setContentAreaFilled(false);
 		btnNewButton.setBorder(null);
-		btnNewButton.setBounds(518, 280, 75, 15);
-		btnNewButton.setFont(new Font("Dialog", Font.BOLD, 12));
+		btnNewButton.setBounds(515, 275, 75, 15);
+		btnNewButton.setFont(new Font("Lucida Sans", Font.BOLD, 12));
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Accedi");
@@ -134,8 +133,8 @@ public class Form_Login extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblSeiUnNuovo = new JLabel("Sei un nuovo utente?");
-		lblSeiUnNuovo.setFont(new Font("Dialog", Font.BOLD, 12));
-		lblSeiUnNuovo.setBounds(362, 280, 150, 15);
+		lblSeiUnNuovo.setFont(new Font("Lucida Sans", Font.BOLD, 12));
+		lblSeiUnNuovo.setBounds(385, 275, 131, 15);
 		contentPane.add(lblSeiUnNuovo);
 		
 		JLabel lblLogin = new JLabel("Login");
@@ -153,10 +152,12 @@ public class Form_Login extends JFrame {
 		contentPane.add(label);
 		
 		JLabel lblUsername = new JLabel("Password");
+		lblUsername.setFont(new Font("Lucida Sans", Font.BOLD, 12));
 		lblUsername.setBounds(291, 140, 70, 15);
 		contentPane.add(lblUsername);
 		
 		JLabel lblUsername_1 = new JLabel("Username");
+		lblUsername_1.setFont(new Font("Lucida Sans", Font.BOLD, 12));
 		lblUsername_1.setBounds(291, 80, 72, 15);
 		contentPane.add(lblUsername_1);
 		

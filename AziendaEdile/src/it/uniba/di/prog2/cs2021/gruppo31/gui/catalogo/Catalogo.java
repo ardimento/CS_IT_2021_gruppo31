@@ -112,7 +112,7 @@ public class Catalogo extends JFrame {
 				String tmp[][] = new String[dadi.size()][4];
 				for(int i=0;i<dadi.size();i++) {
 					tmp[i][0] = Integer.toString(dadi.get(i).getCodice());
-					tmp[i][1] = "€ " + Double.toString(dadi.get(i).getPrezzo());
+					tmp[i][1] = Double.toString(dadi.get(i).getPrezzo()) + " euro";
 					tmp[i][2] = Integer.toString(dadi.get(i).getNumPezzi());
 				}
 				

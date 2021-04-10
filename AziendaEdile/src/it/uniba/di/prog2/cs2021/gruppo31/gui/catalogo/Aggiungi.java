@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Dimension;
 import javax.swing.border.SoftBevelBorder;
 import it.uniba.di.prog2.cs2021.gruppo31.HomePage;
@@ -35,7 +34,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.border.EtchedBorder;
 
 @SuppressWarnings("rawtypes")
 public class Aggiungi extends JFrame {

@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -106,14 +105,17 @@ public class Form_Signin_1 extends JFrame {
 		user = new ImageIcon(userScaled);
 		
 		JLabel lblUsername = new JLabel("Inserisci la password:");
+		lblUsername.setFont(new Font("Lucida Sans", Font.BOLD, 12));
 		lblUsername.setBounds(246, 120, 155, 15);
 		contentPane.add(lblUsername);
 		
 		JLabel lblUsername_1 = new JLabel("Inserisci lo username:");
+		lblUsername_1.setFont(new Font("Lucida Sans", Font.BOLD, 12));
 		lblUsername_1.setBounds(246, 60, 156, 15);
 		contentPane.add(lblUsername_1);
 		
 		JLabel lblInserisciNuocamenteLa = new JLabel("Inserisci nuovamente la password:");
+		lblInserisciNuocamenteLa.setFont(new Font("Lucida Sans", Font.BOLD, 12));
 		lblInserisciNuocamenteLa.setBounds(246, 180, 247, 15);
 		contentPane.add(lblInserisciNuocamenteLa);
 		
@@ -151,12 +153,12 @@ public class Form_Signin_1 extends JFrame {
 				String warning = "Vincoli username:\n";
 				warning += "- Lunghezza minima = 5\n";
 				warning += "- Lunghezza massima = 20\n";
-				warning += "- Puo' contenere solo lettere, cifre e i seguenti caratteri: {._-}\n";
+				warning += "- Puo' contenere solo lettere, cifre e i seguenti caratteri: { ._- }\n";
 				warning += "- Deve iniziare con una lettera\n";
 				warning += "Vincoli password:\n";
 				warning += "- Lunghezza minima = 8\n";
 				warning += "- Lunghezza massima = 50\n";
-				warning += "- Puo' contenere solo lettere, cifre e i seguenti caratteri: {.,;:_+/*^=?!()\\\\[\\\\]{}@%#$-}\n";
+				warning += "- Puo' contenere solo lettere, cifre e i seguenti caratteri: { .,;:_+/*^=?!()[]{}@%#$- }\n";
 				JOptionPane.showMessageDialog(null, warning);
 			}
 		});
