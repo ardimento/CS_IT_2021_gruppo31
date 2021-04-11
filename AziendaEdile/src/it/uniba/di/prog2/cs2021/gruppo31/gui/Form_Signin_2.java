@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +24,8 @@ import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utility_Utente;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,171 +65,189 @@ public class Form_Signin_2 extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		
-		ImageIcon img = new ImageIcon(Form_Signin_2.class.getResource("/worker.png"));
-		Image imgScaled = img.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
-		img = new ImageIcon(imgScaled);
+		try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT,new File("res/Roboto-Medium.ttf")).deriveFont(13f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(font);
+			
+			ImageIcon img = new ImageIcon(Form_Signin_2.class.getResource("/worker.png"));
+			Image imgScaled = img.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+			img = new ImageIcon(imgScaled);
+			
+			JLabel lblNewLabel_1 = new JLabel("");
+			lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_1.setIcon(img);
+			lblNewLabel_1.setBounds(28, 80, 162, 163);
+			contentPane.add(lblNewLabel_1);
+			
+			JLabel lblAziendaEdile = new JLabel("Azienda Edile");
+			lblAziendaEdile.setHorizontalAlignment(SwingConstants.CENTER);
+			lblAziendaEdile.setBackground(new Color(0, 0, 139));
+			lblAziendaEdile.setFont(new Font("Dialog", Font.BOLD, 21));
+			lblAziendaEdile.setForeground(Color.BLACK);
+			lblAziendaEdile.setBounds(28, 50, 162, 29);
+			lblAziendaEdile.setHorizontalTextPosition(JLabel.CENTER);
+			lblAziendaEdile.setVerticalTextPosition(JLabel.TOP);
+			contentPane.add(lblAziendaEdile);
+			
+			// Pannello info
+			JPanel panel = new JPanel();
+			panel.setBorder(null);
+			panel.setBackground(new Color(176, 224, 230));
+			panel.setLayout(null);
+			panel.setPreferredSize(new Dimension(342, 480));
+			
+			nome = new JTextField();
+			nome.setBounds(20, 40, 250, 30);
+			panel.add(nome);
+			
+			cognome = new JTextField();
+			cognome.setBounds(20, 100, 250, 30);
+			panel.add(cognome);
+			
+			nascita = new JTextField();
+			nascita.setBounds(20, 160, 250, 30);
+			panel.add(nascita);
+			
+			mansione = new JTextField();
+			mansione.setBounds(20, 220, 250, 30);
+			panel.add(mansione);
+			
+			entrata = new JTextField();
+			entrata.setBounds(20, 280, 250, 30);
+			panel.add(entrata);
+			
+			stipendio = new JTextField();
+			stipendio.setBounds(20, 340, 250, 30);
+			panel.add(stipendio);
+			
+			vendite = new JTextField();
+			vendite.setBounds(20, 400, 250, 30);
+			panel.add(vendite);
+			
+			JLabel lblNome = new JLabel("Nome:");
+			lblNome.setBounds(20, 20, 45, 15);
+			lblNome.setFont(font);
+			panel.add(lblNome);
+			
+			JLabel lblCognome = new JLabel("Cognome:");
+			lblCognome.setBounds(20, 80, 71, 15);
+			lblCognome.setFont(font);
+			panel.add(lblCognome);
+			
+			JLabel lblDataDiNascita = new JLabel("Data di nascita:");
+			lblDataDiNascita.setBounds(20, 140, 112, 15);
+			lblDataDiNascita.setFont(font);
+			panel.add(lblDataDiNascita);
+			
+			JLabel lblMansione = new JLabel("Mansione:");
+			lblMansione.setBounds(20, 200, 74, 15);
+			lblMansione.setFont(font);
+			panel.add(lblMansione);
+			
+			JLabel lblDataDiEntrata = new JLabel("Data di entrata:");
+			lblDataDiEntrata.setBounds(20, 260, 114, 15);
+			lblDataDiEntrata.setFont(font);
+			panel.add(lblDataDiEntrata);
+			
+			JLabel lblStipendioMensile = new JLabel("Stipendio mensile:");
+			lblStipendioMensile.setBounds(20, 320, 132, 15);
+			lblStipendioMensile.setFont(font);
+			panel.add(lblStipendioMensile);
+			
+			JLabel lblVendite = new JLabel("Limite di vendite annuo:");
+			lblVendite.setBounds(20, 380, 171, 15);
+			lblVendite.setFont(font);
+			panel.add(lblVendite);
+			
+			chckbxSeiUnAmministratore = new JCheckBox("Sei un amministratore?");
+			chckbxSeiUnAmministratore.setBackground(new Color(176, 224, 230));
+			chckbxSeiUnAmministratore.setBounds(20, 440, 189, 23);
+			chckbxSeiUnAmministratore.setFont(font);
+			panel.add(chckbxSeiUnAmministratore);
+			
+			JScrollPane scroll = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			scroll.setBounds(246, 50, 342, 193);
+			scroll.getVerticalScrollBar().setUnitIncrement(10);
+			contentPane.add(scroll);
+			
+			JButton btnNewButton_2 = new JButton("X");
+			btnNewButton_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.exit(0);
+				}
+			});
+			btnNewButton_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+			btnNewButton_2.setSize(new Dimension(10, 10));
+			btnNewButton_2.setBackground(new Color(255, 51, 0));
+			btnNewButton_2.setFont(new Font("Dialog", Font.BOLD, 10));
+			btnNewButton_2.setBounds(558, 0, 42, 23);
+			contentPane.add(btnNewButton_2);
+			
+			JLabel lblNewLabel = new JLabel("");
+			lblNewLabel.setOpaque(true);
+			lblNewLabel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+			lblNewLabel.setBounds(0, 0, 228, 400);
+			contentPane.add(lblNewLabel);
+			
+			JLabel lblLogin = new JLabel("Info Impiegato");
+			lblLogin.setFont(new Font("Dialog", Font.BOLD, 18));
+			lblLogin.setBounds(246, 10, 148, 32);
+			contentPane.add(lblLogin);
+			
+			JButton btnNewButton_1 = new JButton("Registra");
+			btnNewButton_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					check();
+				}
+			});
+			btnNewButton_1.setForeground(new Color(255, 255, 255));
+			btnNewButton_1.setBackground(new Color(46, 139, 87));
+			btnNewButton_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+			btnNewButton_1.setBounds(503, 263, 85, 25);
+			contentPane.add(btnNewButton_1);
+			
+			JButton btnAnnulla = new JButton("Annulla");
+			btnAnnulla.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					new Form_Login();
+				}
+			});
+			btnAnnulla.setForeground(new Color(255, 255, 255));		
+			btnAnnulla.setBackground(new Color(178, 34, 34));
+			btnAnnulla.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+			btnAnnulla.setBounds(406, 263, 85, 25);
+			contentPane.add(btnAnnulla);
+			
+			img = new ImageIcon(Form_Signin_1.class.getResource("/info.png"));
+			JButton button = new JButton(img);
+			button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			button.setContentAreaFilled(false);
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String warning = "Vincoli di inserimento:\n";
+					warning += "- Nome e cognome devono contenere solo lettere\n";
+					warning += "- Nome, cognome e mansione possono contenere massimo 20 caratteri\n";
+					warning += "- Stipendio e limite di vendite devono essere interi positivi\n";
+					warning += "- Le date inserite devono rispettare il formato [gg/mm/aaaa]\n";
+					warning += "- Le date non possono essere successive all'anno corrente\n";
+					warning += "- L'anno minimo per le date e' il 1900\n";
+					warning += "- La data di entrata deve essere maggiore di almeno 18 anni\n"
+							+ "  da quella di nascita: possono lavorare solo i maggiorenni\n";
+					JOptionPane.showMessageDialog(null, warning);
+				}
+			});
+			button.setBorder(null);
+			button.setBounds(400, 10, 32, 32);
+			contentPane.add(button);
+			
+			setVisible(true);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(img);
-		lblNewLabel_1.setBounds(28, 80, 162, 163);
-		contentPane.add(lblNewLabel_1);
-		
-		JLabel lblAziendaEdile = new JLabel("Azienda Edile");
-		lblAziendaEdile.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAziendaEdile.setBackground(new Color(0, 0, 139));
-		lblAziendaEdile.setFont(new Font("Dialog", Font.BOLD, 21));
-		lblAziendaEdile.setForeground(Color.BLACK);
-		lblAziendaEdile.setBounds(28, 50, 162, 29);
-		lblAziendaEdile.setHorizontalTextPosition(JLabel.CENTER);
-		lblAziendaEdile.setVerticalTextPosition(JLabel.TOP);
-		contentPane.add(lblAziendaEdile);
-		
-		// Pannello info
-		JPanel panel = new JPanel();
-		panel.setBorder(null);
-		panel.setBackground(new Color(176, 224, 230));
-		panel.setLayout(null);
-		panel.setPreferredSize(new Dimension(342, 480));
-		
-		nome = new JTextField();
-		nome.setBounds(20, 40, 250, 30);
-		panel.add(nome);
-		
-		cognome = new JTextField();
-		cognome.setBounds(20, 100, 250, 30);
-		panel.add(cognome);
-		
-		nascita = new JTextField();
-		nascita.setBounds(20, 160, 250, 30);
-		panel.add(nascita);
-		
-		mansione = new JTextField();
-		mansione.setBounds(20, 220, 250, 30);
-		panel.add(mansione);
-		
-		entrata = new JTextField();
-		entrata.setBounds(20, 280, 250, 30);
-		panel.add(entrata);
-		
-		stipendio = new JTextField();
-		stipendio.setBounds(20, 340, 250, 30);
-		panel.add(stipendio);
-		
-		vendite = new JTextField();
-		vendite.setBounds(20, 400, 250, 30);
-		panel.add(vendite);
-		
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(20, 20, 45, 15);
-		panel.add(lblNome);
-		
-		JLabel lblCognome = new JLabel("Cognome:");
-		lblCognome.setBounds(20, 80, 71, 15);
-		panel.add(lblCognome);
-		
-		JLabel lblDataDiNascita = new JLabel("Data di nascita:");
-		lblDataDiNascita.setBounds(20, 140, 112, 15);
-		panel.add(lblDataDiNascita);
-		
-		JLabel lblMansione = new JLabel("Mansione:");
-		lblMansione.setBounds(20, 200, 74, 15);
-		panel.add(lblMansione);
-		
-		JLabel lblDataDiEntrata = new JLabel("Data di entrata:");
-		lblDataDiEntrata.setBounds(20, 260, 114, 15);
-		panel.add(lblDataDiEntrata);
-		
-		JLabel lblStipendioMensile = new JLabel("Stipendio mensile:");
-		lblStipendioMensile.setBounds(20, 320, 132, 15);
-		panel.add(lblStipendioMensile);
-		
-		JLabel lblVendite = new JLabel("Limite di vendite annuo:");
-		lblVendite.setBounds(20, 380, 171, 15);
-		panel.add(lblVendite);
-		
-		chckbxSeiUnAmministratore = new JCheckBox("Sei un amministratore?");
-		chckbxSeiUnAmministratore.setBackground(new Color(176, 224, 230));
-		chckbxSeiUnAmministratore.setBounds(20, 440, 189, 23);
-		panel.add(chckbxSeiUnAmministratore);
-		
-		JScrollPane scroll = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setBounds(246, 50, 342, 193);
-		scroll.getVerticalScrollBar().setUnitIncrement(10);
-		contentPane.add(scroll);
-		
-		JButton btnNewButton_2 = new JButton("X");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		btnNewButton_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		btnNewButton_2.setSize(new Dimension(10, 10));
-		btnNewButton_2.setBackground(new Color(255, 51, 0));
-		btnNewButton_2.setFont(new Font("Dialog", Font.BOLD, 10));
-		btnNewButton_2.setBounds(558, 0, 42, 23);
-		contentPane.add(btnNewButton_2);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setOpaque(true);
-		lblNewLabel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
-		lblNewLabel.setBounds(0, 0, 228, 400);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblLogin = new JLabel("Info Impiegato");
-		lblLogin.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblLogin.setBounds(246, 10, 148, 32);
-		contentPane.add(lblLogin);
-		
-		JButton btnNewButton_1 = new JButton("Registra");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				check();
-			}
-		});
-		btnNewButton_1.setForeground(new Color(255, 255, 255));
-		btnNewButton_1.setBackground(new Color(46, 139, 87));
-		btnNewButton_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		btnNewButton_1.setBounds(503, 263, 85, 25);
-		contentPane.add(btnNewButton_1);
-		
-		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new Form_Login();
-			}
-		});
-		btnAnnulla.setForeground(new Color(255, 255, 255));		
-		btnAnnulla.setBackground(new Color(178, 34, 34));
-		btnAnnulla.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		btnAnnulla.setBounds(406, 263, 85, 25);
-		contentPane.add(btnAnnulla);
-		
-		img = new ImageIcon(Form_Signin_1.class.getResource("/info.png"));
-		JButton button = new JButton(img);
-		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button.setContentAreaFilled(false);
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String warning = "Vincoli di inserimento:\n";
-				warning += "- Nome e cognome devono contenere solo lettere\n";
-				warning += "- Nome, cognome e mansione possono contenere massimo 20 caratteri\n";
-				warning += "- Stipendio e limite di vendite devono essere interi positivi\n";
-				warning += "- Le date inserite devono rispettare il formato [gg/mm/aaaa]\n";
-				warning += "- Le date non possono essere successive all'anno corrente\n";
-				warning += "- L'anno minimo per le date e' il 1900\n";
-				warning += "- La data di entrata deve essere maggiore di almeno 18 anni\n"
-						+ "  da quella di nascita: possono lavorare solo i maggiorenni\n";
-				JOptionPane.showMessageDialog(null, warning);
-			}
-		});
-		button.setBorder(null);
-		button.setBounds(400, 10, 32, 32);
-		contentPane.add(button);
-		
-		setVisible(true);
+		} catch (FontFormatException | IOException e1) {
+			JOptionPane.showMessageDialog(null, "ERROR: Errore nella risoluzione del font!");
+			return;
+		}
 	}
 	
 	// Controlla campi inseriti
