@@ -193,6 +193,7 @@ public class Aggiungi extends JFrame {
 		JButton btnAggiungi = new JButton("Aggiungi");
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				check(home);
 			}
 		});
@@ -239,18 +240,21 @@ public class Aggiungi extends JFrame {
 		if(tmpFilettatura.length() == 0 || tmpMateriale.length() == 0 || tmpCategoria.length() == 0 || tmpRivestimento.length() == 0
 				|| tmpLuogo.length() == 0 || tmpData.length() == 0 || tmpPrezzo.length() == 0 || tmpPezzi.length() == 0)
 		{
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Alcuni campi sono vuoti!");
 			return;
 		}
 		
 		if(tmpLuogo.length() > 50)
 		{
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Luogo di produzione non valido!");
 			return;
 		}
 
 		try {
 			if(dateCheck(tmpData) == 1) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Data di produzione non valida!");
 				return;
 			}
@@ -264,12 +268,14 @@ public class Aggiungi extends JFrame {
 			try {
 				tmpPrezzoConv = Double.parseDouble(tmpPrezzo);
 			} catch (NumberFormatException e) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Prezzo non valido!");
 				return;
 			}
 			try {
 				tmpPezziConv = Integer.parseInt(tmpPezzi);
 			} catch (NumberFormatException e) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Numero di pezzi non valido!");
 				return;
 			}
@@ -330,17 +336,21 @@ public class Aggiungi extends JFrame {
 			home.addDado(dado);
 			
 		} catch (AziendaException e) {
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			return;
 		} catch (ParseException e) {
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Data di produzione non valida!");
 			return;
 		} catch (SQLException e) {
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Errore interno database!");
 			return;
 		}
 
 		dispose();
+		setCursor(Cursor.getDefaultCursor());
 		new Catalogo(home);
 		JOptionPane.showMessageDialog(null, "Dado aggiunto al catalogo!");
 	}

@@ -117,13 +117,13 @@ public class Filettatura {
 	@Override
 	public String toString()
 	{
-		String s = "[Metrica: " + metrica;
+		String s = "- Metrica: " + metrica;
 		if(passoGrosso == true)
-			s += " - Passo grosso: " + dimensionePasso;
+			s += "\n- Passo grosso: " + dimensionePasso;
 		else
-			s += " - Passo fine: " + dimensionePasso;
-		s += " - MisuraPiatti: " + misuraPiatti;
-		s += " - Altezza : " + altezza + "]";
+			s += "\n- Passo fine: " + dimensionePasso;
+		s += "\n- Misura Piatti: " + misuraPiatti;
+		s += "\n- Altezza : " + altezza;
 		return s;
 	}
 }

@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
@@ -44,7 +42,7 @@ public class Form_Signin_1 extends JFrame {
 		
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(0, 0, 128));
-		contentPane.setBackground(UIManager.getColor("Button.select"));
+		contentPane.setBackground(new Color(204, 204, 255));
 		contentPane.setBorder(null);
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
@@ -101,7 +99,7 @@ public class Form_Signin_1 extends JFrame {
 			
 			JLabel lblNewLabel = new JLabel("");
 			lblNewLabel.setOpaque(true);
-			lblNewLabel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+			lblNewLabel.setBackground(new Color(51, 153, 204));
 			lblNewLabel.setBounds(0, 0, 228, 400);
 			contentPane.add(lblNewLabel);
 			
@@ -132,6 +130,7 @@ public class Form_Signin_1 extends JFrame {
 			JButton btnNewButton_1 = new JButton("Avanti");
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					check();
 				}
 			});
@@ -193,6 +192,7 @@ public class Form_Signin_1 extends JFrame {
 		
 		if(user.length() == 0 || pass.length() == 0 || pass_1.length() == 0)
 		{
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Alcuni campi sono vuoti!");
 			return;
 		}
@@ -200,6 +200,7 @@ public class Form_Signin_1 extends JFrame {
 		if(pass.equals(pass_1));
 		else
 		{
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Le password non coincidono!");
 			return;
 		}
@@ -207,6 +208,7 @@ public class Form_Signin_1 extends JFrame {
 		int res = Utility_Utente.checkCorrettezzaCredenziali(user,pass);
 		if(res == 0);
 		else {
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Vincoli non rispettati!\nPremere su Info per controllare i vincoli.");
 			return;
 		}
@@ -216,14 +218,17 @@ public class Form_Signin_1 extends JFrame {
 		} catch (AziendaException e) {
 			if(e.getMessage().equals(ErroriDB.USERNAME_NOT_FOUND)) { //Username valido
 				dispose();
+				setCursor(Cursor.getDefaultCursor());
 				new Form_Signin_2(user,pass);
 				return;
 			}
 		} catch (Exception e) {
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Errore interno database!");
 			return;
 		}
 		
+		setCursor(Cursor.getDefaultCursor());
 		JOptionPane.showMessageDialog(null, "ERROR: Username già in uso!");
 		return;
 	}

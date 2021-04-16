@@ -1,7 +1,6 @@
 package it.uniba.di.prog2.cs2021.gruppo31.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import java.awt.Image;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -56,7 +55,7 @@ public class Form_Login extends JFrame {
 		
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(0, 0, 128));
-		contentPane.setBackground(UIManager.getColor("Button.select"));
+		contentPane.setBackground(new Color(204, 204, 255));
 		contentPane.setBorder(null);
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
@@ -105,7 +104,7 @@ public class Form_Login extends JFrame {
 			btnNewButton.setForeground(new Color(0, 0, 128));
 			btnNewButton.setContentAreaFilled(false);
 			btnNewButton.setBorder(null);
-			btnNewButton.setBounds(520, 275, 75, 15);
+			btnNewButton.setBounds(518, 275, 75, 15);
 			btnNewButton.setFont(font);
 			contentPane.add(btnNewButton);
 			
@@ -137,13 +136,13 @@ public class Form_Login extends JFrame {
 			
 			JLabel lblNewLabel = new JLabel("");
 			lblNewLabel.setOpaque(true);
-			lblNewLabel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+			lblNewLabel.setBackground(new Color(51, 153, 204));
 			lblNewLabel.setBounds(0, 0, 228, 400);
 			contentPane.add(lblNewLabel);
 			
 			JLabel lblSeiUnNuovo = new JLabel("Sei un nuovo utente?");
 			lblSeiUnNuovo.setFont(font);
-			lblSeiUnNuovo.setBounds(405, 275, 133, 15);
+			lblSeiUnNuovo.setBounds(400, 275, 133, 15);
 			contentPane.add(lblSeiUnNuovo);
 			
 			JLabel lblLogin = new JLabel("Login");

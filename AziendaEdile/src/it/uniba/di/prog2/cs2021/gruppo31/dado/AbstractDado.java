@@ -315,7 +315,7 @@ public abstract class AbstractDado implements Dado {
 	@Override
 	public String toString() {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		String s = "Filettatura: " + filettatura.toString();
+		String s = "Filettatura:\n" + filettatura.toString() + "\n";
 		String tmpMateriale = null,tmpRivestimento = null;
 		
 		switch(materiale) {
@@ -361,7 +361,7 @@ public abstract class AbstractDado implements Dado {
 		}
 		
 		s += "\nCategoria: " + categoria;
-		s += "\nPrezzo: " + prezzo + " euro";
+		s += String.format("\nPrezzo: %.2f euro",prezzo);
 		s += "\nNumero Pezzi: " + numPezzi;
 		s += "\nMateriale: " + tmpMateriale;
 		s += "\nRivestimento Protettivo: " + tmpRivestimento;

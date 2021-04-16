@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
@@ -60,7 +59,7 @@ public class Form_Signin_2 extends JFrame {
 		
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(0, 0, 128));
-		contentPane.setBackground(UIManager.getColor("Button.select"));
+		contentPane.setBackground(new Color(204, 204, 255));
 		contentPane.setBorder(null);
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
@@ -186,7 +185,7 @@ public class Form_Signin_2 extends JFrame {
 			
 			JLabel lblNewLabel = new JLabel("");
 			lblNewLabel.setOpaque(true);
-			lblNewLabel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+			lblNewLabel.setBackground(new Color(51, 153, 204));
 			lblNewLabel.setBounds(0, 0, 228, 400);
 			contentPane.add(lblNewLabel);
 			
@@ -198,6 +197,7 @@ public class Form_Signin_2 extends JFrame {
 			JButton btnNewButton_1 = new JButton("Registra");
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					check();
 				}
 			});
@@ -263,32 +263,38 @@ public class Form_Signin_2 extends JFrame {
 		if(tmpNome.length() == 0 || tmpCognome.length() == 0 || tmpNascita.length() == 0 || tmpMansione.length() == 0
 				|| tmpEntrata.length() == 0 || tmpStipendio.length() == 0 || tmpVendite.length() == 0)
 		{
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Alcuni campi sono vuoti!");
 			return;
 		}
 		
 		if(tmpNome.length() > 20)
 		{
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Nome non valido!");
 			return;
 		}
 		if(tmpCognome.length() > 20)
 		{
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Cognome non valido!");
 			return;
 		}
 		if(tmpMansione.length() > 20)
 		{
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Mansione non valida!");
 			return;
 		}
 		
 		try {
 			if(dateCheck(tmpNascita) == 1) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Data di nascita non valida!");
 				return;
 			}
 			if(dateCheck(tmpEntrata) == 1) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Data di entrata non valida!");
 				return;
 			}
@@ -300,12 +306,14 @@ public class Form_Signin_2 extends JFrame {
 			try {
 				dataNascita = dataform.parse(tmpNascita);
 			} catch (ParseException e) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Data di nascita non valida!");
 				return;
 			}
 			try {
 				dataEntrata = dataform.parse(tmpEntrata);
 			} catch (ParseException e) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Data di entrata non valida!");
 				return;
 			}
@@ -315,12 +323,14 @@ public class Form_Signin_2 extends JFrame {
 			try {
 				stipendio = Integer.parseInt(tmpStipendio);
 			} catch (NumberFormatException e) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Stipendio mensile non valido!");
 				return;
 			}
 			try {
 				vendite = Integer.parseInt(tmpVendite);
 			} catch (NumberFormatException e) {
+				setCursor(Cursor.getDefaultCursor());
 				JOptionPane.showMessageDialog(null, "ERROR: Limite vendite annuo non valido!");
 				return;
 			}
@@ -331,21 +341,27 @@ public class Form_Signin_2 extends JFrame {
 				case 0: //Valido
 					break;
 				case 1:
+					setCursor(Cursor.getDefaultCursor());
 					JOptionPane.showMessageDialog(null, "ERROR: Nome non valido!");
 					return;
 				case 2:
+					setCursor(Cursor.getDefaultCursor());
 					JOptionPane.showMessageDialog(null, "ERROR: Cognome non valido!");
 					return;
 				case 3:
+					setCursor(Cursor.getDefaultCursor());
 					JOptionPane.showMessageDialog(null, "ERROR: Data di nascita non valida!");
 					return;
 				case 4:
+					setCursor(Cursor.getDefaultCursor());
 					JOptionPane.showMessageDialog(null, "ERROR: Data di entrata non valida!");
 					return;
 				case 5:
+					setCursor(Cursor.getDefaultCursor());
 					JOptionPane.showMessageDialog(null, "ERROR: Stipendio mensile non valido!");
 					return;
 				case 6:
+					setCursor(Cursor.getDefaultCursor());
 					JOptionPane.showMessageDialog(null, "ERROR: Limite vendite annuo non valido!");
 					return;
 			}
@@ -355,14 +371,17 @@ public class Form_Signin_2 extends JFrame {
 			utente.addUtente();
 			
 		} catch (AziendaException e) {
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			return;
 		} catch (SQLException e) {
+			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Errore interno database!");
 			return;
 		}
 		
 		dispose();
+		setCursor(Cursor.getDefaultCursor());
 		new Form_Login();
 		JOptionPane.showMessageDialog(null, "Registrazione completata!");
 	}

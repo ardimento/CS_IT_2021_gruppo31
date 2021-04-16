@@ -138,18 +138,16 @@ public class Home extends JFrame {
 		panel.setLayout(null);
 		contentPane.add(panel);
 		
-		///////////////////////////////////////////////
 		JButton button_5 = new JButton("Vendi");
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new Vendi(home);
 			}
-			
 		});
-		
 		button_5.setBounds(10,12,75,25);
 		panel.add(button_5);
+		button_5.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		button_5.setBackground(new Color(0, 153, 51));
 		button_5.setForeground(Color.WHITE);
 		
@@ -174,7 +172,7 @@ public class Home extends JFrame {
 				new Catalogo(home);
 			}
 		});
-		btnEsci.setBounds(87, 12, 120, 25);
+		btnEsci.setBounds(99, 12, 120, 25);
 		btnEsci.setForeground(new Color(0, 0, 0));
 		btnEsci.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnEsci.setBackground(new Color(255, 215, 0));
