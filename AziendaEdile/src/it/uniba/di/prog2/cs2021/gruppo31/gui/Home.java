@@ -17,6 +17,7 @@ import it.uniba.di.prog2.cs2021.gruppo31.HomePage;
 import it.uniba.di.prog2.cs2021.gruppo31.Vendita;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
 import it.uniba.di.prog2.cs2021.gruppo31.gui.catalogo.Catalogo;
+import it.uniba.di.prog2.cs2021.gruppo31.gui.catalogo.Vendi;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Utente;
 import javax.swing.border.BevelBorder;
@@ -137,13 +138,21 @@ public class Home extends JFrame {
 		panel.setLayout(null);
 		contentPane.add(panel);
 		
+		///////////////////////////////////////////////
 		JButton button_5 = new JButton("Vendi");
-		button_5.setBounds(10, 12, 65, 25);
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Vendi(home);
+			}
+			
+		});
+		
+		button_5.setBounds(10,12,75,25);
 		panel.add(button_5);
-		button_5.setForeground(Color.WHITE);
-		button_5.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		button_5.setBackground(new Color(0, 153, 51));
-
+		button_5.setForeground(Color.WHITE);
+		
 		JButton btnEsci_1 = new JButton("Esci");
 		btnEsci_1.setBounds(260, 42, 65, 25);
 		panel.add(btnEsci_1);
