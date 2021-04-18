@@ -182,6 +182,14 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		ps.executeUpdate();
 		ps.close();
 		ConnectorDB.close(conn);
+		try {
+			ps.executeUpdate();
+		}
+		catch (SQLException ex) {
+			ps.close();
+			ConnectorDB.close(conn);
+			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
+		}
 	}
 	
 	/**
