@@ -52,11 +52,10 @@ public class Vendi extends JFrame{
 	
 	private JTextField textField;
 	private JTextField textField_1;
+	
 	private JTextField textField_2;
-	private JTextField textField_3;
 	private JComboBox comboBox;
 	
-	@SuppressWarnings("unchecked")
 	public Vendi(HomePage home){
 		
 		setSize(500, 300);
@@ -121,18 +120,7 @@ public class Vendi extends JFrame{
 		
 		btn_vendidado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					checkVendita(home);
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (AziendaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				checkVendita(home);
 			}
 		});
 		
@@ -148,9 +136,6 @@ public class Vendi extends JFrame{
 		panel.setBackground(new Color(255, 255, 204));
 		scrollPane.setViewportView(panel);
 		
-		JLabel lblFilettatura = new JLabel("Filettatura:");
-		lblFilettatura.setBounds(20, 20, 81, 15);
-		panel.add(lblFilettatura);
 		
 		//LISTE DEI PRODOTTI 
 		//Filettatura
@@ -162,54 +147,37 @@ public class Vendi extends JFrame{
 				entry[i] += (array.get(i).isPassoGrosso() ? "- Passo Grosso" : "- Passo Fine");
 			}
 			
-			comboBox = new JComboBox(entry);
-			comboBox.setBackground(Color.WHITE);
-			comboBox.setBounds(20, 40, 250, 30);
-			panel.add(comboBox);
 			
 		} catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, "ERROR: Errore interno database!");
 		}
 		
 		JLabel lblLuogoProduzione = new JLabel("Codice dado:");
-		lblLuogoProduzione.setBounds(20, 80, 134, 15);
+		lblLuogoProduzione.setBounds(20, 40, 134, 15);
 		panel.add(lblLuogoProduzione);
 		
 		JLabel lblDataDiProduzione = new JLabel("Data di vendita:");
-		lblDataDiProduzione.setBounds(20, 140, 141, 15);
+		lblDataDiProduzione.setBounds(20, 100, 141, 15);
 		panel.add(lblDataDiProduzione);
 		
-		JLabel label_5 = new JLabel("Prezzo:");
-		label_5.setBounds(20, 200, 54, 15);
-		panel.add(label_5);
-		
 		JLabel label_6 = new JLabel("Numero pezzi:");
-		label_6.setBounds(140, 200, 102, 15);
+		label_6.setBounds(20, 160, 102, 15);
 		panel.add(label_6);
 		
-
-		lblFilettatura.setBounds(20, 20, 81, 15);
-		panel.add(lblFilettatura);
-		
 		textField = new JTextField();
-		textField.setBounds(20,100, 250, 30);
+		textField.setBounds(20,60, 250, 30);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(20, 160, 250, 30);
+		textField_1.setBounds(20, 120, 250, 30);
 		panel.add(textField_1);
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(20, 220, 95, 30);
+		textField_2.setBounds(20, 180, 130, 30);
 		panel.add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(140, 220, 130, 30);
-		panel.add(textField_3);
 		
 		
 		//INFO
@@ -236,21 +204,39 @@ public class Vendi extends JFrame{
 		
 		setVisible(true);
 	}
-
-	public void checkVendita(HomePage home) throws ParseException, AziendaException, SQLException {
-		String tmpFilettatura = comboBox.getSelectedItem().toString();
-		String Codicedado = textField.getText();
+	
+	private void checkVendita(HomePage home) {
+		Filettatura tmpFilettatura;
+		String metrica=null;
+		String codiceStringato= textField.getText();
 		String tmpData = textField_1.getText();
-		String tmpPrezzo = textField_2.getText();
-		String tmpPezzi = textField_3.getText();
+		String tmpPezzi = textField_2.getText();
 		
-		if(Codicedado.length() == 0 || tmpData.length() == 0 || tmpPrezzo.length() == 0 || tmpPezzi.length() == 0)
+		int Codicedado=Integer.valueOf(codiceStringato);
+		ArrayList<Dado> listacatalogo;
+		try {
+			listacatalogo = ProxyDB.getIstance().getCatalogoDadi();
+			for(int i=0;i<listacatalogo.size();i++) {
+				Dado dadopasseggero= ProxyDB.getIstance().getDado(codiceStringato);
+				if(Codicedado==dadopasseggero.getCodice()) {
+					tmpFilettatura=dadopasseggero.getFilettatura();
+					metrica= tmpFilettatura.getMetrica();
+					System.out.println("codice trovato nel catalogo: "+ metrica+" "+dadopasseggero.getCodice());
+				}
+			}
+		} catch (SQLException | AziendaException | ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		if(codiceStringato.length() == 0 ||tmpData.length() == 0 || tmpPezzi.length() == 0)
 		{
 			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Alcuni campi sono vuoti!");
 			return;
 		}
-	
+
+
 		try {
 			if(dateCheck(tmpData) == 1) {
 				setCursor(Cursor.getDefaultCursor());
@@ -262,15 +248,7 @@ public class Vendi extends JFrame{
 			SimpleDateFormat dataform = new SimpleDateFormat("dd/MM/yyyy");
 			Date dataProd = dataform.parse(tmpData);
 			
-			double tmpPrezzoConv;
 			int tmpPezziConv;
-			try {
-				tmpPrezzoConv = Double.parseDouble(tmpPrezzo);
-			} catch (NumberFormatException e) {
-				setCursor(Cursor.getDefaultCursor());
-				JOptionPane.showMessageDialog(null, "ERROR: Prezzo non valido!");
-				return;
-			}
 			try {
 				tmpPezziConv = Integer.parseInt(tmpPezzi);
 			} catch (NumberFormatException e) {
@@ -279,34 +257,32 @@ public class Vendi extends JFrame{
 				return;
 			}
 			
-			
-			String metrica = tmpFilettatura.substring(0,3);
-			if(metrica.charAt(2) == ' ') //Rimuove ultimo carattere se è uno spazio
-				metrica = metrica.substring(0,metrica.length()-1);
-			boolean passo = (tmpFilettatura.substring(tmpFilettatura.length()-1).equals("o") ? true : false);
+			boolean passo = true;
 			Dado dado = new EsagonaleAlto(metrica,passo);
 			
-
-			dado.setDataProduzione(dataProd);
-			dado.setPrezzo(tmpPrezzoConv);
-			dado.setNumPezzi(tmpPezziConv);
 			Vendita vendita= new Vendita(home.getUtente(),dado,dataProd,tmpPezziConv);
+			dado.setDataProduzione(dataProd);
+			dado.setNumPezzi(tmpPezziConv);
 			home.addVendita(vendita);
 			
+		} catch (AziendaException e) {
+			setCursor(Cursor.getDefaultCursor());
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			return;
 		} catch (ParseException e) {
 			setCursor(Cursor.getDefaultCursor());
 			JOptionPane.showMessageDialog(null, "ERROR: Data di produzione non valida!");
 			return;
-		}catch(AziendaException e) {
+		} catch (SQLException e) {
 			setCursor(Cursor.getDefaultCursor());
-			JOptionPane.showMessageDialog(null,e.getMessage());	
+			JOptionPane.showMessageDialog(null, "ERROR: Errore interno database!");
 			return;
 		}
 
-			dispose();
-			setCursor(Cursor.getDefaultCursor());
-			new Catalogo(home);
-			JOptionPane.showMessageDialog(null, "Dado venduto!");
+		dispose();
+		setCursor(Cursor.getDefaultCursor());
+		new Catalogo(home);
+		JOptionPane.showMessageDialog(null, "Dado aggiunto al catalogo!");
 	}
 
 	// Valida una data in formato String.
