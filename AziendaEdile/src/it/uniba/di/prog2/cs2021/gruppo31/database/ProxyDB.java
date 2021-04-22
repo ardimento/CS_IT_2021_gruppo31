@@ -154,6 +154,8 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		boolean tempAdmin = rs.getBoolean("ADMIN");
 		Impiegato tempImpiegato = getInfoImpiegato(username);
 		
+		ps.close();
+		ConnectorDB.close(conn);
 		return new Utente(tempImpiegato,tempUsername,tempPassword,tempAdmin);
 	}
 	
@@ -162,7 +164,7 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 	 */
 	public void addVendita(Vendita vendita) throws SQLException,AziendaException,ParseException {
 		checkUtente(vendita.getUtente().getUsername(),vendita.getUtente().getHashPassword());
-		getDado(Integer.toString(vendita.getDado().hashCode()));
+		String codice = Integer.toString(vendita.getDado().getCodice());
 		
 		query = "INSERT INTO VENDITA(UTENTE,DADO,DATA,NUMERO_PEZZI) VALUES (?,?,?,?);";
 		conn = ConnectorDB.connect();
@@ -170,26 +172,19 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1,vendita.getUtente().getUsername());
-		ps.setString(2,Integer.toString(vendita.getDado().hashCode()));
+		ps.setString(2,codice);
 		ps.setString(3,formatter.format(vendita.getData()));
 		ps.setInt(4,vendita.getNumPezzi());
 		ps.executeUpdate();
+		ps.close();
 		
 		query = "UPDATE DADO SET NUMERO_PEZZI = (NUMERO_PEZZI - ?) WHERE CODICE_HASH = ?;";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1,vendita.getNumPezzi());
-		ps.setString(2,Integer.toString(vendita.getDado().hashCode()));
+		ps.setString(2,Integer.toString(vendita.getDado().getCodice()));
 		ps.executeUpdate();
 		ps.close();
 		ConnectorDB.close(conn);
-		try {
-			ps.executeUpdate();
-		}
-		catch (SQLException ex) {
-			ps.close();
-			ConnectorDB.close(conn);
-			throw new AziendaException(ErroriDB.DADO_NOT_FOUND);
-		}
 	}
 	
 	/**
@@ -250,14 +245,14 @@ public class ProxyDB implements LogIn_SignIn,UserQuery,AdminQuery {
 		dado.setMateriale(rs.getString("MATERIALE"));
 		dado.setCategoria(rs.getString("CATEGORIA"));
 		dado.setRivestimentoProtettivo(rs.getString("RIVESTIMENTO"));
-		
-		Filettatura filettatura = getFilettaturaByID(rs.getInt("FILETTATURA"));
-		dado.setFilettatura(filettatura.getMetrica(),filettatura.isPassoGrosso());
 		dado.setNumPezzi(rs.getInt("NUMERO_PEZZI"));
 		dado.setPrezzo(rs.getDouble("PREZZO"));
 		dado.setLuogoProduzione(rs.getString("LUOGO_PRODUZIONE"));
 		dado.setDataProduzione(formatter.parse(rs.getString("DATA_PRODUZIONE")));
 		
+		Filettatura filettatura = getFilettaturaByID(rs.getInt("FILETTATURA"));
+		dado.setFilettatura(filettatura.getMetrica(),filettatura.isPassoGrosso());
+	
 		ps.close();
 		ConnectorDB.close(conn);
 		return dado;

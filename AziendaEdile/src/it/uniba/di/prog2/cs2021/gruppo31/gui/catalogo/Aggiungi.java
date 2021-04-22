@@ -211,9 +211,9 @@ public class Aggiungi extends JFrame {
 		button1.setContentAreaFilled(false);
 		button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String warning = "Vincoli data produzione:\n";
+				String warning = "Vincoli data di produzione:\n";
 				warning += "- Le date inserite devono rispettare il formato [gg/mm/aaaa]\n";
-				warning += "- Le date non possono essere successive all'anno corrente\n";
+				warning += "- Le date non possono essere successive a quella corrente\n";
 				warning += "- L'anno minimo per le date e' il 1900\n";
 				warning += "Ulteriori vincoli:\n";
 				warning += "- Luogo di produzione puo' contenere massimo 50 caratteri\n";
@@ -384,8 +384,14 @@ public class Aggiungi extends JFrame {
 			int corrente = Calendar.getInstance().get(Calendar.YEAR);
 			if(anno >= 1900 && anno <= corrente);
 			else	return 1;
-		}
-		catch (NumberFormatException e) {
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Calendar c = Calendar.getInstance();
+			Date temp = c.getTime();
+			if (formatter.parse(data).compareTo(temp) > 0) //Vendita nel futuro
+				return 1;
+			
+		} catch (Exception e) {
 			return 1;
 		}
 		

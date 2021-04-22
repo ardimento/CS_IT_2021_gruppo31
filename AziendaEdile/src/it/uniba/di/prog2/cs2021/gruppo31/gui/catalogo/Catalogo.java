@@ -119,6 +119,7 @@ public class Catalogo extends JFrame {
 				DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
 				cellRenderer.setHorizontalAlignment(JLabel.CENTER);
 				table = new JTable(tmp,colonne);
+				//table.setEnabled(false);
 				table.setBackground(new Color(204, 204, 255));
 				table.setOpaque(true);
 				table.setFillsViewportHeight(true);
@@ -139,7 +140,7 @@ public class Catalogo extends JFrame {
 				sp.setBounds(10, 10, 443, 280);
 				contentPane.add(sp);
 				
-			} catch (AziendaException e1) {
+			} catch (AziendaException e1) {	//Tabella vuota
 				DefaultTableModel model = new DefaultTableModel(0,colonne.length);
 				model.setColumnIdentifiers(colonne);
 				table = new JTable(model);

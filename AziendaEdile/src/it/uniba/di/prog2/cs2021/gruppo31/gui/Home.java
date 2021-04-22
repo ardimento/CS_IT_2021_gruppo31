@@ -1,5 +1,6 @@
 package it.uniba.di.prog2.cs2021.gruppo31.gui;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.Font;
 import java.awt.Dimension;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import it.uniba.di.prog2.cs2021.gruppo31.HomePage;
 import it.uniba.di.prog2.cs2021.gruppo31.Vendita;
@@ -178,6 +180,33 @@ public class Home extends JFrame {
 		btnEsci.setBackground(new Color(255, 215, 0));
 		panel.add(btnEsci);
 		
+		img = new ImageIcon(Form_Signin_1.class.getResource("/question-mark.png"));	
+		imgScaled = img.getImage().getScaledInstance(32, 32, Image.SCALE_DEFAULT);
+		img = new ImageIcon(imgScaled);
+		
+		JButton button_1 = new JButton(img);
+		button_1.setBounds(293, 5, 32, 32);
+		panel.add(button_1);
+		button_1.setContentAreaFilled(false);
+		button_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		button_1.setBorder(null);
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					int giorno = Impiegato.MAX_VENDITE_GIORNO;
+					int anno = home.getInfoImpiegato().getMaxVenditeAnno();
+					giorno -= home.getVenditeGiorno(home.getUtente().getUsername());
+					anno -= home.getVenditeAnno(home.getUtente().getUsername());
+					String warning = "Vendite annue rimaste: " + anno + "\n";
+					warning += "Vendite giornaliere rimaste: " + giorno;
+					JOptionPane.showMessageDialog(null, warning);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "ERROR: Erorre interno database!");
+					return;
+				}
+			}
+		});
+		
 		//Tabella vendite
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -187,16 +216,22 @@ public class Home extends JFrame {
 				vendite = home.getVenditeImpiegato();
 				String tmp[][] = new String[vendite.size()][4];
 				for(int i=0;i<vendite.size();i++) {
-					tmp[i][0] = Integer.toString(vendite.get(i).getDado().hashCode());
+					tmp[i][0] = Integer.toString(vendite.get(i).getDado().getCodice());
 					tmp[i][1] = formatter.format(vendite.get(i).getData());
 					tmp[i][2] = Integer.toString(vendite.get(i).getNumPezzi());
 					tmp[i][3] = "€ " + Double.toString(vendite.get(i).getDado().getPrezzo() * (double)vendite.get(i).getNumPezzi());
 				}
+				
+				DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
 				table = new JTable(tmp,colonne);
+				table.setEnabled(false);
 				table.setBackground(new Color(204, 255, 153));
 				table.setOpaque(true);
 				table.setFillsViewportHeight(true);
 				table.getTableHeader().setBackground(Color.WHITE);
+				table.getColumnModel().getColumn(2).setPreferredWidth(40);
+				table.getColumnModel().getColumn(2).setCellRenderer(cellRenderer);
+				
 				JScrollPane sp = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				sp.setBounds(10, 79, 315, 119);
 				panel.add(sp);

@@ -10,10 +10,10 @@ public class ConnectorDB {
 	
 	/** Stringa di connessione contenente il path del database. */
 	private static String url = "jdbc:sqlite:sqlite3/schema.db";
-
+	
 	/**
 	 * Metodo statico che si occupa di aprire una connessione verso il database.
-	 * @return Oggetto Connection istaziato attraverso l'url di connessione del database.
+	 * @return Oggetto Connection istanziato attraverso l'url di connessione del database.
 	 * @throws SQLException
 	 * @see Connection
 	 * @see DriverManager#getConnection(String)

@@ -1,6 +1,7 @@
 package it.uniba.di.prog2.cs2021.gruppo31;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,7 +73,7 @@ public class HomePage {
 			throw new AziendaException(ErroriUtente.MAX_VENDITE_GIORNO);
 		
 		UserQuery uq = ProxyDB.getIstance();
-		Dado dado = uq.getDado(Integer.toString(vendita.getDado().hashCode()));
+		Dado dado = uq.getDado(Integer.toString(vendita.getDado().getCodice()));
 		int pezzi = dado.getNumPezzi();
 		if(pezzi < vendita.getNumPezzi())
 			throw new AziendaException(ErroriUtente.NUMPEZZI_NOT_VALID);
@@ -222,7 +223,7 @@ public class HomePage {
 	 * @see Vendita
 	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery#getVenditeImpiegato(String)
 	 */
-	private int getVenditeAnno(String username) throws SQLException,AziendaException,ParseException {
+	public int getVenditeAnno(String username) throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
 		try {
 			ArrayList<Vendita> vendite = uq.getVenditeImpiegato(username);
@@ -255,15 +256,17 @@ public class HomePage {
 	 * @see Vendita
 	 * @see it.uniba.di.prog2.cs2021.gruppo31.database.UserQuery#getVenditeImpiegato(String)
 	 */
-	private int getVenditeGiorno(String username) throws SQLException,AziendaException,ParseException {
+	public int getVenditeGiorno(String username) throws SQLException,AziendaException,ParseException {
 		UserQuery uq = ProxyDB.getIstance();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			ArrayList<Vendita> vendite = uq.getVenditeImpiegato(username);
-			Date data = Calendar.getInstance().getTime();
+			Date tmp = Calendar.getInstance().getTime();
+			String data = formatter.format(tmp);
 			int count = 0;
 			
 			for(Vendita i : vendite)
-				if(i.getData().compareTo(data) == 0)	count++;
+				if(formatter.format(i.getData()).equals(data))	count++;
 			
 			return count;
 		}
