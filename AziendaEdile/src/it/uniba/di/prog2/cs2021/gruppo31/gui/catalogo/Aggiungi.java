@@ -63,6 +63,7 @@ public class Aggiungi extends JFrame {
 		setContentPane(contentPane);
 		
 		JButton button = new JButton("X");
+		button.setOpaque(true);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -76,6 +77,7 @@ public class Aggiungi extends JFrame {
 		contentPane.add(button);
 		
 		JButton button_1 = new JButton("Indietro");
+		button_1.setOpaque(true);
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -191,6 +193,7 @@ public class Aggiungi extends JFrame {
 		panel.add(textField_3);
 		
 		JButton btnAggiungi = new JButton("Aggiungi");
+		btnAggiungi.setOpaque(true);
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));

@@ -45,6 +45,7 @@ public class Catalogo extends JFrame {
 		setContentPane(contentPane);
 		
 		JButton btnAggiungiDado = new JButton("Aggiungi Dado");
+		btnAggiungiDado.setOpaque(true);
 		btnAggiungiDado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -58,6 +59,7 @@ public class Catalogo extends JFrame {
 		contentPane.add(btnAggiungiDado);
 		
 		JButton btnEliminaDado = new JButton("Elimina Dado");
+		btnEliminaDado.setOpaque(true);
 		btnEliminaDado.setForeground(Color.WHITE);
 		btnEliminaDado.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnEliminaDado.setBackground(new Color(0, 153, 51));
@@ -65,6 +67,7 @@ public class Catalogo extends JFrame {
 		contentPane.add(btnEliminaDado);
 		
 		JButton btnAggiornaPrezzo = new JButton("Aggiorna Prezzo");
+		btnAggiornaPrezzo.setOpaque(true);
 		btnAggiornaPrezzo.setForeground(Color.WHITE);
 		btnAggiornaPrezzo.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnAggiornaPrezzo.setBackground(new Color(218, 112, 214));
@@ -72,6 +75,7 @@ public class Catalogo extends JFrame {
 		contentPane.add(btnAggiornaPrezzo);
 		
 		JButton btnAggiornaScorte = new JButton("Aggiorna Scorte");
+		btnAggiornaScorte.setOpaque(true);
 		btnAggiornaScorte.setForeground(Color.WHITE);
 		btnAggiornaScorte.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnAggiornaScorte.setBackground(new Color(218, 112, 214));
@@ -79,6 +83,7 @@ public class Catalogo extends JFrame {
 		contentPane.add(btnAggiornaScorte);
 		
 		JButton btnIndietro = new JButton("Indietro");
+		btnIndietro.setOpaque(true);
 		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -92,6 +97,7 @@ public class Catalogo extends JFrame {
 		contentPane.add(btnIndietro);
 		
 		JButton button = new JButton("X");
+		button.setOpaque(true);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);

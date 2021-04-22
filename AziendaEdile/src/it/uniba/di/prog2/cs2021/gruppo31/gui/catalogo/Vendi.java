@@ -53,6 +53,7 @@ public class Vendi extends JFrame {
 
 		// PULSANTE INDIETRO
 		JButton btn_indietro = new JButton("Indietro");
+		btn_indietro.setOpaque(true);
 		btn_indietro.setForeground(Color.WHITE);
 		btn_indietro.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btn_indietro.setBackground(new Color(178, 34, 34));
@@ -68,6 +69,7 @@ public class Vendi extends JFrame {
 
 		// PULSANTE X
 		JButton btn_x = new JButton("X");
+		btn_x.setOpaque(true);
 		btn_x.setSize(new Dimension(10, 10));
 		btn_x.setFont(new Font("Dialog", Font.BOLD, 10));
 		btn_x.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -82,6 +84,7 @@ public class Vendi extends JFrame {
 
 		// PULSANTE VENDI DADO
 		JButton btn_vendidado = new JButton("Vendi");
+		btn_vendidado.setOpaque(true);
 		btn_vendidado.setForeground(Color.WHITE);
 		btn_vendidado.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btn_vendidado.setBackground(new Color(0, 153, 51));

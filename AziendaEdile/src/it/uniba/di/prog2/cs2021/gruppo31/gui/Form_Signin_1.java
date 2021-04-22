@@ -85,6 +85,7 @@ public class Form_Signin_1 extends JFrame {
 			contentPane.add(passwordField_1);
 			
 			JButton btnNewButton_2 = new JButton("X");
+			btnNewButton_2.setOpaque(true);
 			btnNewButton_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					System.exit(0);
@@ -128,6 +129,7 @@ public class Form_Signin_1 extends JFrame {
 			contentPane.add(lblInserisciNuocamenteLa);
 			
 			JButton btnNewButton_1 = new JButton("Avanti");
+			btnNewButton_1.setOpaque(true);
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -141,6 +143,7 @@ public class Form_Signin_1 extends JFrame {
 			contentPane.add(btnNewButton_1);
 			
 			JButton btnAnnulla = new JButton("Annulla");
+			btnAnnulla.setOpaque(true);
 			btnAnnulla.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();

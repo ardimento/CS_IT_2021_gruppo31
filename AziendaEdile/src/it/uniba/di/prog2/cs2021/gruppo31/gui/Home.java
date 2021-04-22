@@ -58,6 +58,7 @@ public class Home extends JFrame {
 		img = new ImageIcon(imgScaled);
 
 		JButton button = new JButton("X");
+		button.setOpaque(true);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -141,6 +142,7 @@ public class Home extends JFrame {
 		contentPane.add(panel);
 		
 		JButton button_5 = new JButton("Vendi");
+		button_5.setOpaque(true);
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -154,6 +156,7 @@ public class Home extends JFrame {
 		button_5.setForeground(Color.WHITE);
 		
 		JButton btnEsci_1 = new JButton("Esci");
+		btnEsci_1.setOpaque(true);
 		btnEsci_1.setBounds(260, 42, 65, 25);
 		panel.add(btnEsci_1);
 		btnEsci_1.addActionListener(new ActionListener() {
@@ -168,6 +171,7 @@ public class Home extends JFrame {
 		btnEsci_1.setBackground(new Color(178, 34, 34));
 
 		JButton btnEsci = new JButton("Catalogo dadi");
+		btnEsci.setOpaque(true);
 		btnEsci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

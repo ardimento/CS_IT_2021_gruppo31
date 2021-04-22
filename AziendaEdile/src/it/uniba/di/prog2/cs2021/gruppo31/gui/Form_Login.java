@@ -109,6 +109,7 @@ public class Form_Login extends JFrame {
 			contentPane.add(btnNewButton);
 			
 			JButton btnNewButton_1 = new JButton("Accedi");
+			btnNewButton_1.setOpaque(true);
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -122,6 +123,7 @@ public class Form_Login extends JFrame {
 			contentPane.add(btnNewButton_1);
 			
 			JButton btnNewButton_2 = new JButton("X");
+			btnNewButton_2.setOpaque(true);
 			btnNewButton_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					System.exit(0);
