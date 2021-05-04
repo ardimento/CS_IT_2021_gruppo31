@@ -59,12 +59,20 @@ public class Catalogo extends JFrame {
 		contentPane.add(btnAggiungiDado);
 		
 		JButton btnEliminaDado = new JButton("Elimina Dado");
+		
+		btnEliminaDado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Elimina(home);
+			}
+		});
 		btnEliminaDado.setOpaque(true);
 		btnEliminaDado.setForeground(Color.WHITE);
 		btnEliminaDado.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnEliminaDado.setBackground(new Color(0, 153, 51));
 		btnEliminaDado.setBounds(465, 78, 125, 22);
 		contentPane.add(btnEliminaDado);
+		
 		
 		JButton btnAggiornaPrezzo = new JButton("Aggiorna Prezzo");
 		btnAggiornaPrezzo.setOpaque(true);
@@ -74,6 +82,13 @@ public class Catalogo extends JFrame {
 		btnAggiornaPrezzo.setBounds(465, 112, 125, 22);
 		contentPane.add(btnAggiornaPrezzo);
 		
+		btnAggiornaPrezzo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new AggiornaPrezzo(home);
+			}
+		});
+		
 		JButton btnAggiornaScorte = new JButton("Aggiorna Scorte");
 		btnAggiornaScorte.setOpaque(true);
 		btnAggiornaScorte.setForeground(Color.WHITE);
@@ -81,6 +96,13 @@ public class Catalogo extends JFrame {
 		btnAggiornaScorte.setBackground(new Color(218, 112, 214));
 		btnAggiornaScorte.setBounds(465, 146, 125, 22);
 		contentPane.add(btnAggiornaScorte);
+		
+		btnAggiornaScorte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new AggiornaScorte(home);
+			}
+		});
 		
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.setOpaque(true);
