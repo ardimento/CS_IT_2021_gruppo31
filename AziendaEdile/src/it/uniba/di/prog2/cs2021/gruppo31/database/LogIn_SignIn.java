@@ -49,7 +49,7 @@ public interface LogIn_SignIn {
 	 * di login in quanto la classe HomePage, per essere istanziata,
 	 * necessita dell'utente che ha effettuato l'accesso.
 	 * @param username Username utente.
-	 * @retrun Restituisce l'utente trovato.
+	 * @return Restituisce l'utente trovato.
 	 * @throws SQLException
 	 * @throws ParseException
 	 * @throws AziendaException Eccezione: USERNAME_NOT_FOUND.

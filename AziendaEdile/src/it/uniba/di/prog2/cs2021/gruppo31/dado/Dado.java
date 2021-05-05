@@ -157,6 +157,7 @@ public interface Dado {
 	
 	/**
 	 * Imposta il codice identificativo del dado.<br>
+	 * @param codice Codice identificativo del dado.
 	 * @see #hashCode()
 	 */
 	void setCodice(int codice);

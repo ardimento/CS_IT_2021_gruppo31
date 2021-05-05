@@ -180,7 +180,7 @@ public class HomePage {
 	 */
 	public void updatePezziDado(int hashDado, int numPezzi) throws SQLException,AziendaException,ParseException {
 		AdminQuery aq = ProxyDB.getIstance();
-		if(numPezzi < 0)
+		if(numPezzi <= 0)
 			throw new AziendaException(ErroriUtente.NUMPEZZI_NOT_VALID);
 		aq.updatePezziDado(utente.getUsername(),hashDado,numPezzi);
 	}

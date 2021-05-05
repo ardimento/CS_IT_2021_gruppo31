@@ -43,7 +43,7 @@ public class Utility_Utente {
 	 * di login in quanto la classe HomePage, per essere istanziata,
 	 * necessita dell'utente che ha effettuato l'accesso.
 	 * @param username Username utente.
-	 * @retrun Restituisce l'utente trovato.
+	 * @return Restituisce l'utente trovato.
 	 * @throws SQLException
 	 * @throws ParseException
 	 * @throws AziendaException Eccezione: USERNAME_NOT_FOUND.
@@ -101,7 +101,7 @@ public class Utility_Utente {
 	 * 	5: Stipendio mensile non corretto<br>
 	 *  6: Numero vendite massime all'anno non corretto<br>
 	 *  @see #checkNome(String)
-	 *  @see #checkDataEntrata(Date)
+	 *  @see #checkDataEntrata(Date, Date)
 	 *  @see #checkDataNascita(Date)
 	 */
 	public static int checkImpiegato(Impiegato impiegato) {
