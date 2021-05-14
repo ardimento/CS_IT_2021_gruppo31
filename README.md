@@ -1,19 +1,26 @@
-# CS_IT_2021_gruppo31
-Progettazione e sviluppo di un sistema di vendita di dadi per un'azienda edile.
+# Gestionale catalogo dadi
+Progettazione e sviluppo di un sistema per la gestione e la vendita di dadi in un'azienda edile.
 
 ## Table of Contents
-1. [General Info](#general-info)
-2. [Installazione](#installation)
-3. [Collaboration](#collaboration)
-4. [FAQs](#faqs)
+1. [Informazioni generali](#info)
+2. [Prerequisiti](#requisiti)
+3. [Esecuzione](#esecuzione)
+4. [Autori](#autori)
 
-### *General Info*
+### *Informazioni generali*
 ***
-Il software gestisce un sistema di vendita bulloni per serrare le viti di un'azienda; Tutti i dadi venduti sono di tipo "esagonale alto" ma ci sono delle implementazioni che renderanno l'applicazione adatta alla vendita di altri tipi di dado("esagonale basso" , "esagonale sottile" ecc).
+Il software si occupa della gestione e della vendita di dadi per serrare viti filettate.
+Attualmente il sistema può gestire solo dadi di tipo "esagonale alto", ma grazie alla scalabilità del sistema, in futuro sarà possibile memorizzare e vendere anche altre tipologie di dado, tra cui: esagonale alto, esagonale sottile, con flangia, ecc.
 
-I dipendenti in base al loro ruolo all'interno dell'azienda possono scegliere di aggiornare il catalogo scorte dei dati in magazzino o venderli; Alcuni dipendenti registrati come autorizzati posso anche scegliere di creare un nuovo tipo di bullone e aggiornare il catalogo scorte dei dadi. 
-A ogni vendita l'impiegato deve compilare la pagina di vendita per riportare le informazioni indispensabili.
-Il sistema chiede sempre che il dipendente sia prima registrato e poi loggato all'interno del programma prima di effettuare qualsiasi operazione.
+Gli utenti del sistema possono essere di due tipi:
+* #### User
+  Possono vendere i dadi e consultare il catalogo, ma non hanno la possibilità di apportare modifiche ad esso.
+* #### Admin
+  Possono vendere i dadi e consultare il catalogo, ed inoltre possono modificarlo. Le modifiche che possono essere effettuate sul catalogo sono le seguenti:
+  * Aggiungi un nuovo set di dadi al catalogo
+  * Elimina un set di dadi dal catalogo
+  * Aggiorna il prezzo relativo ad un set di dadi
+  * Aggiorna le scorte relative ad un set di dadi
 
 
 
