@@ -50,6 +50,9 @@ Dopo essersi registrati è necessario inserire i propri dati nella schermata di 
 ### HomePage
 Nella HomePage sono presenti a video tutte le informazioni dell'utente registrato sul lato sinistro, sul lato destro sono presenti tutte le operazioni che è possibile fare all'interno dell'applicazione, è presente inoltre la schermata di tutte le vendite effettuate dall'impiegato registrato. In questo momento la lista delle vendite è vuota perchè l'imiegato non ha effettuato alcuna vendita.
 
+<img width="596" alt="MicrosoftTeams-image (2)" src="https://user-images.githubusercontent.com/79160832/119011851-bd2c6100-b995-11eb-9e33-820df0c89ec7.png">
+
+
 
 ### *Autori*
 ***
