@@ -35,6 +35,9 @@ java --version
 ### *Esecuzione*
 ***
 ### Login
-![alt text](http://url/to/img.png) 
+cd /path/to/directory/with/file
+git add .
+git commit"added folder with images"
+git push
 ### *Autori*
 ***
