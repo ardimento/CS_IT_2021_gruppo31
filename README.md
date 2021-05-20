@@ -1,3 +1,4 @@
+![DGGMRC98M07A662K](https://user-images.githubusercontent.com/79160832/119007573-a126c080-b991-11eb-8418-7bf7d13b48c9.jpg)
 # Gestionale catalogo dadi
 Progettazione e sviluppo di un sistema per la gestione e la vendita di dadi in un'azienda edile.
 
