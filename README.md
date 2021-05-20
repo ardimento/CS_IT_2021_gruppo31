@@ -53,8 +53,20 @@ Nella HomePage sono presenti a video tutte le informazioni dell'utente registrat
 <img width="596" alt="MicrosoftTeams-image (2)" src="https://user-images.githubusercontent.com/79160832/119011851-bd2c6100-b995-11eb-9e33-820df0c89ec7.png">
 
 ### Vendi
+La vendita del dado è possibile solo se il dado è presente nel catalogo dei dadi.
+Nella sezione  vendi si può selezionare il codice del dado, inserire la vendita e il numero di pezzi, infine cliccare sul tasto vendi e terminare quindi l'operazione.
 
+<img width="349" alt="Schermata 2021-05-20 alle 17 40 34" src="https://user-images.githubusercontent.com/79158119/119013177-0a5d0280-b997-11eb-8f8e-871c9c4d1a3c.png">
 
+### AggiungiDado
+Nella sezione catalogo dadi possono aggiungere un dado al catalogo solo gli amministratori compilando i relativi campi quali: Filettatura, Materiale, Rivestimento protettivo, Luogo produzione, Data produzione e terminare l'operazione cliccando sul tatso aggiungi.
+
+<img width="435" alt="Schermata 2021-05-20 alle 17 42 59" src="https://user-images.githubusercontent.com/79158119/119014196-02519280-b998-11eb-8b68-bdedbcfe59c8.png">
+
+### CatalogoDadi
+Nel catalogo dadi si può notare sulla sinistra la tabella relativa ad ogni dado inoltre cliccando sul tasto "visualizza" vengono mostrati dettagli maggiori su ogni singolo dado, mentre sulla destra ci sono i tasti : Aggiungi dado, Elimina dado, Aggiorna prezzo e Aggiorna scorte.
+
+<img width="594" alt="Schermata 2021-05-20 alle 17 41 54" src="https://user-images.githubusercontent.com/79158119/119015118-e8fd1600-b998-11eb-8e14-cfded9330434.png">
 
 ### *Autori*
 ***
