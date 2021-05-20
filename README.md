@@ -38,7 +38,8 @@ java --version
 ### Registrazione
 Per acedere alle funzionalità del software è necessario registrarsi; Bisogna riempire tutti i campi in entrabe le 2 finestre con le proprie informazioni personali riguardanti sia la persona fisica che il suo ruolo all'interno dell'azienda. Il ruolo di amministratore è importante a fini di inserimento dei nuovi dadi nel catalogo.
 
-<img width="600" alt="MicrosoftTeams-image" src="https://user-images.githubusercontent.com/79160832/119009822-cc121400-b993-11eb-9558-8327604fb97d.png">
+<img width="605" alt="Schermata 2021-05-20 alle 17 50 18" src="https://user-images.githubusercontent.com/79160832/119011553-750d3e80-b995-11eb-8a79-e2bb298b8658.png">
+
 
 <img width="605" alt="Schermata 2021-05-20 alle 17 50 18" src="https://user-images.githubusercontent.com/79160832/119011335-41caaf80-b995-11eb-9fe0-7230c42f7074.png">
 
