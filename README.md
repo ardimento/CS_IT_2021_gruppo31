@@ -36,7 +36,7 @@ java --version
 ### *Esecuzione*
 ***
 ### Registrazione
-Per acedere alle funzionalità del software è necessario registrarsi; Bisogna riempire tutti i campi in entrabe le 2 finestre con le proprie informazioni personali riguardanti sia la persona fisica che il suo ruolo all'interno dell'azienda. Il ruolo di amministratore è importante a fini di inserimento dei nuovi dadi nel catalogo.
+Per accedere alle funzionalità del software è necessario registrarsi; Bisogna riempire tutti i campi in entrambe le 2 finestre con le proprie informazioni personali, riguardanti sia la persona fisica che il suo ruolo all'interno dell'azienda. Il ruolo di amministratore è importante a fini di inserimento dei nuovi dadi nel catalogo.
 
 <img width="600" alt="119011656-90784980-b995-11eb-927c-ff6768303706" src="https://user-images.githubusercontent.com/79160832/119012062-fbc21b80-b995-11eb-88be-a6469a57338a.png">
 
