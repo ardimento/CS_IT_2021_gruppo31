@@ -48,7 +48,7 @@ Dopo essersi registrati è necessario inserire i propri dati nella schermata di 
 <img width="600" alt="MicrosoftTeams-image" src="https://user-images.githubusercontent.com/79160832/119009822-cc121400-b993-11eb-9558-8327604fb97d.png">
 
 ### HomePage
-Nella HomePage sono presenti a video tutte le informazioni dell'utente registrato sul lato sinistro, sul lato destro sono presenti tutte le operazioni che è possibile fare all'interno dell'applicazione, è presente inoltre la schermata di tutte le vendite effettuate dall'impiegato registrato. In questo momento la lista delle vendite è vuota perchè l'imiegato non ha effettuato alcuna vendita.
+Nella HomePage sono presenti a video tutte le informazioni dell'utente registrato sul lato sinistro, sul lato destro sono presenti tutte le operazioni che è possibile fare all'interno dell'applicazione, è presente inoltre la schermata di tutte le vendite effettuate dall'impiegato registrato. In questo momento la lista delle vendite è vuota perchè l'impiegato non ha effettuato alcuna vendita.
 
 <img width="596" alt="MicrosoftTeams-image (2)" src="https://user-images.githubusercontent.com/79160832/119011851-bd2c6100-b995-11eb-9e33-820df0c89ec7.png">
 
