@@ -91,7 +91,6 @@ In questa sezione si deve selezionare il codice del dado, inserire le scorte del
 
 Andrea Catacchio
 Marco  De Giglio
-
-
+Matteo Costantini
 
 ***
