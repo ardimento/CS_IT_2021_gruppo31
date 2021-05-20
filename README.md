@@ -40,7 +40,7 @@ Per acedere alle funzionalità del software è necessario registrarsi; Bisogna r
 
 <img width="600" alt="119011656-90784980-b995-11eb-927c-ff6768303706" src="https://user-images.githubusercontent.com/79160832/119012062-fbc21b80-b995-11eb-88be-a6469a57338a.png">
 
-<img width="605" alt="Schermata 2021-05-20 alle 17 50 18" src="https://user-images.githubusercontent.com/79160832/119011335-41caaf80-b995-11eb-9fe0-7230c42f7074.png">
+<img width="601" alt="119011335-41caaf80-b995-11eb-9fe0-7230c42f7074" src="https://user-images.githubusercontent.com/79160832/119012279-2f04aa80-b996-11eb-83eb-bbaa7452860a.png">
 
 ### Login
 Dopo essersi registrati è necessario inserire i propri dati nella schermata di login e cliccare il pulsante accedi.
