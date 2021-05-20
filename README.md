@@ -52,6 +52,8 @@ Nella HomePage sono presenti a video tutte le informazioni dell'utente registrat
 
 <img width="596" alt="MicrosoftTeams-image (2)" src="https://user-images.githubusercontent.com/79160832/119011851-bd2c6100-b995-11eb-9e33-820df0c89ec7.png">
 
+### Vendi
+
 
 
 ### *Autori*
