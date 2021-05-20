@@ -58,15 +58,40 @@ Nella sezione  vendi si può selezionare il codice del dado, inserire la vendita
 
 <img width="349" alt="Schermata 2021-05-20 alle 17 40 34" src="https://user-images.githubusercontent.com/79158119/119013177-0a5d0280-b997-11eb-8f8e-871c9c4d1a3c.png">
 
-### AggiungiDado
-Nella sezione catalogo dadi possono aggiungere un dado al catalogo solo gli amministratori compilando i relativi campi quali: Filettatura, Materiale, Rivestimento protettivo, Luogo produzione, Data produzione e terminare l'operazione cliccando sul tatso aggiungi.
-
-<img width="435" alt="Schermata 2021-05-20 alle 17 42 59" src="https://user-images.githubusercontent.com/79158119/119014196-02519280-b998-11eb-8b68-bdedbcfe59c8.png">
 
 ### CatalogoDadi
 Nel catalogo dadi si può notare sulla sinistra la tabella relativa ad ogni dado inoltre cliccando sul tasto "visualizza" vengono mostrati dettagli maggiori su ogni singolo dado, mentre sulla destra ci sono i tasti : Aggiungi dado, Elimina dado, Aggiorna prezzo e Aggiorna scorte.
 
 <img width="594" alt="Schermata 2021-05-20 alle 17 41 54" src="https://user-images.githubusercontent.com/79158119/119015118-e8fd1600-b998-11eb-8e14-cfded9330434.png">
 
+### AggiungiDado
+Nella sezione catalogo dadi possono aggiungere un dado al catalogo solo gli amministratori compilando i relativi campi quali: Filettatura, Materiale, Rivestimento protettivo, Luogo produzione, Data produzione e terminare l'operazione cliccando sul tatso aggiungi.
+
+<img width="435" alt="Schermata 2021-05-20 alle 17 42 59" src="https://user-images.githubusercontent.com/79158119/119014196-02519280-b998-11eb-8b68-bdedbcfe59c8.png">
+
+### EliminaDado
+In questa sezione si deve selezionare il codice del dado e cliccare sul tasto elimina.
+
+<img width="399" alt="Schermata 2021-05-20 alle 17 43 36" src="https://user-images.githubusercontent.com/79158119/119016475-4776c400-b99a-11eb-9db5-a1d3051ed3c9.png">
+
+### AggiornaPrezzoDado 
+
+In questa sezione si deve selezionare il codice del dado e inserire il prezzo del dado infine cliccare sul tasto "Aggiorna".
+
+<img width="397" alt="Schermata 2021-05-20 alle 17 43 57" src="https://user-images.githubusercontent.com/79158119/119016718-8e64b980-b99a-11eb-911d-ab06358cd45a.png">
+
+
+### AggiornaPrezzoScorte
+
+In questa sezione si deve selezionare il codice del dado, inserire le scorte del dado e infine cliccare sul tasto "Aggiorna".
+
+<img width="394" alt="Schermata 2021-05-20 alle 17 44 23" src="https://user-images.githubusercontent.com/79158119/119017036-df74ad80-b99a-11eb-957f-500c81827b91.png">
+
 ### *Autori*
+
+Andrea Catacchio
+Marco  De Giglio
+
+
+
 ***
