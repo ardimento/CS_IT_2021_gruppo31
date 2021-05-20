@@ -35,7 +35,13 @@ java --version
 
 ### *Esecuzione*
 ***
+### Registrazione
+Per acedere alle funzionalità del software è necessario registrarsi; Bisogna riempire tutti i campi in entrabe le 2 finestre con le proprie informazioni personali riguardanti sia la persona fisica che il suo ruolo all'interno dell'azienda. Il ruolo di amministratore è importante a fini di inserimento dei nuovi dadi nel catalogo.
+<img width="600" alt="MicrosoftTeams-image" src="https://user-images.githubusercontent.com/79160832/119009822-cc121400-b993-11eb-9558-8327604fb97d.png">![Uploading MicrosoftTeams-image (1).png…]()
+
+
 ### Login
-![DGGMRC98M07A662K](https://user-images.githubusercontent.com/79160832/119007573-a126c080-b991-11eb-8418-7bf7d13b48c9.jpg)
+Dopo essersi registrati è necessario inserire i propri dati nella schermata di login e cliccare il pulsante accedi.
+<img width="600" alt="MicrosoftTeams-image" src="https://user-images.githubusercontent.com/79160832/119009822-cc121400-b993-11eb-9558-8327604fb97d.png">
 ### *Autori*
 ***
