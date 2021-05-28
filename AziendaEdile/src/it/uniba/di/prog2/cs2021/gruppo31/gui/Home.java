@@ -2,6 +2,8 @@ package it.uniba.di.prog2.cs2021.gruppo31.gui;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import it.uniba.di.prog2.cs2021.gruppo31.HomePage;
 import it.uniba.di.prog2.cs2021.gruppo31.Vendita;
 import it.uniba.di.prog2.cs2021.gruppo31.exception.AziendaException;
+import it.uniba.di.prog2.cs2021.gruppo31.gui.catalogo.ButtonColumn;
 import it.uniba.di.prog2.cs2021.gruppo31.gui.catalogo.Catalogo;
 import it.uniba.di.prog2.cs2021.gruppo31.gui.catalogo.Vendi;
 import it.uniba.di.prog2.cs2021.gruppo31.utente.Impiegato;
@@ -39,10 +42,10 @@ public class Home extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private Utente utente;
-	
+
 	public Home(HomePage home) {
 		
-		setSize(600, 300);
+		setSize(700, 300);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
 
@@ -68,7 +71,7 @@ public class Home extends JFrame {
 		button.setFont(new Font("Dialog", Font.BOLD, 10));
 		button.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		button.setBackground(new Color(255, 51, 0));
-		button.setBounds(558, 0, 42, 23);
+		button.setBounds(658, 0, 42, 23);
 		contentPane.add(button);
 
 		JLabel lblNewLabel_1 = new JLabel("");
@@ -137,7 +140,7 @@ public class Home extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(250, 80, 337, 210);
+		panel.setBounds(250, 80, 438, 210);
 		panel.setLayout(null);
 		contentPane.add(panel);
 		
@@ -157,7 +160,7 @@ public class Home extends JFrame {
 		
 		JButton btnEsci_1 = new JButton("Esci");
 		btnEsci_1.setOpaque(true);
-		btnEsci_1.setBounds(260, 42, 65, 25);
+		btnEsci_1.setBounds(361, 42, 65, 25);
 		panel.add(btnEsci_1);
 		btnEsci_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,7 +192,7 @@ public class Home extends JFrame {
 		img = new ImageIcon(imgScaled);
 		
 		JButton button_1 = new JButton(img);
-		button_1.setBounds(293, 5, 32, 32);
+		button_1.setBounds(394, 5, 32, 32);
 		panel.add(button_1);
 		button_1.setContentAreaFilled(false);
 		button_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -214,31 +217,43 @@ public class Home extends JFrame {
 		//Tabella vendite
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			String[] colonne = {"Dado","Data","Pezzi","Totale"};
+			String[] colonne = {"Dado","Data","Pezzi","Totale","Dettagli"};
 			ArrayList<Vendita> vendite;
 			try {
 				vendite = home.getVenditeImpiegato();
-				String tmp[][] = new String[vendite.size()][4];
+				String tmp[][] = new String[vendite.size()][5];
 				for(int i=0;i<vendite.size();i++) {
 					tmp[i][0] = Integer.toString(vendite.get(i).getDado().getCodice());
 					tmp[i][1] = formatter.format(vendite.get(i).getData());
 					tmp[i][2] = Integer.toString(vendite.get(i).getNumPezzi());
-					tmp[i][3] = String.format("%.2f euro",vendite.get(i).getDado().getPrezzo() * (double)vendite.get(i).getNumPezzi());
+					tmp[i][3] = String.format("€ %.2f",vendite.get(i).getDado().getPrezzo() * (double)vendite.get(i).getNumPezzi());
 				}
 				
 				DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
 				table = new JTable(tmp,colonne);
-				table.setEnabled(false);
+				//table.setEnabled(false);
 				table.setBackground(new Color(204, 255, 153));
 				table.setOpaque(true);
 				table.setFillsViewportHeight(true);
 				table.getTableHeader().setBackground(Color.WHITE);
 				table.getColumnModel().getColumn(2).setPreferredWidth(40);
 				table.getColumnModel().getColumn(2).setCellRenderer(cellRenderer);
+				table.getColumnModel().getColumn(4).setPreferredWidth(110);
+				table.getColumnModel().getColumn(4).setCellRenderer(cellRenderer);
+				
+				Action box = new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+					public void actionPerformed(ActionEvent e) {
+						int row = Integer.valueOf(e.getActionCommand());
+						JOptionPane.showMessageDialog(null, vendite.get(row).getDado().toString());
+					}
+				};
+				new ButtonColumn(table,box,4);
 				
 				JScrollPane sp = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-				sp.setBounds(10, 79, 315, 119);
+				sp.setBounds(10, 79, 416, 119);
 				panel.add(sp);
+				
 			} catch (AziendaException e1) {
 				DefaultTableModel model = new DefaultTableModel(0,colonne.length);
 				model.setColumnIdentifiers(colonne);
@@ -247,7 +262,7 @@ public class Home extends JFrame {
 				table.setFillsViewportHeight(true);
 				table.getTableHeader().setBackground(Color.WHITE);
 				JScrollPane sp = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-				sp.setBounds(10, 79, 315, 119);
+				sp.setBounds(10, 79, 416, 119);
 				panel.add(sp);
 			}
 
